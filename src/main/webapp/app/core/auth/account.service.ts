@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -88,5 +89,15 @@ export class AccountService {
       this.stateStorageService.clearUrl();
       this.router.navigateByUrl(previousUrl);
     }
+  }
+
+  getFullName(): string {
+    return this.userIdentity ? this.userIdentity.firstName + ' ' + this.userIdentity.lastName : '';
+  }
+
+  getInitialFullName(): string {
+    return this.userIdentity && this.userIdentity.firstName && this.userIdentity.lastName
+      ? this.userIdentity.firstName.charAt(0).toUpperCase() + this.userIdentity.lastName.charAt(0).toUpperCase()
+      : '';
   }
 }

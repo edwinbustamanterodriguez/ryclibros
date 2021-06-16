@@ -22,7 +22,7 @@
         <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="home"></fa-icon>
-            <span>Home</span>
+            <span>Principal</span>
           </span>
         </a>
       </li>
@@ -46,7 +46,7 @@
         </ul>
       </li>
       <li
-        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        *jhiHasAnyAuthority="'ROL_ADMINISTRADOR'"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -56,14 +56,14 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
           <span>
             <fa-icon icon="users-cog"></fa-icon>
-            <span>Administration</span>
+            <span>Administración</span>
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
           <li>
             <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
-              <span>User management</span>
+              <span>Gestión de usuarios</span>
             </a>
           </li>
           <li>
@@ -113,19 +113,32 @@
         [routerLinkActiveOptions]="{ exact: true }"
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
-          <span *ngIf="!getImageUrl()">
+          <span *ngIf="!isAuthenticated()">
             <fa-icon icon="user"></fa-icon>
-            <span>Account</span>
+            <span>Cuenta</span>
+            <!-- <button *ngSwitchCase="false" type="button" class="btn btn-outline-secondary" (click)="login()"><fa-icon icon="user"></fa-icon> Ingresar</button>-->
           </span>
+
+          <div *ngIf="isAuthenticated()" class="profile-navbar-content">
+            <div *ngIf="!getImageUrl()" class="profile-image-navbar">
+              <span>{{ getIntialFullName() }}</span>
+            </div>
+            <div *ngIf="getImageUrl()" class="profile-image-navbar">
+              <img class="profile-image-navbar" [src]="getImageUrl()" alt="{{ getIntialFullName() }}" />
+            </div>
+            <span class="ml-2">{{ getFullName() }}</span>
+          </div>
+
+          <!--
           <span *ngIf="getImageUrl()">
             <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar" />
-          </span>
+          </span>-->
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
           <li *ngSwitchCase="true">
             <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
               <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
-              <span>Settings</span>
+              <span>Ajustes</span>
             </a>
           </li>
           <li *ngSwitchCase="true">
@@ -137,25 +150,19 @@
               data-cy="passwordItem"
             >
               <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
-              <span>Password</span>
+              <span>Contraseña</span>
             </a>
           </li>
           <li *ngSwitchCase="true">
             <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
               <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign out</span>
+              <span>Cerrar sesión</span>
             </a>
           </li>
           <li *ngSwitchCase="false">
             <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
               <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-              <span>Sign in</span>
-            </a>
-          </li>
-          <li *ngSwitchCase="false">
-            <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
-              <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
-              <span>Register</span>
+              <span>Ingresar</span>
             </a>
           </li>
         </ul>

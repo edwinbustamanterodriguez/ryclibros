@@ -1,14 +1,15 @@
-import { Component, ViewChild, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { LoginService } from 'app/login/login.service';
+import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'jhi-login',
-  templateUrl: './login.component.html',
+  selector: 'jhi-login-dialog',
+  templateUrl: './login-dialog.component.html',
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginDialogComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
   starting = false;
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private accountService: AccountService,
     private loginService: LoginService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public activeModal: NgbActiveModal
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +59,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.authenticationError = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
+            this.activeModal.dismiss();
             this.router.navigate(['']);
           }
         },
@@ -65,5 +68,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.authenticationError = true;
         }
       );
+  }
+
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 }

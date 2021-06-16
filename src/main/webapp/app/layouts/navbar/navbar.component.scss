@@ -27,6 +27,8 @@ Navbar
   ul.navbar-nav {
     .nav-item {
       margin-left: 0.5em;
+      align-items: center;
+      display: flex;
     }
   }
 
@@ -51,4 +53,22 @@ Logo styles
   vertical-align: middle;
   background: url('../../../content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
+}
+
+/* ==========================================================================
+Profile styles
+========================================================================== */
+.profile-image-navbar {
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 50%;
+  background: #458578;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.profile-navbar-content {
+  display: inline-flex;
+  align-items: center;
 }
