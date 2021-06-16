@@ -6,7 +6,7 @@
 
   <div class="modal-body">
     <div class="alert alert-danger" *ngIf="authenticationError" data-cy="loginError">
-      <strong>¡Error al iniciar sesión!</strong>Verifique sus credenciales y vuelva a intentarlo.
+      <strong>¡Error al iniciar sesión!</strong> Verifique sus credenciales y vuelva a intentarlo.
     </div>
     <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
       <div class="form-group">

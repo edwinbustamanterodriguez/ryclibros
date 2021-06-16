@@ -90,7 +90,7 @@ public class UserResource {
      *
      * @param userDTO the user to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new user, or with status {@code 400 (Bad Request)} if the login or email is already in use.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
+     * @throws URISyntaxException       if the Location URI syntax is incorrect.
      * @throws BadRequestAlertException {@code 400 (Bad Request)} if the login or email is already in use.
      */
     @PostMapping("/users")
@@ -111,7 +111,11 @@ public class UserResource {
             return ResponseEntity
                 .created(new URI("/api/admin/users/" + newUser.getLogin()))
                 .headers(
-                    HeaderUtil.createAlert(applicationName, "A user is created with identifier " + newUser.getLogin(), newUser.getLogin())
+                    HeaderUtil.createAlert(
+                        applicationName,
+                        "Se creó un nuevo usuario " + newUser.getFirstName() + " " + newUser.getLastName(),
+                        newUser.getLogin()
+                    )
                 )
                 .body(newUser);
         }
@@ -141,7 +145,11 @@ public class UserResource {
 
         return ResponseUtil.wrapOrNotFound(
             updatedUser,
-            HeaderUtil.createAlert(applicationName, "A user is updated with identifier " + userDTO.getLogin(), userDTO.getLogin())
+            HeaderUtil.createAlert(
+                applicationName,
+                "Se actualizó los datos del usuario " + userDTO.getFirstName() + " " + userDTO.getLastName(),
+                userDTO.getLogin()
+            )
         );
     }
 
@@ -194,7 +202,7 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createAlert(applicationName, "A user is deleted with identifier " + login, login))
+            .headers(HeaderUtil.createAlert(applicationName, "Se eliminó al usuario  " + login, login))
             .build();
     }
 }

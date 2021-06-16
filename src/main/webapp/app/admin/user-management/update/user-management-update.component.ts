@@ -25,12 +25,12 @@ export class UserManagementUpdateComponent implements OnInit {
         Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
       ],
     ],
-    firstName: ['', [Validators.maxLength(50)]],
-    lastName: ['', [Validators.maxLength(50)]],
-    email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
+    firstName: ['', [Validators.required, Validators.maxLength(50)]],
+    lastName: ['', [Validators.required, Validators.maxLength(50)]],
+    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [],
     langKey: [],
-    authorities: [],
+    authorities: ['', [Validators.required]],
   });
 
   constructor(private userService: UserManagementService, private route: ActivatedRoute, private fb: FormBuilder) {}

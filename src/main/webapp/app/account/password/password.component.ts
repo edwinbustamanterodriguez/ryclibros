@@ -15,6 +15,7 @@ export class PasswordComponent implements OnInit {
   error = false;
   success = false;
   account$?: Observable<Account | null>;
+  fieldTextType = false;
   passwordForm = this.fb.group({
     currentPassword: ['', [Validators.required]],
     newPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
@@ -41,5 +42,9 @@ export class PasswordComponent implements OnInit {
         () => (this.error = true)
       );
     }
+  }
+
+  toggleFieldTextType(): void {
+    this.fieldTextType = !this.fieldTextType;
   }
 }

@@ -2,40 +2,39 @@
   <div class="col-8">
     <div *ngIf="user">
       <h2>
-        <span>User</span> [<strong>{{ user.login }}</strong
-        >]
+        <span>Detalle del usuario </span>
       </h2>
 
       <dl class="row-md jh-entity-details">
-        <dt><span>Login</span></dt>
+        <dt><span>Usuario</span></dt>
         <dd>
           <span>{{ user.login }}</span>
-          <span *ngIf="user.activated" class="badge badge-success">Activated</span>
-          <span *ngIf="!user.activated" class="badge badge-danger">Deactivated</span>
+          <span *ngIf="user.activated" class="badge badge-success">Activado</span>
+          <span *ngIf="!user.activated" class="badge badge-danger">Desactivado</span>
         </dd>
 
-        <dt><span>First Name</span></dt>
+        <dt><span>Nombre</span></dt>
         <dd>{{ user.firstName }}</dd>
 
-        <dt><span>Last Name</span></dt>
+        <dt><span>Apellido</span></dt>
         <dd>{{ user.lastName }}</dd>
 
-        <dt><span>Email</span></dt>
+        <dt><span>Correo</span></dt>
         <dd>{{ user.email }}</dd>
 
-        <dt><span>Created By</span></dt>
+        <dt><span>Creado por</span></dt>
         <dd>{{ user.createdBy }}</dd>
 
-        <dt><span>Created Date</span></dt>
+        <dt><span>Fecha de creación</span></dt>
         <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-        <dt><span>Last Modified By</span></dt>
+        <dt><span>Modificado por</span></dt>
         <dd>{{ user.lastModifiedBy }}</dd>
 
-        <dt><span>Last Modified Date</span></dt>
+        <dt><span>Fecha de modificación</span></dt>
         <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-        <dt><span>Profiles</span></dt>
+        <dt><span>Roles</span></dt>
         <dd>
           <ul class="list-unstyled">
             <li *ngFor="let authority of user.authorities">
@@ -45,7 +44,7 @@
         </dd>
       </dl>
 
-      <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span></button>
+      <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span></button>
     </div>
   </div>
 </div>

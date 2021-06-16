@@ -116,12 +116,11 @@
           <span *ngIf="!isAuthenticated()">
             <fa-icon icon="user"></fa-icon>
             <span>Cuenta</span>
-            <!-- <button *ngSwitchCase="false" type="button" class="btn btn-outline-secondary" (click)="login()"><fa-icon icon="user"></fa-icon> Ingresar</button>-->
           </span>
 
           <div *ngIf="isAuthenticated()" class="profile-navbar-content">
             <div *ngIf="!getImageUrl()" class="profile-image-navbar">
-              <span>{{ getIntialFullName() }}</span>
+              <span class="align-middle">{{ getIntialFullName() }}</span>
             </div>
             <div *ngIf="getImageUrl()" class="profile-image-navbar">
               <img class="profile-image-navbar" [src]="getImageUrl()" alt="{{ getIntialFullName() }}" />
