@@ -1,11 +1,13 @@
 categoria_id_pk;categoria_nombre;categoria_descripcion;categoria_activo
-1;protocol Buckinghamshire;homogénea web;false
-2;Versatil Guinea;Madera Public-key;true
-3;Configuración;primary;true
-4;Director blockchains;Negro;true
-5;Dinánmico;Ordenador productize plug-and-play;true
-6;ADP;Gerente Metal;true
-7;Sabroso Contabilidad;Genérico Raton;false
-8;Plástico;payment Cine Normas;true
-9;Naira Bedfordshire;Letonia Plástico JSON;true
-10;open-source;Juguetería;false
+1;Nacimientos;;true
+2;Legajos Nacimientos;;true
+3;Matrimonios;;true
+4;Legajos Matrimonios;;true
+5;Defunciones;;true
+6;Legajos Defunciones;;true
+7;Reconocimientos;;false
+8;Legajos Reconocimientos;;true
+9;Ejecutoriales de Inscripciones Nacimientos;;true
+10;Tramites Departamentales;;true
+11;Tramites Interdepartamentales;;true
+12;Cancelación de Matrimonios;;true

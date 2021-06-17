@@ -5,6 +5,7 @@ import com.juancarlos.ryclibros.service.CategoriaQueryService;
 import com.juancarlos.ryclibros.service.CategoriaService;
 import com.juancarlos.ryclibros.service.criteria.CategoriaCriteria;
 import com.juancarlos.ryclibros.service.dto.CategoriaDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -68,19 +69,19 @@ public class CategoriaResource {
     public ResponseEntity<CategoriaDTO> createCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO) throws URISyntaxException {
         log.debug("REST request to save Categoria : {}", categoriaDTO);
         if (categoriaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new categoria cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Una nueva categoría no puede tener una identificación", ENTITY_NAME, "idexists");
         }
         CategoriaDTO result = categoriaService.save(categoriaDTO);
         return ResponseEntity
             .created(new URI("/api/categorias/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "una", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /categorias/:id} : Updates an existing categoria.
      *
-     * @param id the id of the categoriaDTO to save.
+     * @param id           the id of the categoriaDTO to save.
      * @param categoriaDTO the categoriaDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated categoriaDTO,
      * or with status {@code 400 (Bad Request)} if the categoriaDTO is not valid,
@@ -94,27 +95,27 @@ public class CategoriaResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Categoria : {}, {}", id, categoriaDTO);
         if (categoriaDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, categoriaDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!categoriaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         CategoriaDTO result = categoriaService.save(categoriaDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, categoriaDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, categoriaDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /categorias/:id} : Partial updates given fields of an existing categoria, field will ignore if it is null
      *
-     * @param id the id of the categoriaDTO to save.
+     * @param id           the id of the categoriaDTO to save.
      * @param categoriaDTO the categoriaDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated categoriaDTO,
      * or with status {@code 400 (Bad Request)} if the categoriaDTO is not valid,
@@ -129,21 +130,21 @@ public class CategoriaResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Categoria partially : {}, {}", id, categoriaDTO);
         if (categoriaDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, categoriaDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!categoriaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontro la entidad", ENTITY_NAME, "idnotfound");
         }
 
         Optional<CategoriaDTO> result = categoriaService.partialUpdate(categoriaDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, categoriaDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, categoriaDTO.getId().toString())
         );
     }
 
@@ -199,7 +200,7 @@ public class CategoriaResource {
         categoriaService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "la", ENTITY_NAME, id.toString()))
             .build();
     }
 }
