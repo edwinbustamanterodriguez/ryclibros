@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="libro">
+      <h2 data-cy="libroDetailsHeading"><span>Libro</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ libro.id }}</span>
+        </dd>
+        <dt><span>Numero</span></dt>
+        <dd>
+          <span>{{ libro.numero }}</span>
+        </dd>
+        <dt><span>Observaciones</span></dt>
+        <dd>
+          <span>{{ libro.observaciones }}</span>
+        </dd>
+        <dt><span>Categoria</span></dt>
+        <dd>
+          <div *ngIf="libro.categoria">
+            <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/libro', libro.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

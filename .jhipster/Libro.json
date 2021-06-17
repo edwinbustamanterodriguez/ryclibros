@@ -1,0 +1,29 @@
+{
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "observaciones",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipName": "categoria",
+      "otherEntityName": "categoria",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id"
+    }
+  ],
+  "service": "serviceClass",
+  "dto": "mapstruct",
+  "jpaMetamodelFiltering": true,
+  "readOnly": false,
+  "pagination": "pagination",
+  "name": "Libro",
+  "changelogDate": "20210617212957"
+}
