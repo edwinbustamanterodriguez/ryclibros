@@ -12,6 +12,28 @@
       </button>
     </div>
   </h2>
+  <!--<div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3">
+          <input type="text" class="form-control" [(ngModel)]="currentSearch"
+                 (ngModelChange)="onSearchChange()" id="currentSearch" name="currentSearch"
+                 placeholder="Buscar usuarios">
+
+          <button class="input-group-append btn btn-info" [disabled]="!currentSearch || searching "
+                  (click)="search(currentSearch)">
+            <fa-icon *ngIf="!searching" icon="search"></fa-icon>
+            <span *ngIf="searching" class="spinner-border spinner-border-sm" role="status"
+                  aria-hidden="true"></span>
+          </button>
+
+          <button class="input-group-append btn btn-danger" (click)="deleteSearch()" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>-->
 
   <jhi-alert-error></jhi-alert-error>
 
