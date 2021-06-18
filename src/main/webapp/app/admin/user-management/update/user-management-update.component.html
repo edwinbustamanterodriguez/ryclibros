@@ -13,7 +13,7 @@
 
         <div class="form-group">
           <label class="form-control-label">Usuario</label>
-          <input type="text" class="form-control" name="login" formControlName="login" />
+          <input type="text" class="form-control" name="login" formControlName="login" [readOnly]="user.id" />
 
           <div *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.required"> Este campo es requerido. </small>

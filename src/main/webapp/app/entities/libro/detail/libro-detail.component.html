@@ -25,8 +25,24 @@
         <dt><span>Categoria</span></dt>
         <dd>
           <div *ngIf="libro.categoria">
-            <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.id }}</a>
+            <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.nombre }}</a>
           </div>
+        </dd>
+        <dt><span>Fecha de registro</span></dt>
+        <dd>
+          <span>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</span>
+        </dd>
+        <dt><span>Libro registrado por</span></dt>
+        <dd>
+          <span>{{ libro.createdBy }}</span>
+        </dd>
+        <dt><span>Fecha de modificación</span></dt>
+        <dd>
+          <span>{{ libro.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</span>
+        </dd>
+        <dt><span>Libro modificado por</span></dt>
+        <dd>
+          <span>{{ libro.lastModifiedBy }}</span>
         </dd>
       </dl>
 

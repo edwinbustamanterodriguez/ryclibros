@@ -1,11 +1,11 @@
-libro_id_pk;libro_numero;libro_observaciones;libro_categoria_id_fk
-1;deposit Hormigon;Papelería monitorizar;1
-2;Turquia Camboya;matrix indexing;2
-3;Ordenador Cine Pelota;En ubiquitous;3
-4;el hacking;contexto;4
-5;haptic migración transmitting;payment Queso;5
-6;transmitting Aldea;Mozambique;6
-7;reintermediate aplicación Distribuido;Credit Gris bluetooth;7
-8;Soluciones invoice Credit;Práctico Buckinghamshire sistémica;8
-9;Loan Ladrillo Berkshire;TCP vía;9
-10;scalable;strategic;10
+libro_id_pk;libro_numero;libro_observaciones;libro_categoria_id_fk;created_by;last_modified_by
+1;deposit Hormigon;Papelería monitorizar;1;system;system
+2;Turquia Camboya;matrix indexing;2;system;system
+3;Ordenador Cine Pelota;En ubiquitous;3;system;system
+4;el hacking;contexto;4;system;system
+5;haptic migración transmitting;payment Queso;5;system;system
+6;transmitting Aldea;Mozambique;6;system;system
+7;reintermediate aplicación Distribuido;Credit Gris bluetooth;7;system;system
+8;Soluciones invoice Credit;Práctico Buckinghamshire sistémica;8;system;system
+9;Loan Ladrillo Berkshire;TCP vía;9;system;system
+10;scalable;strategic;10;system;system

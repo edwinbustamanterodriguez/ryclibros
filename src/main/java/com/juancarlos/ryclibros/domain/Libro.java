@@ -9,7 +9,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Table(name = "libro")
-public class Libro implements Serializable {
+public class Libro extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

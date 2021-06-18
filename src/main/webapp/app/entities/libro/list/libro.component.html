@@ -34,7 +34,7 @@
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="numero"><span>Numero</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="observaciones"><span>Observaciones</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="observaciones"><span>Fecha de registro</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="categoria.id"><span>Categoria</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
@@ -45,7 +45,7 @@
             <a [routerLink]="['/libro', libro.id, 'view']">{{ libro.id }}</a>
           </td>
           <td>{{ libro.numero }}</td>
-          <td>{{ libro.observaciones }}</td>
+          <td>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
           <td>
             <div *ngIf="libro.categoria">
               <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.nombre }}</a>
