@@ -5,6 +5,7 @@ import com.juancarlos.ryclibros.service.LibroQueryService;
 import com.juancarlos.ryclibros.service.LibroService;
 import com.juancarlos.ryclibros.service.criteria.LibroCriteria;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -69,14 +70,14 @@ public class LibroResource {
         LibroDTO result = libroService.save(libroDTO);
         return ResponseEntity
             .created(new URI("/api/libros/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "un", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /libros/:id} : Updates an existing libro.
      *
-     * @param id the id of the libroDTO to save.
+     * @param id       the id of the libroDTO to save.
      * @param libroDTO the libroDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated libroDTO,
      * or with status {@code 400 (Bad Request)} if the libroDTO is not valid,
@@ -90,27 +91,27 @@ public class LibroResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Libro : {}, {}", id, libroDTO);
         if (libroDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, libroDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!libroRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         LibroDTO result = libroService.save(libroDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, libroDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "el", ENTITY_NAME, libroDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /libros/:id} : Partial updates given fields of an existing libro, field will ignore if it is null
      *
-     * @param id the id of the libroDTO to save.
+     * @param id       the id of the libroDTO to save.
      * @param libroDTO the libroDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated libroDTO,
      * or with status {@code 400 (Bad Request)} if the libroDTO is not valid,
@@ -125,21 +126,21 @@ public class LibroResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Libro partially : {}, {}", id, libroDTO);
         if (libroDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, libroDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!libroRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         Optional<LibroDTO> result = libroService.partialUpdate(libroDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, libroDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "el", ENTITY_NAME, libroDTO.getId().toString())
         );
     }
 
@@ -195,7 +196,7 @@ public class LibroResource {
         libroService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "el", ENTITY_NAME, id.toString()))
             .build();
     }
 }

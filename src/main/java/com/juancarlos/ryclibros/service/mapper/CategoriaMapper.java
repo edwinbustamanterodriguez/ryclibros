@@ -12,5 +12,6 @@ public interface CategoriaMapper extends EntityMapper<CategoriaDTO, Categoria> {
     @Named("id")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nombre", source = "nombre")
     CategoriaDTO toDtoId(Categoria categoria);
 }

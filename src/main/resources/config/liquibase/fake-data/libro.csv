@@ -1,4 +1,4 @@
-id;numero;observaciones;categoria_id
+libro_id_pk;libro_numero;libro_observaciones;libro_categoria_id_fk
 1;deposit Hormigon;Papelería monitorizar;1
 2;Turquia Camboya;matrix indexing;2
 3;Ordenador Cine Pelota;En ubiquitous;3

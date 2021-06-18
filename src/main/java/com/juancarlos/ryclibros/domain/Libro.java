@@ -15,17 +15,19 @@ public class Libro implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "libro_id_pk")
     private Long id;
 
     @NotNull
-    @Column(name = "numero", nullable = false, unique = true)
+    @Column(name = "libro_numero", nullable = false, unique = true)
     private String numero;
 
-    @Column(name = "observaciones")
+    @Column(name = "libro_observaciones")
     private String observaciones;
 
     @ManyToOne(optional = false)
     @NotNull
+    @JoinColumn(name = "libro_categoria_id_fk", nullable = false)
     private Categoria categoria;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
