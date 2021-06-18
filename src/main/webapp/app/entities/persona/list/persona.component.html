@@ -1,0 +1,108 @@
+<div>
+  <h2 id="page-heading" data-cy="PersonaHeading">
+    <span>Personas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-persona"
+        [routerLink]="['/persona/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Persona </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="personas?.length === 0">
+    <span>No personas found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="personas && personas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="apaterno"><span>Apaterno</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="amaterno"><span>Amaterno</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="ci"><span>Ci</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="expedicion"><span>Expedicion</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="telefono"><span>Telefono</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="institucion"><span>Institucion</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let persona of personas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/persona', persona.id, 'view']">{{ persona.id }}</a>
+          </td>
+          <td>{{ persona.nombre }}</td>
+          <td>{{ persona.apaterno }}</td>
+          <td>{{ persona.amaterno }}</td>
+          <td>{{ persona.ci }}</td>
+          <td>{{ persona.expedicion }}</td>
+          <td>{{ persona.telefono }}</td>
+          <td>{{ persona.institucion }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/persona', persona.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/persona', persona.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(persona)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="personas && personas.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

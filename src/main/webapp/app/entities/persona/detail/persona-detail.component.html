@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="persona">
+      <h2 data-cy="personaDetailsHeading"><span>Persona</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ persona.id }}</span>
+        </dd>
+        <dt><span>Nombre</span></dt>
+        <dd>
+          <span>{{ persona.nombre }}</span>
+        </dd>
+        <dt><span>Apaterno</span></dt>
+        <dd>
+          <span>{{ persona.apaterno }}</span>
+        </dd>
+        <dt><span>Amaterno</span></dt>
+        <dd>
+          <span>{{ persona.amaterno }}</span>
+        </dd>
+        <dt><span>Ci</span></dt>
+        <dd>
+          <span>{{ persona.ci }}</span>
+        </dd>
+        <dt><span>Expedicion</span></dt>
+        <dd>
+          <span>{{ persona.expedicion }}</span>
+        </dd>
+        <dt><span>Telefono</span></dt>
+        <dd>
+          <span>{{ persona.telefono }}</span>
+        </dd>
+        <dt><span>Institucion</span></dt>
+        <dd>
+          <span>{{ persona.institucion }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/persona', persona.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

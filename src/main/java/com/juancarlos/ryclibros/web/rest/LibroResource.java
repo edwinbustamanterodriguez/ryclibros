@@ -65,7 +65,7 @@ public class LibroResource {
     public ResponseEntity<LibroDTO> createLibro(@Valid @RequestBody LibroDTO libroDTO) throws URISyntaxException {
         log.debug("REST request to save Libro : {}", libroDTO);
         if (libroDTO.getId() != null) {
-            throw new BadRequestAlertException("A new libro cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Un libro nuevo no puede tener un identificación", ENTITY_NAME, "idexists");
         }
         LibroDTO result = libroService.save(libroDTO);
         return ResponseEntity
