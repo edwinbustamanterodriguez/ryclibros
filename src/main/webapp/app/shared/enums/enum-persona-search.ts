@@ -1,6 +1,6 @@
 export enum EnumPersonaSearch {
-  NOMBRE,
-  APELLIDO_PATERNO,
-  APELLIDO_MATERNO,
-  CI,
+  NOMBRE = 'Nombre',
+  APELLIDO_PATERNO = 'Apellido Paterno',
+  APELLIDO_MATERNO = 'Apellido Materno',
+  CI = 'CI',
 }

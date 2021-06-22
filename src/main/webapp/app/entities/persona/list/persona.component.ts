@@ -11,6 +11,7 @@ import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { PersonaService } from '../service/persona.service';
 import { PersonaDeleteDialogComponent } from '../delete/persona-delete-dialog.component';
 import { EnumPersonaSearch } from 'app/shared/enums/enum-persona-search';
+import { EnumDepartamentos } from 'app/shared/enums/enum-expedicion';
 
 @Component({
   selector: 'jhi-persona',
@@ -30,7 +31,7 @@ export class PersonaComponent implements OnInit {
 
   enumPersonaSearch = EnumPersonaSearch;
   searchModes: string[] = [];
-  optionSelected = '0';
+  optionSelected = 'Nombre';
 
   constructor(
     protected personaService: PersonaService,
@@ -39,7 +40,7 @@ export class PersonaComponent implements OnInit {
     protected modalService: NgbModal
   ) {
     this.currentSearch = '';
-    this.searchModes = Object.keys(this.enumPersonaSearch).filter(f => !isNaN(Number(f)));
+    this.searchModes = Object.values(this.enumPersonaSearch);
   }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -48,8 +49,13 @@ export class PersonaComponent implements OnInit {
 
     if (this.currentSearch && this.currentSearch.length !== 0) {
       this.searching = true;
+
+      // @ts-ignore
+      let number = Object.values(EnumPersonaSearch).indexOf(this.optionSelected);
+      const numberAux = number ? number : 0;
+
       this.personaService
-        .search(this.currentSearch, this.optionSelected, {
+        .search(this.currentSearch, numberAux, {
           page: pageToLoad - 1,
           size: this.itemsPerPage,
           sort: this.sort(),
@@ -162,11 +168,8 @@ export class PersonaComponent implements OnInit {
     }
   }
 
-  toIdentifier(searchMode: number): string {
-    return this.enumPersonaSearch[searchMode];
-  }
-
-  toEnum(searchMode: string): string {
-    return this.enumPersonaSearch[+searchMode];
+  departamentosAbr(expedicion: string | undefined): string {
+    // @ts-ignore
+    return Object.keys(EnumDepartamentos)[Object.values(EnumDepartamentos).indexOf(expedicion)];
   }
 }

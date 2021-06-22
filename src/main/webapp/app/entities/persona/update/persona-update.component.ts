@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 
 import { IPersona, Persona } from '../persona.model';
 import { PersonaService } from '../service/persona.service';
+import { EnumDepartamentos } from 'app/shared/enums/enum-expedicion';
 
 @Component({
   selector: 'jhi-persona-update',
@@ -14,6 +15,8 @@ import { PersonaService } from '../service/persona.service';
 })
 export class PersonaUpdateComponent implements OnInit {
   isSaving = false;
+
+  departamentos: string[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -26,7 +29,9 @@ export class PersonaUpdateComponent implements OnInit {
     institucion: [],
   });
 
-  constructor(protected personaService: PersonaService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(protected personaService: PersonaService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {
+    this.departamentos = Object.values(EnumDepartamentos);
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ persona }) => {

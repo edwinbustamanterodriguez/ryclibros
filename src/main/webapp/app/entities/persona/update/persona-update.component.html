@@ -46,8 +46,7 @@
           <div class="form-group">
             <label class="d-block" for="field_expedicion">Expedición</label>
             <select class="form-control" id="field_expedicion" name="expedicion" formControlName="expedicion">
-              <option>HOLA</option>
-              <!-- <option [ngValue]="sourceOption" *ngFor="let sourceOption of sources;">{{toSource(sourceOption)}}</option>-->
+              <option [ngValue]="departamentoOption" *ngFor="let departamentoOption of departamentos">{{ departamentoOption }}</option>
             </select>
             <div *ngIf="editForm.get('expedicion')!.invalid && (editForm.get('expedicion')!.dirty || editForm.get('expedicion')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('expedicion')?.errors?.required"> Este campo es requerido. </small>

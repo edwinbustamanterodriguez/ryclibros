@@ -1,4 +1,4 @@
-export enum EnumPersonaSearch {
+export enum EnumDepartamentos {
   CH = 'Chuquisaca',
   LP = 'La Paz',
   CB = 'Cochabamba',
