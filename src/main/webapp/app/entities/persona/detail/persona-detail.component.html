@@ -18,38 +18,31 @@
         <dd>
           <span>{{ persona.nombre }}</span>
         </dd>
-        <dt><span>Apaterno</span></dt>
+        <dt><span>Apellido Paterno</span></dt>
         <dd>
           <span>{{ persona.apaterno }}</span>
         </dd>
-        <dt><span>Amaterno</span></dt>
+        <dt><span>Apellido Materno</span></dt>
         <dd>
           <span>{{ persona.amaterno }}</span>
         </dd>
-        <dt><span>Ci</span></dt>
+        <dt><span>CI</span></dt>
         <dd>
           <span>{{ persona.ci }}</span>
-        </dd>
-        <dt><span>Expedicion</span></dt>
-        <dd>
           <span>{{ persona.expedicion }}</span>
         </dd>
-        <dt><span>Telefono</span></dt>
+        <dt><span>Teléfono</span></dt>
         <dd>
           <span>{{ persona.telefono }}</span>
         </dd>
-        <dt><span>Institucion</span></dt>
+        <dt><span>Institución</span></dt>
         <dd>
           <span>{{ persona.institucion }}</span>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/persona', persona.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atrás</span>
       </button>
     </div>
   </div>

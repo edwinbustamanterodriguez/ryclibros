@@ -153,6 +153,18 @@ public class PersonaResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/personas/_search")
+    public ResponseEntity<List<PersonaDTO>> getAllPersonasByQuery(
+        @RequestParam(required = true) String query,
+        @RequestParam(required = true) Integer filter,
+        Pageable pageable
+    ) {
+        log.debug("REST request to get a page of Personas");
+        Page<PersonaDTO> page = personaService.findAllByQuery(query, filter, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /personas/:id} : get the "id" persona.
      *

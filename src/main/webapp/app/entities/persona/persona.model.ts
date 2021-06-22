@@ -3,7 +3,7 @@ export interface IPersona {
   nombre?: string;
   apaterno?: string;
   amaterno?: string | null;
-  ci?: number;
+  ci?: string;
   expedicion?: string;
   telefono?: string | null;
   institucion?: string | null;
@@ -15,7 +15,7 @@ export class Persona implements IPersona {
     public nombre?: string,
     public apaterno?: string,
     public amaterno?: string | null,
-    public ci?: number,
+    public ci?: string,
     public expedicion?: string,
     public telefono?: string | null,
     public institucion?: string | null

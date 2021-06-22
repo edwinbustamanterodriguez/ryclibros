@@ -1,7 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-persona-heading" data-cy="PersonaCreateUpdateHeading">Create or edit a Persona</h2>
+      <h2 id="jhi-persona-heading" data-cy="PersonaCreateUpdateHeading">
+        {{ editForm.get('id')!.value == null ? 'Agregar' : 'Editar' }} Persona
+      </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -15,54 +17,50 @@
           <label class="form-control-label" for="field_nombre">Nombre</label>
           <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
           <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> Este campo es requerido. </small>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_apaterno">Apaterno</label>
+          <label class="form-control-label" for="field_apaterno">Apellido Paterno</label>
           <input type="text" class="form-control" name="apaterno" id="field_apaterno" data-cy="apaterno" formControlName="apaterno" />
           <div *ngIf="editForm.get('apaterno')!.invalid && (editForm.get('apaterno')!.dirty || editForm.get('apaterno')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('apaterno')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('apaterno')?.errors?.required"> Este campo es requerido. </small>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_amaterno">Amaterno</label>
+          <label class="form-control-label" for="field_amaterno">Apellido Materno</label>
           <input type="text" class="form-control" name="amaterno" id="field_amaterno" data-cy="amaterno" formControlName="amaterno" />
         </div>
 
-        <div class="form-group">
-          <label class="form-control-label" for="field_ci">Ci</label>
-          <input type="number" class="form-control" name="ci" id="field_ci" data-cy="ci" formControlName="ci" />
-          <div *ngIf="editForm.get('ci')!.invalid && (editForm.get('ci')!.dirty || editForm.get('ci')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('ci')?.errors?.required"> This field is required. </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('ci')?.errors?.number"> This field should be a number. </small>
+        <div class="d-flex mb-0 pb-0">
+          <div class="flex-grow-1 form-group">
+            <label class="form-control-label" for="field_ci">CI</label>
+            <input type="number" class="form-control" name="ci" id="field_ci" data-cy="ci" formControlName="ci" />
+            <div *ngIf="editForm.get('ci')!.invalid && (editForm.get('ci')!.dirty || editForm.get('ci')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('ci')?.errors?.required"> Este campo es requerido. </small>
+              <small class="form-text text-danger" [hidden]="!editForm.get('ci')?.errors?.number"> Este campo debe ser números. </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="d-block" for="field_expedicion">Expedición</label>
+            <select class="form-control" id="field_expedicion" name="expedicion" formControlName="expedicion">
+              <option>HOLA</option>
+              <!-- <option [ngValue]="sourceOption" *ngFor="let sourceOption of sources;">{{toSource(sourceOption)}}</option>-->
+            </select>
+            <div *ngIf="editForm.get('expedicion')!.invalid && (editForm.get('expedicion')!.dirty || editForm.get('expedicion')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('expedicion')?.errors?.required"> Este campo es requerido. </small>
+            </div>
           </div>
         </div>
-
         <div class="form-group">
-          <label class="form-control-label" for="field_expedicion">Expedicion</label>
-          <input
-            type="text"
-            class="form-control"
-            name="expedicion"
-            id="field_expedicion"
-            data-cy="expedicion"
-            formControlName="expedicion"
-          />
-          <div *ngIf="editForm.get('expedicion')!.invalid && (editForm.get('expedicion')!.dirty || editForm.get('expedicion')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('expedicion')?.errors?.required"> This field is required. </small>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_telefono">Telefono</label>
+          <label class="form-control-label" for="field_telefono">Teléfono</label>
           <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
         </div>
 
         <div class="form-group">
-          <label class="form-control-label" for="field_institucion">Institucion</label>
+          <label class="form-control-label" for="field_institucion">Institución</label>
           <input
             type="text"
             class="form-control"
@@ -76,7 +74,7 @@
 
       <div>
         <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
         </button>
 
         <button
@@ -86,7 +84,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
         </button>
       </div>
     </form>

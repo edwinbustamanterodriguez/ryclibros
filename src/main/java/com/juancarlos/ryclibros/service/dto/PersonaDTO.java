@@ -20,7 +20,7 @@ public class PersonaDTO implements Serializable {
     private String amaterno;
 
     @NotNull
-    private Integer ci;
+    private String ci;
 
     @NotNull
     private String expedicion;
@@ -61,11 +61,11 @@ public class PersonaDTO implements Serializable {
         this.amaterno = amaterno;
     }
 
-    public Integer getCi() {
+    public String getCi() {
         return ci;
     }
 
-    public void setCi(Integer ci) {
+    public void setCi(String ci) {
         this.ci = ci;
     }
 
@@ -122,7 +122,7 @@ public class PersonaDTO implements Serializable {
             ", nombre='" + getNombre() + "'" +
             ", apaterno='" + getApaterno() + "'" +
             ", amaterno='" + getAmaterno() + "'" +
-            ", ci=" + getCi() +
+            ", ci=" + getCi() + "'" +
             ", expedicion='" + getExpedicion() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", institucion='" + getInstitucion() + "'" +

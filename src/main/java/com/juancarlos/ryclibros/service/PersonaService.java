@@ -97,4 +97,20 @@ public class PersonaService {
         log.debug("Request to delete Persona : {}", id);
         personaRepository.deleteById(id);
     }
+
+    public Page<PersonaDTO> findAllByQuery(String query, Integer filter, Pageable pageable) {
+        switch (filter) {
+            case 1:
+                return personaRepository.findAllByApaternoContaining(query, pageable).map(personaMapper::toDto);
+            case 2:
+                return personaRepository.findAllByAmaternoContaining(query, pageable).map(personaMapper::toDto);
+            case 3:
+                return personaRepository.findAllByCiContaining(query, pageable).map(personaMapper::toDto);
+            case 0:
+            default:
+                {
+                    return personaRepository.findAllByNombreContaining(query, pageable).map(personaMapper::toDto);
+                }
+        }
+    }
 }

@@ -31,7 +31,7 @@ public class Persona implements Serializable {
 
     @NotNull
     @Column(name = "persona_ci", nullable = false)
-    private Integer ci;
+    private String ci;
 
     @NotNull
     @Column(name = "persona_expedicion", nullable = false)
@@ -96,16 +96,16 @@ public class Persona implements Serializable {
         this.amaterno = amaterno;
     }
 
-    public Integer getCi() {
+    public String getCi() {
         return this.ci;
     }
 
-    public Persona ci(Integer ci) {
+    public Persona ci(String ci) {
         this.ci = ci;
         return this;
     }
 
-    public void setCi(Integer ci) {
+    public void setCi(String ci) {
         this.ci = ci;
     }
 

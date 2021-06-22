@@ -37,11 +37,11 @@ class PersonaResourceIT {
     private static final String DEFAULT_APATERNO = "AAAAAAAAAA";
     private static final String UPDATED_APATERNO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_AMATERNO = "AAAAAAAAAA";
+    private static final String DEFAULT_AMATERNO = "BBBBBBBBBB";
     private static final String UPDATED_AMATERNO = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_CI = 1;
-    private static final Integer UPDATED_CI = 2;
+    private static final String DEFAULT_CI = "BBBBBBBBBB";
+    private static final String UPDATED_CI = "BBBBBBBBBB";
 
     private static final String DEFAULT_EXPEDICION = "AAAAAAAAAA";
     private static final String UPDATED_EXPEDICION = "BBBBBBBBBB";

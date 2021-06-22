@@ -16,7 +16,7 @@
     },
     {
       "fieldName": "ci",
-      "fieldType": "Integer",
+      "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {

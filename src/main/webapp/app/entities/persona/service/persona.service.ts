@@ -57,4 +57,12 @@ export class PersonaService {
     }
     return personaCollection;
   }
+
+  search(currentSearch: string, optioSelected: string, req?: any): Observable<EntityArrayResponseType> {
+    let options = createRequestOption(req);
+    options = options.append('query', currentSearch);
+    options = options.append('filter', optioSelected);
+
+    return this.http.get<IPersona[]>(this.resourceUrl + '/_search', { params: options, observe: 'response' });
+  }
 }

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh List</span>
+        <span>Actualizar Lista</span>
       </button>
 
       <button
@@ -15,31 +15,82 @@
         [routerLink]="['/persona/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Persona </span>
+        <span> Añadir nueva persona</span>
       </button>
     </div>
   </h2>
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3 mb-3">
+          <div class="input-group-append" role="group">
+            <select class="form-control" id="field_searchMode" data-cy="searchMode" name="searchMode" [(ngModel)]="optionSelected">
+              <option [ngValue]="searchMode" *ngFor="let searchMode of searchModes">
+                {{ toEnum(searchMode) }}
+              </option>
+            </select>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            (ngModelChange)="onSearchChange()"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="Buscar..."
+          />
+          <button class="input-group-append btn btn-info" [disabled]="!currentSearch || searching" (click)="loadPage(1, true)">
+            <fa-icon *ngIf="!searching" icon="search"></fa-icon>
+            <span *ngIf="searching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+          <button class="input-group-append btn btn-danger" (click)="deleteSearch()" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="personas?.length === 0">
-    <span>No personas found</span>
+    <span>No se encontró personas</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="personas && personas.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="apaterno"><span>Apaterno</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="amaterno"><span>Amaterno</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="ci"><span>Ci</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="expedicion"><span>Expedicion</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="telefono"><span>Telefono</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="institucion"><span>Institucion</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nombre">
+            <span>Nombre</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="apaterno">
+            <span>Apellido Paterno</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="amaterno">
+            <span>Apellido Materno</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="ci">
+            <span>CI</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="telefono">
+            <span>Teléfono</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="institucion">
+            <span>Institución</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -51,8 +102,7 @@
           <td>{{ persona.nombre }}</td>
           <td>{{ persona.apaterno }}</td>
           <td>{{ persona.amaterno }}</td>
-          <td>{{ persona.ci }}</td>
-          <td>{{ persona.expedicion }}</td>
+          <td>{{ persona.ci + ' ' + persona.expedicion }}</td>
           <td>{{ persona.telefono }}</td>
           <td>{{ persona.institucion }}</td>
           <td class="text-right">
@@ -64,7 +114,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
+                <span class="d-none d-md-inline">Detalle</span>
               </button>
 
               <button
@@ -74,12 +124,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Editar</span>
               </button>
 
               <button type="submit" (click)="delete(persona)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline">Eliminar</span>
               </button>
             </div>
           </td>
@@ -90,7 +140,7 @@
 
   <div *ngIf="personas && personas.length > 0">
     <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Personas' }"></jhi-item-count>
     </div>
 
     <div class="row justify-content-center">
