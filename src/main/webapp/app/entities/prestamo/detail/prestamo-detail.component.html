@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prestamo">
+      <h2 data-cy="prestamoDetailsHeading"><span>Prestamo</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ prestamo.id }}</span>
+        </dd>
+        <dt><span>Observaciones</span></dt>
+        <dd>
+          <span>{{ prestamo.observaciones }}</span>
+        </dd>
+        <dt><span>Fecha Fin</span></dt>
+        <dd>
+          <span>{{ prestamo.fechaFin | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Libro</span></dt>
+        <dd>
+          <div *ngIf="prestamo.libro">
+            <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Persona</span></dt>
+        <dd>
+          <div *ngIf="prestamo.persona">
+            <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{ prestamo.persona?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span>{{ prestamo.user?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/prestamo', prestamo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

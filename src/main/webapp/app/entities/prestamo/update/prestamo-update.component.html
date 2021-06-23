@@ -1,0 +1,113 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-prestamo-heading" data-cy="PrestamoCreateUpdateHeading">Create or edit a Prestamo</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_observaciones">Observaciones</label>
+          <input
+            type="text"
+            class="form-control"
+            name="observaciones"
+            id="field_observaciones"
+            data-cy="observaciones"
+            formControlName="observaciones"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_fechaFin">Fecha Fin</label>
+          <div class="d-flex">
+            <input
+              id="field_fechaFin"
+              data-cy="fechaFin"
+              type="datetime-local"
+              class="form-control"
+              name="fechaFin"
+              formControlName="fechaFin"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('fechaFin')!.invalid && (editForm.get('fechaFin')!.dirty || editForm.get('fechaFin')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fechaFin')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('fechaFin')?.errors?.ZonedDateTimelocal">
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_libro">Libro</label>
+          <select class="form-control" id="field_libro" data-cy="libro" name="libro" formControlName="libro">
+            <option *ngIf="!editForm.get('libro')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="libroOption.id === editForm.get('libro')!.value?.id ? editForm.get('libro')!.value : libroOption"
+              *ngFor="let libroOption of librosSharedCollection; trackBy: trackLibroById"
+            >
+              {{ libroOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['libro'])!.invalid && (editForm.get(['libro'])!.dirty || editForm.get(['libro'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['libro'])?.errors?.required"> This field is required. </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_persona">Persona</label>
+          <select class="form-control" id="field_persona" data-cy="persona" name="persona" formControlName="persona">
+            <option *ngIf="!editForm.get('persona')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="personaOption.id === editForm.get('persona')!.value?.id ? editForm.get('persona')!.value : personaOption"
+              *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
+            >
+              {{ personaOption.id }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['persona'])!.invalid && (editForm.get(['persona'])!.dirty || editForm.get(['persona'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['persona'])?.errors?.required"> This field is required. </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+            <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['user'])?.errors?.required"> This field is required. </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

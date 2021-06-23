@@ -18,7 +18,7 @@
   "relationships": [],
   "service": "serviceClass",
   "dto": "mapstruct",
-  "jpaMetamodelFiltering": true,
+  "jpaMetamodelFiltering": false,
   "readOnly": false,
   "pagination": "pagination",
   "name": "Categoria",
