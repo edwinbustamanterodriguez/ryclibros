@@ -9,7 +9,6 @@ import com.juancarlos.ryclibros.IntegrationTest;
 import com.juancarlos.ryclibros.domain.Categoria;
 import com.juancarlos.ryclibros.domain.Libro;
 import com.juancarlos.ryclibros.repository.LibroRepository;
-import com.juancarlos.ryclibros.service.criteria.LibroCriteria;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
 import com.juancarlos.ryclibros.service.mapper.LibroMapper;
 import java.util.List;

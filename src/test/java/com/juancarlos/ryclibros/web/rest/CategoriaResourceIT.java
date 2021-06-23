@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.juancarlos.ryclibros.IntegrationTest;
 import com.juancarlos.ryclibros.domain.Categoria;
 import com.juancarlos.ryclibros.repository.CategoriaRepository;
-import com.juancarlos.ryclibros.service.criteria.CategoriaCriteria;
 import com.juancarlos.ryclibros.service.dto.CategoriaDTO;
 import com.juancarlos.ryclibros.service.mapper.CategoriaMapper;
 import java.util.List;

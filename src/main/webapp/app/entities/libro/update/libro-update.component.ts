@@ -94,7 +94,7 @@ export class LibroUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.categoriaService
-      .query()
+      .getAllActiveStatus()
       .pipe(map((res: HttpResponse<ICategoria[]>) => res.body ?? []))
       .pipe(
         map((categorias: ICategoria[]) =>

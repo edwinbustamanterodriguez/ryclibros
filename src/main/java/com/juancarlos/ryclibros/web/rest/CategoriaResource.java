@@ -1,9 +1,7 @@
 package com.juancarlos.ryclibros.web.rest;
 
 import com.juancarlos.ryclibros.repository.CategoriaRepository;
-import com.juancarlos.ryclibros.service.CategoriaQueryService;
 import com.juancarlos.ryclibros.service.CategoriaService;
-import com.juancarlos.ryclibros.service.criteria.CategoriaCriteria;
 import com.juancarlos.ryclibros.service.dto.CategoriaDTO;
 import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
@@ -20,11 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -46,16 +42,9 @@ public class CategoriaResource {
 
     private final CategoriaRepository categoriaRepository;
 
-    private final CategoriaQueryService categoriaQueryService;
-
-    public CategoriaResource(
-        CategoriaService categoriaService,
-        CategoriaRepository categoriaRepository,
-        CategoriaQueryService categoriaQueryService
-    ) {
+    public CategoriaResource(CategoriaService categoriaService, CategoriaRepository categoriaRepository) {
         this.categoriaService = categoriaService;
         this.categoriaRepository = categoriaRepository;
-        this.categoriaQueryService = categoriaQueryService;
     }
 
     /**
@@ -152,27 +141,20 @@ public class CategoriaResource {
      * {@code GET  /categorias} : get all the categorias.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of categorias in body.
      */
     @GetMapping("/categorias")
-    public ResponseEntity<List<CategoriaDTO>> getAllCategorias(CategoriaCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Categorias by criteria: {}", criteria);
-        Page<CategoriaDTO> page = categoriaQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<CategoriaDTO>> getAllCategorias(Pageable pageable) {
+        Page<CategoriaDTO> page = categoriaService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-     * {@code GET  /categorias/count} : count all the categorias.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/categorias/count")
-    public ResponseEntity<Long> countCategorias(CategoriaCriteria criteria) {
-        log.debug("REST request to count Categorias by criteria: {}", criteria);
-        return ResponseEntity.ok().body(categoriaQueryService.countByCriteria(criteria));
+    @GetMapping("/categorias//active-status")
+    public ResponseEntity<List<CategoriaDTO>> getAllCategoriasActiveStatus(Pageable pageable) {
+        Page<CategoriaDTO> page = categoriaService.findAllActiveStatus(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

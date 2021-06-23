@@ -44,9 +44,9 @@
               {{ categoriaOption.nombre }}
             </option>
           </select>
-        </div>
-        <div *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['categoria'])?.errors?.required"> Este campo es requerido. </small>
+          <div *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get(['categoria'])?.errors?.required"> Este campo es requerido. </small>
+          </div>
         </div>
       </div>
 

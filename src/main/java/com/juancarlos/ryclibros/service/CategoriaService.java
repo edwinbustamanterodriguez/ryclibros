@@ -97,4 +97,8 @@ public class CategoriaService {
         log.debug("Request to delete Categoria : {}", id);
         categoriaRepository.deleteById(id);
     }
+
+    public Page<CategoriaDTO> findAllActiveStatus(Pageable pageable) {
+        return categoriaRepository.findAllByActivo(true, pageable).map(categoriaMapper::toDto);
+    }
 }

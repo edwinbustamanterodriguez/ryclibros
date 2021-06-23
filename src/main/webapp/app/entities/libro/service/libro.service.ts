@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { ILibro, getLibroIdentifier } from '../libro.model';
+import { IPersona } from 'app/entities/persona/persona.model';
 
 export type EntityResponseType = HttpResponse<ILibro>;
 export type EntityArrayResponseType = HttpResponse<ILibro[]>;
@@ -56,5 +57,11 @@ export class LibroService {
       return [...librosToAdd, ...libroCollection];
     }
     return libroCollection;
+  }
+
+  search(currentSearch: string, req?: any): Observable<EntityArrayResponseType> {
+    let options = createRequestOption(req);
+    options = options.append('search', currentSearch);
+    return this.http.get<IPersona[]>(this.resourceUrl + '/_search', { params: options, observe: 'response' });
   }
 }

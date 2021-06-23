@@ -1,9 +1,7 @@
 package com.juancarlos.ryclibros.web.rest;
 
 import com.juancarlos.ryclibros.repository.LibroRepository;
-import com.juancarlos.ryclibros.service.LibroQueryService;
 import com.juancarlos.ryclibros.service.LibroService;
-import com.juancarlos.ryclibros.service.criteria.LibroCriteria;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
 import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
@@ -20,11 +18,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -46,12 +42,9 @@ public class LibroResource {
 
     private final LibroRepository libroRepository;
 
-    private final LibroQueryService libroQueryService;
-
-    public LibroResource(LibroService libroService, LibroRepository libroRepository, LibroQueryService libroQueryService) {
+    public LibroResource(LibroService libroService, LibroRepository libroRepository) {
         this.libroService = libroService;
         this.libroRepository = libroRepository;
-        this.libroQueryService = libroQueryService;
     }
 
     /**
@@ -148,27 +141,21 @@ public class LibroResource {
      * {@code GET  /libros} : get all the libros.
      *
      * @param pageable the pagination information.
-     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of libros in body.
      */
     @GetMapping("/libros")
-    public ResponseEntity<List<LibroDTO>> getAllLibros(LibroCriteria criteria, Pageable pageable) {
-        log.debug("REST request to get Libros by criteria: {}", criteria);
-        Page<LibroDTO> page = libroQueryService.findByCriteria(criteria, pageable);
+    public ResponseEntity<List<LibroDTO>> getAllLibros(Pageable pageable) {
+        Page<LibroDTO> page = libroService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-     * {@code GET  /libros/count} : count all the libros.
-     *
-     * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-     */
-    @GetMapping("/libros/count")
-    public ResponseEntity<Long> countLibros(LibroCriteria criteria) {
-        log.debug("REST request to count Libros by criteria: {}", criteria);
-        return ResponseEntity.ok().body(libroQueryService.countByCriteria(criteria));
+    @GetMapping("/libros/_search")
+    public ResponseEntity<List<LibroDTO>> getAllLibrosSearch(@RequestParam(required = true) String search, Pageable pageable) {
+        log.debug("REST request to get a page of Personas");
+        Page<LibroDTO> page = libroService.getAllLibrosSearch(search, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
     /**

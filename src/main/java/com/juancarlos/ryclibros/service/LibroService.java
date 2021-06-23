@@ -97,4 +97,8 @@ public class LibroService {
         log.debug("Request to delete Libro : {}", id);
         libroRepository.deleteById(id);
     }
+
+    public Page<LibroDTO> getAllLibrosSearch(String search, Pageable pageable) {
+        return libroRepository.findAllByNumeroContaining(search, pageable).map(libroMapper::toDto);
+    }
 }

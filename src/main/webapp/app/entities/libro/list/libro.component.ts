@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +10,6 @@ import { ILibro } from '../libro.model';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { LibroService } from '../service/libro.service';
 import { LibroDeleteDialogComponent } from '../delete/libro-delete-dialog.component';
-
 @Component({
   selector: 'jhi-libro',
   templateUrl: './libro.component.html',
@@ -24,33 +24,54 @@ export class LibroComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  currentSearch: string;
+  searching = false;
+
   constructor(
     protected libroService: LibroService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    this.currentSearch = '';
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
 
-    this.libroService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<ILibro[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        () => {
-          this.isLoading = false;
-          this.onError();
-        }
-      );
+    if (this.currentSearch && this.currentSearch.length !== 0) {
+      this.searching = true;
+      this.libroService
+        .search(this.currentSearch, {
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<ILibro[]>) => {
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          () => {
+            this.onError();
+          }
+        );
+    } else {
+      this.libroService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<ILibro[]>) => {
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          () => {
+            this.onError();
+          }
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -109,9 +130,25 @@ export class LibroComponent implements OnInit {
     }
     this.libros = data ?? [];
     this.ngbPaginationPage = this.page;
+    this.searching = false;
+    this.isLoading = false;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.searching = false;
+    this.isLoading = false;
+  }
+
+  deleteSearch(): void {
+    this.currentSearch = '';
+    this.loadPage(1, true);
+  }
+
+  onSearchChange(): void {
+    if (!this.currentSearch) {
+      this.currentSearch = '';
+      this.loadPage(1, true);
+    }
   }
 }
