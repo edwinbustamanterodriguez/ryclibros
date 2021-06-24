@@ -1,8 +1,10 @@
 package com.juancarlos.ryclibros.service.mapper;
 
 import com.juancarlos.ryclibros.domain.Authority;
+import com.juancarlos.ryclibros.domain.Categoria;
 import com.juancarlos.ryclibros.domain.User;
 import com.juancarlos.ryclibros.service.dto.AdminUserDTO;
+import com.juancarlos.ryclibros.service.dto.CategoriaDTO;
 import com.juancarlos.ryclibros.service.dto.UserDTO;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -91,12 +93,16 @@ public class UserMapper {
     @Named("id")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
     public UserDTO toDtoId(User user) {
         if (user == null) {
             return null;
         }
         UserDTO userDto = new UserDTO();
         userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
         return userDto;
     }
 

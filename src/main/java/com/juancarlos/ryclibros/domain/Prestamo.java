@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Table(name = "prestamo")
-public class Prestamo implements Serializable {
+public class Prestamo extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,6 +42,10 @@ public class Prestamo implements Serializable {
     @NotNull
     @JoinColumn(name = "prestamo_user_id_fk", nullable = false)
     private User user;
+
+    @NotNull
+    @Column(name = "prestamo_devuelto", nullable = false)
+    private Boolean devuelto;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -122,6 +126,19 @@ public class Prestamo implements Serializable {
         this.user = user;
     }
 
+    public Boolean getDevuelto() {
+        return devuelto;
+    }
+
+    public void setDevuelto(Boolean devuelto) {
+        this.devuelto = devuelto;
+    }
+
+    public Prestamo devuelto(Boolean devuelto) {
+        this.devuelto = devuelto;
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -148,6 +165,7 @@ public class Prestamo implements Serializable {
             "id=" + getId() +
             ", observaciones='" + getObservaciones() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
+            ", devuelto='" + getDevuelto() + "'" +
             "}";
     }
 }

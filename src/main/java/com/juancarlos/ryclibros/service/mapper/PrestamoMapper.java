@@ -11,6 +11,6 @@ import org.mapstruct.*;
 public interface PrestamoMapper extends EntityMapper<PrestamoDTO, Prestamo> {
     @Mapping(target = "libro", source = "libro", qualifiedByName = "id")
     @Mapping(target = "persona", source = "persona", qualifiedByName = "id")
-    @Mapping(target = "user", source = "user", qualifiedByName = "login")
+    @Mapping(target = "user", source = "user", qualifiedByName = "id")
     PrestamoDTO toDto(Prestamo s);
 }

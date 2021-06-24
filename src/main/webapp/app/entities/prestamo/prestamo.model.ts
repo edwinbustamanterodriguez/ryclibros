@@ -1,7 +1,7 @@
 import * as dayjs from 'dayjs';
 import { ILibro } from 'app/entities/libro/libro.model';
 import { IPersona } from 'app/entities/persona/persona.model';
-import { IUser } from 'app/entities/user/user.model';
+import { IUserRequired } from 'app/entities/user/user-required.model';
 
 export interface IPrestamo {
   id?: number;
@@ -9,7 +9,12 @@ export interface IPrestamo {
   fechaFin?: dayjs.Dayjs;
   libro?: ILibro;
   persona?: IPersona;
-  user?: IUser;
+  user?: IUserRequired;
+  devuelto?: boolean;
+  createdBy?: string;
+  createdDate?: Date;
+  lastModifiedBy?: string;
+  lastModifiedDate?: Date;
 }
 
 export class Prestamo implements IPrestamo {
@@ -19,8 +24,15 @@ export class Prestamo implements IPrestamo {
     public fechaFin?: dayjs.Dayjs,
     public libro?: ILibro,
     public persona?: IPersona,
-    public user?: IUser
-  ) {}
+    public user?: IUserRequired,
+    public devuelto?: boolean,
+    public createdBy?: string,
+    public createdDate?: Date,
+    public lastModifiedBy?: string,
+    public lastModifiedDate?: Date
+  ) {
+    this.devuelto = this.devuelto ?? false;
+  }
 }
 
 export function getPrestamoIdentifier(prestamo: IPrestamo): number | undefined {

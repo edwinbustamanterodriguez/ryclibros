@@ -14,38 +14,40 @@
         <dd>
           <span>{{ prestamo.id }}</span>
         </dd>
-        <dt><span>Observaciones</span></dt>
+        <dt><span>Numero de libro</span></dt>
         <dd>
-          <span>{{ prestamo.observaciones }}</span>
+          <div *ngIf="prestamo.libro">
+            <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.numero }}</a>
+          </div>
         </dd>
-        <dt><span>Fecha Fin</span></dt>
+        <dt><span>Prestatario</span></dt>
+        <dd>
+          <div *ngIf="prestamo.persona">
+            <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{
+              prestamo.persona?.nombre + ' ' + prestamo.persona?.apaterno + ' ' + prestamo.persona?.amaterno
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Fecha de prestamo</span></dt>
+        <dd>
+          <span>{{ prestamo.createdDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+        </dd>
+        <dt><span>Prestado por</span></dt>
+        <dd>
+          <span>{{ prestamo.user?.firstName + ' ' + prestamo.user?.lastName }}</span>
+        </dd>
+        <dt><span>Prestado hasta</span></dt>
         <dd>
           <span>{{ prestamo.fechaFin | formatMediumDatetime }}</span>
         </dd>
-        <dt><span>Libro</span></dt>
+        <dt><span>Observaciones</span></dt>
         <dd>
-          <div *ngIf="prestamo.libro">
-            <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.id }}</a>
-          </div>
-        </dd>
-        <dt><span>Persona</span></dt>
-        <dd>
-          <div *ngIf="prestamo.persona">
-            <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{ prestamo.persona?.id }}</a>
-          </div>
-        </dd>
-        <dt><span>User</span></dt>
-        <dd>
-          <span>{{ prestamo.user?.login }}</span>
+          <span>{{ prestamo.observaciones }}</span>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/prestamo', prestamo.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
     </div>
   </div>

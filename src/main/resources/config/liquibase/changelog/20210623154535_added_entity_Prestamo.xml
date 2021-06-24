@@ -29,6 +29,17 @@
             <column name="prestamo_user_id_fk" type="bigint">
                 <constraints nullable="false" />
             </column>
+
+            <column name="prestamo_devuelto" type="boolean">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="prestamo" columnName="prestamo_fecha_fin" columnDataType="${datetimeType}"/>
@@ -44,7 +55,7 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210623154535-1-data" author="jhipster" context="faker">
+    <changeSet id="20210623154535-1-data" author="jhipster">
         <loadData
                   file="config/liquibase/fake-data/prestamo.csv"
                   separator=";"
@@ -55,6 +66,7 @@
             <column name="prestamo_libro_id_fk" type="numeric"/>
             <column name="prestamo_persona_id_fk" type="numeric"/>
             <column name="prestamo_user_id_fk" type="numeric"/>
+            <column name="prestamo_devuelto" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

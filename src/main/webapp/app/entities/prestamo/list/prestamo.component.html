@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh List</span>
+        <span>Actualizar Lista</span>
       </button>
 
       <button
@@ -32,12 +32,35 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="observaciones"><span>Observaciones</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="fechaFin"><span>Fecha Fin</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="libro.id"><span>Libro</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="persona.id"><span>Persona</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="user.login"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="libro.numero">
+            <span>Numero de libro</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="persona.id">
+            <span>Prestatario</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span>Fecha de prestamo</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="user.login">
+            <span>Prestado por</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="fechaFin">
+            <span>Prestado hasta</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+
+          <th scope="col" jhiSortBy="observaciones">
+            <span>Observaciones</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -46,20 +69,29 @@
           <td>
             <a [routerLink]="['/prestamo', prestamo.id, 'view']">{{ prestamo.id }}</a>
           </td>
-          <td>{{ prestamo.observaciones }}</td>
-          <td>{{ prestamo.fechaFin | formatMediumDatetime }}</td>
           <td>
             <div *ngIf="prestamo.libro">
-              <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.id }}</a>
+              <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.numero }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="prestamo.persona">
-              <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{ prestamo.persona?.id }}</a>
+              <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{
+                prestamo.persona?.nombre + ' ' + prestamo.persona?.apaterno + ' ' + prestamo.persona?.amaterno
+              }}</a>
             </div>
           </td>
+          <td>{{ prestamo.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>
-            {{ prestamo.user?.login }}
+            {{ prestamo.user?.firstName + ' ' + prestamo.user?.lastName }}
+          </td>
+          <td>{{ prestamo.fechaFin | formatMediumDatetime }}</td>
+          <td>
+            {{
+              prestamo.observaciones! && prestamo.observaciones!.length > 10
+                ? (prestamo.observaciones! | slice: 0:10) + '..'
+                : prestamo.observaciones
+            }}
           </td>
           <td class="text-right">
             <div class="btn-group">
@@ -70,22 +102,11 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
+                <span class="d-none d-md-inline">Detalle</span>
               </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/prestamo', prestamo.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
-              </button>
-
-              <button type="submit" (click)="delete(prestamo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+              <button type="submit" (click)="delete(prestamo)" class="btn btn-primary btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="book"></fa-icon>
+                <span class="d-none d-md-inline">Devolver Libro</span>
               </button>
             </div>
           </td>
@@ -96,7 +117,7 @@
 
   <div *ngIf="prestamos && prestamos.length > 0">
     <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Registros' }"></jhi-item-count>
     </div>
 
     <div class="row justify-content-center">

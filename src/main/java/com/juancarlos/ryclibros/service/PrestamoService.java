@@ -2,7 +2,10 @@ package com.juancarlos.ryclibros.service;
 
 import com.juancarlos.ryclibros.domain.Prestamo;
 import com.juancarlos.ryclibros.repository.PrestamoRepository;
+import com.juancarlos.ryclibros.repository.UserRepository;
+import com.juancarlos.ryclibros.security.SecurityUtils;
 import com.juancarlos.ryclibros.service.dto.PrestamoDTO;
+import com.juancarlos.ryclibros.service.dto.UserDTO;
 import com.juancarlos.ryclibros.service.mapper.PrestamoMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -25,9 +28,12 @@ public class PrestamoService {
 
     private final PrestamoMapper prestamoMapper;
 
-    public PrestamoService(PrestamoRepository prestamoRepository, PrestamoMapper prestamoMapper) {
+    private final UserRepository userRepository;
+
+    public PrestamoService(PrestamoRepository prestamoRepository, PrestamoMapper prestamoMapper, UserRepository userRepository) {
         this.prestamoRepository = prestamoRepository;
         this.prestamoMapper = prestamoMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -38,6 +44,19 @@ public class PrestamoService {
      */
     public PrestamoDTO save(PrestamoDTO prestamoDTO) {
         log.debug("Request to save Prestamo : {}", prestamoDTO);
+
+        SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(
+                user -> {
+                    Long id = user.getId();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(id);
+                    prestamoDTO.setUser(userDTO);
+                }
+            );
+
         Prestamo prestamo = prestamoMapper.toEntity(prestamoDTO);
         prestamo = prestamoRepository.save(prestamo);
         return prestamoMapper.toDto(prestamo);

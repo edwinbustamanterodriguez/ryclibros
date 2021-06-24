@@ -34,7 +34,6 @@ export class PrestamoUpdateComponent implements OnInit {
     fechaFin: [null, [Validators.required]],
     libro: [null, Validators.required],
     persona: [null, Validators.required],
-    user: [null, Validators.required],
   });
 
   constructor(
@@ -149,7 +148,6 @@ export class PrestamoUpdateComponent implements OnInit {
       fechaFin: this.editForm.get(['fechaFin'])!.value ? dayjs(this.editForm.get(['fechaFin'])!.value, DATE_TIME_FORMAT) : undefined,
       libro: this.editForm.get(['libro'])!.value,
       persona: this.editForm.get(['persona'])!.value,
-      user: this.editForm.get(['user'])!.value,
     };
   }
 }
