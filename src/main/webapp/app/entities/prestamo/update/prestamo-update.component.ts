@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -16,6 +17,9 @@ import { IPersona } from 'app/entities/persona/persona.model';
 import { PersonaService } from 'app/entities/persona/service/persona.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
+import { PrestamoDevolverDialogComponent } from 'app/entities/prestamo/devolver/prestamo-devolver-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SelectedLibroDialogComponent } from 'app/entities/prestamo/selected-libro/selected-libro-dialog.component';
 
 @Component({
   selector: 'jhi-prestamo-update',
@@ -36,13 +40,16 @@ export class PrestamoUpdateComponent implements OnInit {
     persona: [null, Validators.required],
   });
 
+  libro?: ILibro;
+
   constructor(
     protected prestamoService: PrestamoService,
     protected libroService: LibroService,
     protected personaService: PersonaService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -149,5 +156,21 @@ export class PrestamoUpdateComponent implements OnInit {
       libro: this.editForm.get(['libro'])!.value,
       persona: this.editForm.get(['persona'])!.value,
     };
+  }
+
+  selectedPrestatario(): void {}
+
+  selectedLibro(): void {
+    const modalRef = this.modalService.open(SelectedLibroDialogComponent, { size: 'xl', backdrop: 'static' });
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(
+      (libro: ILibro) => {
+        this.editForm.patchValue({
+          libro: libro,
+        });
+        this.libro = libro;
+      },
+      () => {}
+    );
   }
 }

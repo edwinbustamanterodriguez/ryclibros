@@ -6,10 +6,17 @@ import { PrestamoDetailComponent } from './detail/prestamo-detail.component';
 import { PrestamoUpdateComponent } from './update/prestamo-update.component';
 import { PrestamoDevolverDialogComponent } from './devolver/prestamo-devolver-dialog.component';
 import { PrestamoRoutingModule } from './route/prestamo-routing.module';
+import { SelectedLibroDialogComponent } from 'app/entities/prestamo/selected-libro/selected-libro-dialog.component';
 
 @NgModule({
   imports: [SharedModule, PrestamoRoutingModule],
-  declarations: [PrestamoComponent, PrestamoDetailComponent, PrestamoUpdateComponent, PrestamoDevolverDialogComponent],
-  entryComponents: [PrestamoDevolverDialogComponent],
+  declarations: [
+    PrestamoComponent,
+    PrestamoDetailComponent,
+    PrestamoUpdateComponent,
+    PrestamoDevolverDialogComponent,
+    SelectedLibroDialogComponent,
+  ],
+  entryComponents: [PrestamoDevolverDialogComponent, SelectedLibroDialogComponent],
 })
 export class PrestamoModule {}
