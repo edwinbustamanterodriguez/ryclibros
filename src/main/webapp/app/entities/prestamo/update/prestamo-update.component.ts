@@ -20,6 +20,8 @@ import { UserService } from 'app/entities/user/user.service';
 import { PrestamoDevolverDialogComponent } from 'app/entities/prestamo/devolver/prestamo-devolver-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SelectedLibroDialogComponent } from 'app/entities/prestamo/selected-libro/selected-libro-dialog.component';
+import { SelectedPersonaDialogComponent } from 'app/entities/prestamo/selected-persona/selected-persona-dialog.component';
+import { EnumDepartamentos } from 'app/shared/enums/enum-expedicion';
 
 @Component({
   selector: 'jhi-prestamo-update',
@@ -41,6 +43,7 @@ export class PrestamoUpdateComponent implements OnInit {
   });
 
   libro?: ILibro;
+  persona?: IPersona;
 
   constructor(
     protected prestamoService: PrestamoService,
@@ -158,7 +161,24 @@ export class PrestamoUpdateComponent implements OnInit {
     };
   }
 
-  selectedPrestatario(): void {}
+  selectedPrestatario(): void {
+    const modalRef = this.modalService.open(SelectedPersonaDialogComponent, { size: 'xl', backdrop: 'static' });
+    // unsubscribe not needed because closed completes on modal close
+    modalRef.closed.subscribe(
+      (persona: IPersona) => {
+        this.editForm.patchValue({
+          persona: persona,
+        });
+        this.persona = persona;
+      },
+      () => {}
+    );
+  }
+
+  departamentosAbr(expedicion: string | undefined): string {
+    // @ts-ignore
+    return Object.keys(EnumDepartamentos)[Object.values(EnumDepartamentos).indexOf(expedicion)];
+  }
 
   selectedLibro(): void {
     const modalRef = this.modalService.open(SelectedLibroDialogComponent, { size: 'xl', backdrop: 'static' });

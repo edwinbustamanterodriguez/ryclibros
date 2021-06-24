@@ -1,0 +1,127 @@
+<div class="modal-header">
+  <h4 class="modal-title" data-cy="prestamoDeleteDialogHeading">Busque y seleccione el prestatario</h4>
+
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <div>
+    <div class="row">
+      <div class="col-sm-12">
+        <form name="searchForm" class="form-inline">
+          <div class="input-group w-100 mt-3 mb-3">
+            <div class="input-group-append" role="group">
+              <select class="form-control" id="field_searchMode" data-cy="searchMode" name="searchMode" [(ngModel)]="optionSelected">
+                <option [ngValue]="searchMode" *ngFor="let searchMode of searchModes">
+                  {{ searchMode }}
+                </option>
+              </select>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="currentSearch"
+              (ngModelChange)="onSearchChange()"
+              id="currentSearch"
+              name="currentSearch"
+              placeholder="Buscar..."
+            />
+            <button class="input-group-append btn btn-info" [disabled]="!currentSearch || searching" (click)="loadPage(1, true)">
+              <fa-icon *ngIf="!searching" icon="search"></fa-icon>
+              <span *ngIf="searching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+            <button class="input-group-append btn btn-danger" (click)="deleteSearch()" *ngIf="currentSearch">
+              <fa-icon icon="trash-alt"></fa-icon>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="personas?.length === 0 && !currentSearch">
+      <span>No se encontró registro de personas</span>
+    </div>
+    <div class="alert alert-warning" id="no-found" *ngIf="personas?.length === 0 && currentSearch">
+      <span>No se encontró resultados para la búsqueda</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="personas && personas.length > 0">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+            <th scope="col" jhiSortBy="id">
+              <span>ID</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="nombre">
+              <span>Nombre</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="apaterno">
+              <span>Apellido Paterno</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="amaterno">
+              <span>Apellido Materno</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="ci">
+              <span>CI</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="telefono">
+              <span>Teléfono</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col" jhiSortBy="institucion">
+              <span>Institución</span>
+              <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let persona of personas; trackBy: trackId" data-cy="entityTable">
+            <td>
+              <a [routerLink]="['/persona', persona.id, 'view']">{{ persona.id }}</a>
+            </td>
+            <td>{{ persona.nombre }}</td>
+            <td>{{ persona.apaterno }}</td>
+            <td>{{ persona.amaterno }}</td>
+            <td>{{ persona.ci + ' ' + departamentosAbr(persona.expedicion) }}</td>
+            <td>{{ persona.telefono }}</td>
+            <td>{{ persona.institucion }}</td>
+            <td class="text-right"></td>
+            <td class="text-right">
+              <button type="submit" class="btn btn-primary btn-sm" (click)="selectedPersona(persona)">
+                <fa-icon icon="user"></fa-icon>
+                <span class="d-none d-md-inline">Seleccionar</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="personas && personas.length > 0">
+      <div class="row justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Personas' }"></jhi-item-count>
+      </div>
+
+      <div class="row justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [(page)]="ngbPaginationPage"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="loadPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  </div>
+</div>
