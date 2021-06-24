@@ -44,6 +44,10 @@
         <dd>
           <span>{{ prestamo.observaciones }}</span>
         </dd>
+        <dt><span>Estado del libro</span></dt>
+        <dd>
+          <span>{{ prestamo.devuelto ? 'Devuelto' : 'Prestado' }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

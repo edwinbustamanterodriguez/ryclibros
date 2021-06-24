@@ -1,0 +1,33 @@
+<form *ngIf="prestamo" name="deleteForm" (ngSubmit)="confirmDevolucion(prestamo)" [formGroup]="returnedForm">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="prestamoDeleteDialogHeading">Confirmación de devolución del libro</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <p id="jhi-delete-prestamo-heading">¿Esta seguro de devolver el libro "{{ prestamo.libro!.numero }}"?</p>
+
+    <div class="form-group">
+      <label class="form-control-label" for="field_observaciones">Observaciones</label>
+      <textarea class="form-control" id="field_observaciones" id="field_observaciones" rows="3" formControlName="observaciones"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+    </button>
+
+    <button
+      id="jhi-confirm-delete-prestamo"
+      data-cy="entityConfirmDeleteButton"
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="returnedForm.invalid || isSaving"
+    >
+      <fa-icon icon="book"></fa-icon>&nbsp;<span>Devolver</span>
+    </button>
+  </div>
+</form>

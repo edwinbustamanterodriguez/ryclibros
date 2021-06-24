@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="PrestamoHeading">
-    <span>Prestamos</span>
+    <span>Prestamo de libros</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
@@ -14,18 +14,46 @@
         class="btn btn-primary jh-create-entity create-prestamo"
         [routerLink]="['/prestamo/new']"
       >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Prestamo </span>
+        <fa-icon icon="book"></fa-icon>
+        <span> Prestar libro </span>
       </button>
     </div>
   </h2>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            (ngModelChange)="onSearchChange()"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="Buscar por el numero de libro..."
+          />
+          <button class="input-group-append btn btn-info" [disabled]="!currentSearch || searching" (click)="loadPage(1, true)">
+            <fa-icon *ngIf="!searching" icon="search"></fa-icon>
+            <span *ngIf="searching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+          <button class="input-group-append btn btn-danger" (click)="deleteSearch()" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
 
-  <div class="alert alert-warning" id="no-result" *ngIf="prestamos?.length === 0">
-    <span>No prestamos found</span>
+  <div class="alert alert-warning" id="no-result" *ngIf="prestamos?.length === 0 && !currentSearch">
+    <span>No se encontró registro de préstamo de libros</span>
+  </div>
+  <div class="alert alert-warning" id="no-found" *ngIf="prestamos?.length === 0 && currentSearch">
+    <span>No se encontró resultados para la búsqueda</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="prestamos && prestamos.length > 0">
@@ -104,7 +132,7 @@
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">Detalle</span>
               </button>
-              <button type="submit" (click)="delete(prestamo)" class="btn btn-primary btn-sm" data-cy="entityDeleteButton">
+              <button type="submit" (click)="returned(prestamo)" class="btn btn-primary btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="book"></fa-icon>
                 <span class="d-none d-md-inline">Devolver Libro</span>
               </button>

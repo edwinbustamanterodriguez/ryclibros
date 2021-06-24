@@ -14,6 +14,7 @@ public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "numero", source = "numero")
+    @Mapping(target = "observaciones", source = "observaciones")
     @Mapping(target = "categoria", source = "categoria", qualifiedByName = "id")
     LibroDTO toDto(Libro s);
 }

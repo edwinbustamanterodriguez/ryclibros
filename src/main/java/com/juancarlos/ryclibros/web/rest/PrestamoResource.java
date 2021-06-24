@@ -3,6 +3,7 @@ package com.juancarlos.ryclibros.web.rest;
 import com.juancarlos.ryclibros.repository.PrestamoRepository;
 import com.juancarlos.ryclibros.service.PrestamoService;
 import com.juancarlos.ryclibros.service.dto.PrestamoDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,19 +60,19 @@ public class PrestamoResource {
     public ResponseEntity<PrestamoDTO> createPrestamo(@Valid @RequestBody PrestamoDTO prestamoDTO) throws URISyntaxException {
         log.debug("REST request to save Prestamo : {}", prestamoDTO);
         if (prestamoDTO.getId() != null) {
-            throw new BadRequestAlertException("A new prestamo cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Un prestamo nuevo no puede tener una identificación", ENTITY_NAME, "idexists");
         }
         PrestamoDTO result = prestamoService.save(prestamoDTO);
         return ResponseEntity
             .created(new URI("/api/prestamos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "el", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /prestamos/:id} : Updates an existing prestamo.
      *
-     * @param id the id of the prestamoDTO to save.
+     * @param id          the id of the prestamoDTO to save.
      * @param prestamoDTO the prestamoDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prestamoDTO,
      * or with status {@code 400 (Bad Request)} if the prestamoDTO is not valid,
@@ -85,27 +86,27 @@ public class PrestamoResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Prestamo : {}, {}", id, prestamoDTO);
         if (prestamoDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificador inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, prestamoDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificador inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!prestamoRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontro la entidad", ENTITY_NAME, "idnotfound");
         }
 
         PrestamoDTO result = prestamoService.save(prestamoDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prestamoDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "el", ENTITY_NAME, prestamoDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /prestamos/:id} : Partial updates given fields of an existing prestamo, field will ignore if it is null
      *
-     * @param id the id of the prestamoDTO to save.
+     * @param id          the id of the prestamoDTO to save.
      * @param prestamoDTO the prestamoDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated prestamoDTO,
      * or with status {@code 400 (Bad Request)} if the prestamoDTO is not valid,
@@ -120,21 +121,21 @@ public class PrestamoResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Prestamo partially : {}, {}", id, prestamoDTO);
         if (prestamoDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificador inválido", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, prestamoDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificador inválido", ENTITY_NAME, "idinvalid");
         }
 
         if (!prestamoRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontro la entidad", ENTITY_NAME, "idnotfound");
         }
 
         Optional<PrestamoDTO> result = prestamoService.partialUpdate(prestamoDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prestamoDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "el", ENTITY_NAME, prestamoDTO.getId().toString())
         );
     }
 
@@ -148,6 +149,22 @@ public class PrestamoResource {
     public ResponseEntity<List<PrestamoDTO>> getAllPrestamos(Pageable pageable) {
         log.debug("REST request to get a page of Prestamos");
         Page<PrestamoDTO> page = prestamoService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/prestamos/current")
+    public ResponseEntity<List<PrestamoDTO>> getAllPrestamosCurrent(Pageable pageable) {
+        log.debug("REST request to get a page of Prestamos");
+        Page<PrestamoDTO> page = prestamoService.findAllPrestamosCurrent(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/prestamos/_search")
+    public ResponseEntity<List<PrestamoDTO>> getAllPrestamosByNameLibro(@RequestParam(required = true) String search, Pageable pageable) {
+        log.debug("REST request to get a page of Prestamos by Name Libro");
+        Page<PrestamoDTO> page = prestamoService.findAllByNameLibro(search, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -177,7 +194,7 @@ public class PrestamoResource {
         prestamoService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "el", ENTITY_NAME, id.toString()))
             .build();
     }
 }

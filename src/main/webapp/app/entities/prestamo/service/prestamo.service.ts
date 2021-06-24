@@ -52,6 +52,21 @@ export class PrestamoService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  queryDevueltoFalse(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IPrestamo[]>(this.resourceUrl + '/current', { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  search(currentSearch: string, req?: any): Observable<EntityArrayResponseType> {
+    let options = createRequestOption(req);
+    options = options.append('search', currentSearch);
+    return this.http
+      .get<IPrestamo[]>(this.resourceUrl + '/_search', { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

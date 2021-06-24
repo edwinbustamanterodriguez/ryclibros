@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +9,8 @@ import { IPrestamo } from '../prestamo.model';
 
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { PrestamoService } from '../service/prestamo.service';
-import { PrestamoDeleteDialogComponent } from '../delete/prestamo-delete-dialog.component';
+import { PrestamoDevolverDialogComponent } from '../devolver/prestamo-devolver-dialog.component';
+import { ILibro } from 'app/entities/libro/libro.model';
 
 @Component({
   selector: 'jhi-prestamo',
@@ -24,33 +26,56 @@ export class PrestamoComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
 
+  currentSearch: string;
+  searching = false;
+
   constructor(
     protected prestamoService: PrestamoService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    this.currentSearch = '';
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
 
-    this.prestamoService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<IPrestamo[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        () => {
-          this.isLoading = false;
-          this.onError();
-        }
-      );
+    if (this.currentSearch && this.currentSearch.length !== 0) {
+      this.searching = true;
+      this.prestamoService
+        .search(this.currentSearch, {
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<ILibro[]>) => {
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          () => {
+            this.onError();
+          }
+        );
+    } else {
+      this.prestamoService
+        .queryDevueltoFalse({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe(
+          (res: HttpResponse<IPrestamo[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          () => {
+            this.isLoading = false;
+            this.onError();
+          }
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -61,12 +86,12 @@ export class PrestamoComponent implements OnInit {
     return item.id!;
   }
 
-  delete(prestamo: IPrestamo): void {
-    const modalRef = this.modalService.open(PrestamoDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+  returned(prestamo: IPrestamo): void {
+    const modalRef = this.modalService.open(PrestamoDevolverDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.prestamo = prestamo;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {
-      if (reason === 'deleted') {
+      if (reason === 'returned') {
         this.loadPage();
       }
     });
@@ -87,9 +112,11 @@ export class PrestamoComponent implements OnInit {
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+      const search = params.get('search');
+      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending || search !== this.currentSearch) {
         this.predicate = predicate;
         this.ascending = ascending;
+        this.currentSearch = search ? search : '';
         this.loadPage(pageNumber, true);
       }
     });
@@ -104,14 +131,31 @@ export class PrestamoComponent implements OnInit {
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+          search: this.currentSearch,
         },
       });
     }
     this.prestamos = data ?? [];
     this.ngbPaginationPage = this.page;
+    this.searching = false;
+    this.isLoading = false;
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+    this.searching = false;
+    this.isLoading = false;
+  }
+
+  deleteSearch(): void {
+    this.currentSearch = '';
+    this.loadPage(1, true);
+  }
+
+  onSearchChange(): void {
+    if (!this.currentSearch) {
+      this.currentSearch = '';
+      this.loadPage(1, true);
+    }
   }
 }

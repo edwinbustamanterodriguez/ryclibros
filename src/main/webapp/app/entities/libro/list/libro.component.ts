@@ -108,9 +108,11 @@ export class LibroComponent implements OnInit {
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+      const search = params.get('search');
+      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending || search !== this.currentSearch) {
         this.predicate = predicate;
         this.ascending = ascending;
+        this.currentSearch = search ? search : '';
         this.loadPage(pageNumber, true);
       }
     });
@@ -125,6 +127,7 @@ export class LibroComponent implements OnInit {
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+          search: this.currentSearch,
         },
       });
     }

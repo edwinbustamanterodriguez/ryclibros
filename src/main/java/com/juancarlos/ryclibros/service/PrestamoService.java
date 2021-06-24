@@ -95,6 +95,18 @@ public class PrestamoService {
         return prestamoRepository.findAll(pageable).map(prestamoMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PrestamoDTO> findAllPrestamosCurrent(Pageable pageable) {
+        log.debug("Request to get all Prestamos");
+        return prestamoRepository.findAllByDevueltoFalse(pageable).map(prestamoMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<PrestamoDTO> findAllByNameLibro(String search, Pageable pageable) {
+        log.debug("Request to get all Prestamos");
+        return prestamoRepository.findAllByLibroNumeroContainingAndDevuelto(search, false, pageable).map(prestamoMapper::toDto);
+    }
+
     /**
      * Get one prestamo by id.
      *

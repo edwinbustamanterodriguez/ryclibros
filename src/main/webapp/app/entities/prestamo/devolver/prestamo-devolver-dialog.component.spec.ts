@@ -7,24 +7,24 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { PrestamoService } from '../service/prestamo.service';
 
-import { PrestamoDeleteDialogComponent } from './prestamo-delete-dialog.component';
+import { PrestamoDevolverDialogComponent } from './prestamo-devolver-dialog.component';
 
 describe('Component Tests', () => {
   describe('Prestamo Management Delete Component', () => {
-    let comp: PrestamoDeleteDialogComponent;
-    let fixture: ComponentFixture<PrestamoDeleteDialogComponent>;
+    let comp: PrestamoDevolverDialogComponent;
+    let fixture: ComponentFixture<PrestamoDevolverDialogComponent>;
     let service: PrestamoService;
     let mockActiveModal: NgbActiveModal;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule],
-        declarations: [PrestamoDeleteDialogComponent],
+        declarations: [PrestamoDevolverDialogComponent],
         providers: [NgbActiveModal],
       })
-        .overrideTemplate(PrestamoDeleteDialogComponent, '')
+        .overrideTemplate(PrestamoDevolverDialogComponent, '')
         .compileComponents();
-      fixture = TestBed.createComponent(PrestamoDeleteDialogComponent);
+      fixture = TestBed.createComponent(PrestamoDevolverDialogComponent);
       comp = fixture.componentInstance;
       service = TestBed.inject(PrestamoService);
       mockActiveModal = TestBed.inject(NgbActiveModal);
@@ -38,7 +38,7 @@ describe('Component Tests', () => {
           spyOn(service, 'delete').and.returnValue(of({}));
 
           // WHEN
-          comp.confirmDelete(123);
+          comp.confirmDevolucion(123);
           tick();
 
           // THEN
