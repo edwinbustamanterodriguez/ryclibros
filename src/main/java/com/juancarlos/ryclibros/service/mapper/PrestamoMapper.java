@@ -9,6 +9,13 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = { LibroMapper.class, PersonaMapper.class, UserMapper.class })
 public interface PrestamoMapper extends EntityMapper<PrestamoDTO, Prestamo> {
+    @Named("id")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "observaciones", source = "observaciones")
+    @Mapping(target = "fechaFin", source = "fechaFin")
+    @Mapping(target = "createdDate", source = "createdDate")
+    @Mapping(target = "lastModifiedDate", source = "lastModifiedDate")
     @Mapping(target = "libro", source = "libro", qualifiedByName = "id")
     @Mapping(target = "persona", source = "persona", qualifiedByName = "id")
     @Mapping(target = "user", source = "user", qualifiedByName = "id")

@@ -1,21 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="DevolucionHeading">
-    <span>Devolucions</span>
+    <span>Registro de devoluciones</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh List</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-devolucion"
-        [routerLink]="['/devolucion/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Devolucion </span>
+        <span>Actualizar Lista</span>
       </button>
     </div>
   </h2>
@@ -32,11 +22,31 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="observaciones"><span>Observaciones</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="user.login"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="persona.id"><span>Persona</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="prestamo.id"><span>Prestamo</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="prestamo.id">
+            <span>Numero de libro</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="persona.id">
+            <span>Devuelto por</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span>Fecha de devolucion</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="user.id">
+            <span>Recibido por</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="observaciones">
+            <span>Observaciones</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,19 +55,26 @@
           <td>
             <a [routerLink]="['/devolucion', devolucion.id, 'view']">{{ devolucion.id }}</a>
           </td>
-          <td>{{ devolucion.observaciones }}</td>
           <td>
-            {{ devolucion.user?.login }}
+            <div *ngIf="devolucion.prestamo">
+              {{ devolucion.prestamo?.libro?.numero }}
+            </div>
           </td>
           <td>
             <div *ngIf="devolucion.persona">
-              <a [routerLink]="['/persona', devolucion.persona?.id, 'view']">{{ devolucion.persona?.id }}</a>
+              {{ devolucion.persona?.nombre + ' ' + devolucion.persona?.apaterno + ' ' + devolucion.persona?.amaterno }}
             </div>
           </td>
+          <td>{{ devolucion.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>
-            <div *ngIf="devolucion.prestamo">
-              <a [routerLink]="['/prestamo', devolucion.prestamo?.id, 'view']">{{ devolucion.prestamo?.id }}</a>
-            </div>
+            {{ devolucion.user?.firstName + ' ' + devolucion.user?.lastName }}
+          </td>
+          <td>
+            {{
+              devolucion.observaciones! && devolucion.observaciones!.length > 10
+                ? (devolucion.observaciones! | slice: 0:10) + '..'
+                : devolucion.observaciones
+            }}
           </td>
           <td class="text-right">
             <div class="btn-group">
@@ -68,22 +85,12 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
-              </button>
-
-              <button
-                type="submit"
-                [routerLink]="['/devolucion', devolucion.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
-                <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Detalle</span>
               </button>
 
               <button type="submit" (click)="delete(devolucion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline">Eliminar</span>
               </button>
             </div>
           </td>
@@ -94,7 +101,7 @@
 
   <div *ngIf="devolucions && devolucions.length > 0">
     <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Devoluciones' }"></jhi-item-count>
     </div>
 
     <div class="row justify-content-center">

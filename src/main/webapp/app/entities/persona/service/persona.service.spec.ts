@@ -25,7 +25,7 @@ describe('Service Tests', () => {
         nombre: 'AAAAAAA',
         apaterno: 'AAAAAAA',
         amaterno: 'AAAAAAA',
-        ci: 0,
+        ci: '12',
         expedicion: 'AAAAAAA',
         telefono: 'AAAAAAA',
         institucion: 'AAAAAAA',

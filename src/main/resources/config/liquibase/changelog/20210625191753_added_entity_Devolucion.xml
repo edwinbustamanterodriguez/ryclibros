@@ -24,8 +24,14 @@
                 <constraints nullable="false" />
             </column>
             <column name="devolucion_prestamo_id_fk" type="bigint">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_devolucion__prestamo_id_pk" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="fk_devolucion_prestamo_id" />
             </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

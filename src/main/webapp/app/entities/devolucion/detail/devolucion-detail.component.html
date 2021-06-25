@@ -18,30 +18,24 @@
         <dd>
           <span>{{ devolucion.observaciones }}</span>
         </dd>
-        <dt><span>User</span></dt>
+        <dt><span>Recibido por</span></dt>
         <dd>
-          <span>{{ devolucion.user?.login }}</span>
+          <span>{{ devolucion.user?.firstName + ' ' + devolucion.user?.lastName }}</span>
         </dd>
-        <dt><span>Persona</span></dt>
+        <dt><span>Devuelto por</span></dt>
         <dd>
-          <div *ngIf="devolucion.persona">
-            <a [routerLink]="['/persona', devolucion.persona?.id, 'view']">{{ devolucion.persona?.id }}</a>
-          </div>
+          {{ devolucion.persona?.nombre + ' ' + devolucion.persona?.apaterno + ' ' + devolucion.persona?.amaterno }}
         </dd>
-        <dt><span>Prestamo</span></dt>
+        <dt><span>Numero de libro</span></dt>
         <dd>
           <div *ngIf="devolucion.prestamo">
-            <a [routerLink]="['/prestamo', devolucion.prestamo?.id, 'view']">{{ devolucion.prestamo?.id }}</a>
+            <a [routerLink]="['/prestamo', devolucion.prestamo?.id, 'view']">{{ devolucion.prestamo?.libro?.numero }}</a>
           </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-      </button>
-
-      <button type="button" [routerLink]="['/devolucion', devolucion.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
       </button>
     </div>
   </div>

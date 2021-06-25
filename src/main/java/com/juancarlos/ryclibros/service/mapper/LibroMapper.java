@@ -2,7 +2,6 @@ package com.juancarlos.ryclibros.service.mapper;
 
 import com.juancarlos.ryclibros.domain.*;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
-import com.juancarlos.ryclibros.service.dto.PersonaDTO;
 import org.mapstruct.*;
 
 /**
@@ -15,6 +14,10 @@ public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "numero", source = "numero")
     @Mapping(target = "observaciones", source = "observaciones")
+    @Mapping(target = "createdDate", source = "createdDate")
+    @Mapping(target = "lastModifiedDate", source = "lastModifiedDate")
+    @Mapping(target = "createdBy", source = "createdBy")
+    @Mapping(target = "lastModifiedBy", source = "lastModifiedBy")
     @Mapping(target = "categoria", source = "categoria", qualifiedByName = "id")
     LibroDTO toDto(Libro s);
 }
