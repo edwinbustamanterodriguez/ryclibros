@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="DevolucionHeading">
+    <span>Devolucions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-devolucion"
+        [routerLink]="['/devolucion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Devolucion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="devolucions?.length === 0">
+    <span>No devolucions found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="devolucions && devolucions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="observaciones"><span>Observaciones</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="user.login"><span>User</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="persona.id"><span>Persona</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="prestamo.id"><span>Prestamo</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let devolucion of devolucions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/devolucion', devolucion.id, 'view']">{{ devolucion.id }}</a>
+          </td>
+          <td>{{ devolucion.observaciones }}</td>
+          <td>
+            {{ devolucion.user?.login }}
+          </td>
+          <td>
+            <div *ngIf="devolucion.persona">
+              <a [routerLink]="['/persona', devolucion.persona?.id, 'view']">{{ devolucion.persona?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="devolucion.prestamo">
+              <a [routerLink]="['/prestamo', devolucion.prestamo?.id, 'view']">{{ devolucion.prestamo?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/devolucion', devolucion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/devolucion', devolucion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(devolucion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="devolucions && devolucions.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

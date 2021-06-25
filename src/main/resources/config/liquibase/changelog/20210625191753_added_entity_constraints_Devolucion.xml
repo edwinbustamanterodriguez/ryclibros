@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Devolucion.
+    -->
+    <changeSet id="20210625191753-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="devolucion_prestamo_id_fk"
+                                 baseTableName="devolucion"
+                                 constraintName="fk_devolucion_prestamo_id"
+                                 referencedColumnNames="prestamo_id_pk"
+                                 referencedTableName="prestamo"/>
+
+        <addForeignKeyConstraint baseColumnNames="devolucion_persona_id_fk"
+                                 baseTableName="devolucion"
+                                 constraintName="fk_devolucion_persona_id"
+                                 referencedColumnNames="persona_id_pk"
+                                 referencedTableName="persona"/>
+
+        <addForeignKeyConstraint baseColumnNames="devolucion_user_id_fk"
+                                 baseTableName="devolucion"
+                                 constraintName="fk_devolucion_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>
