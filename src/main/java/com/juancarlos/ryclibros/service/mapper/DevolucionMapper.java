@@ -9,7 +9,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = { UserMapper.class, PersonaMapper.class, PrestamoMapper.class })
 public interface DevolucionMapper extends EntityMapper<DevolucionDTO, Devolucion> {
-    @Mapping(target = "user", source = "user", qualifiedByName = "login")
+    @Mapping(target = "user", source = "user", qualifiedByName = "id")
     @Mapping(target = "persona", source = "persona", qualifiedByName = "id")
     @Mapping(target = "prestamo", source = "prestamo", qualifiedByName = "id")
     DevolucionDTO toDto(Devolucion s);

@@ -1,4 +1,3 @@
-import { IUser } from 'app/entities/user/user.model';
 import { IPersona } from 'app/entities/persona/persona.model';
 import { IPrestamo } from 'app/entities/prestamo/prestamo.model';
 import { IUserRequired } from 'app/entities/user/user-required.model';
