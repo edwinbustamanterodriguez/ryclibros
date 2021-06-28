@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +10,7 @@ import { IDevolucion } from '../devolucion.model';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { DevolucionService } from '../service/devolucion.service';
 import { DevolucionDeleteDialogComponent } from '../delete/devolucion-delete-dialog.component';
+import { DevolucionDetailDialogComponent } from 'app/entities/devolucion/detail/devolucion-detail-dialog.component';
 
 @Component({
   selector: 'jhi-devolucion',
@@ -113,5 +115,10 @@ export class DevolucionComponent implements OnInit {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  detail(devolucion: IDevolucion): void {
+    const modalRef = this.modalService.open(DevolucionDetailDialogComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.devolucion = devolucion;
   }
 }

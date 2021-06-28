@@ -8,6 +8,7 @@ import { PrestamoDevolverDialogComponent } from './devolver/prestamo-devolver-di
 import { PrestamoRoutingModule } from './route/prestamo-routing.module';
 import { SelectedLibroDialogComponent } from 'app/entities/prestamo/selected-libro/selected-libro-dialog.component';
 import { SelectedPersonaDialogComponent } from 'app/entities/prestamo/selected-persona/selected-persona-dialog.component';
+import { PrestamoDeleteDialogComponent } from 'app/entities/prestamo/delete/prestamo-delete-dialog.component';
 
 @NgModule({
   imports: [SharedModule, PrestamoRoutingModule],
@@ -18,6 +19,7 @@ import { SelectedPersonaDialogComponent } from 'app/entities/prestamo/selected-p
     PrestamoDevolverDialogComponent,
     SelectedLibroDialogComponent,
     SelectedPersonaDialogComponent,
+    PrestamoDeleteDialogComponent,
   ],
   entryComponents: [PrestamoDevolverDialogComponent, SelectedLibroDialogComponent, SelectedPersonaDialogComponent],
 })

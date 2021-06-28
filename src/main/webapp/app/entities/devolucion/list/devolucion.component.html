@@ -53,7 +53,7 @@
       <tbody>
         <tr *ngFor="let devolucion of devolucions; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/devolucion', devolucion.id, 'view']">{{ devolucion.id }}</a>
+            {{ devolucion.id }}
           </td>
           <td>
             <div *ngIf="devolucion.prestamo">
@@ -78,12 +78,7 @@
           </td>
           <td class="text-right">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/devolucion', devolucion.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <button type="submit" class="btn btn-info btn-sm" data-cy="entityDetailsButton" (click)="detail(devolucion)">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">Detalle</span>
               </button>

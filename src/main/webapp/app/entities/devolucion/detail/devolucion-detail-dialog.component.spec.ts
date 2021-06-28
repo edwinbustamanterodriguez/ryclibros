@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { DevolucionDetailComponent } from './devolucion-detail.component';
+import { DevolucionDetailDialogComponent } from './devolucion-detail-dialog.component';
 
 describe('Component Tests', () => {
   describe('Devolucion Management Detail Component', () => {
-    let comp: DevolucionDetailComponent;
-    let fixture: ComponentFixture<DevolucionDetailComponent>;
+    let comp: DevolucionDetailDialogComponent;
+    let fixture: ComponentFixture<DevolucionDetailDialogComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [DevolucionDetailComponent],
+        declarations: [DevolucionDetailDialogComponent],
         providers: [
           {
             provide: ActivatedRoute,
@@ -19,9 +19,9 @@ describe('Component Tests', () => {
           },
         ],
       })
-        .overrideTemplate(DevolucionDetailComponent, '')
+        .overrideTemplate(DevolucionDetailDialogComponent, '')
         .compileComponents();
-      fixture = TestBed.createComponent(DevolucionDetailComponent);
+      fixture = TestBed.createComponent(DevolucionDetailDialogComponent);
       comp = fixture.componentInstance;
     });
 

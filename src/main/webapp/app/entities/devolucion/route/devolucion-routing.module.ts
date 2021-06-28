@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { DevolucionComponent } from '../list/devolucion.component';
-import { DevolucionDetailComponent } from '../detail/devolucion-detail.component';
+import { DevolucionDetailDialogComponent } from '../detail/devolucion-detail-dialog.component';
 import { DevolucionUpdateComponent } from '../update/devolucion-update.component';
 import { DevolucionRoutingResolveService } from './devolucion-routing-resolve.service';
 
@@ -18,7 +18,7 @@ const devolucionRoute: Routes = [
   },
   {
     path: ':id/view',
-    component: DevolucionDetailComponent,
+    component: DevolucionDetailDialogComponent,
     resolve: {
       devolucion: DevolucionRoutingResolveService,
     },
