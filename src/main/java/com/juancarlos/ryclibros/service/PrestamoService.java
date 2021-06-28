@@ -128,4 +128,8 @@ public class PrestamoService {
         log.debug("Request to delete Prestamo : {}", id);
         prestamoRepository.deleteById(id);
     }
+
+    public void setStatusDevueltoToTrue(Long idPrestamo) {
+        prestamoRepository.setStatusDevueltoToTrue(true, idPrestamo);
+    }
 }

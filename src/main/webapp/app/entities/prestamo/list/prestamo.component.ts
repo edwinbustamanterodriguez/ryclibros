@@ -87,7 +87,7 @@ export class PrestamoComponent implements OnInit {
   }
 
   returned(prestamo: IPrestamo): void {
-    const modalRef = this.modalService.open(PrestamoDevolverDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(PrestamoDevolverDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.prestamo = prestamo;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe(reason => {

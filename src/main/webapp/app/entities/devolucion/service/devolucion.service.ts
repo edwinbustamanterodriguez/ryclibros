@@ -20,6 +20,10 @@ export class DevolucionService {
     return this.http.post<IDevolucion>(this.resourceUrl, devolucion, { observe: 'response' });
   }
 
+  createDevolution(devolucion: IDevolucion): Observable<EntityResponseType> {
+    return this.http.post<IDevolucion>(this.resourceUrl + '/prestamo', devolucion, { observe: 'response' });
+  }
+
   update(devolucion: IDevolucion): Observable<EntityResponseType> {
     return this.http.put<IDevolucion>(`${this.resourceUrl}/${getDevolucionIdentifier(devolucion) as number}`, devolucion, {
       observe: 'response',

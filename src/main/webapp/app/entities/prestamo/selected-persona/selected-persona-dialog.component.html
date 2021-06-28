@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title" data-cy="prestamoDeleteDialogHeading">Busque y seleccione el prestatario</h4>
+  <h4 class="modal-title" data-cy="prestamoDeleteDialogHeading">Busque y seleccione una persona</h4>
 
   <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
 </div>
@@ -87,7 +87,7 @@
         <tbody>
           <tr *ngFor="let persona of personas; trackBy: trackId" data-cy="entityTable">
             <td>
-              <a [routerLink]="['/persona', persona.id, 'view']">{{ persona.id }}</a>
+              {{ persona.id }}
             </td>
             <td>{{ persona.nombre }}</td>
             <td>{{ persona.apaterno }}</td>

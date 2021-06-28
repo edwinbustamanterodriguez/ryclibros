@@ -68,10 +68,25 @@ public class DevolucionResource {
             .body(result);
     }
 
+    @PostMapping("/devolucions/prestamo")
+    public ResponseEntity<DevolucionDTO> createDevolucionFromPrestamo(@Valid @RequestBody DevolucionDTO devolucionDTO)
+        throws URISyntaxException {
+        log.debug("REST request to save Devolucion : {}", devolucionDTO);
+        if (devolucionDTO.getId() != null) {
+            throw new BadRequestAlertException("La devolucion no puede tener un identificador", ENTITY_NAME, "idexists");
+        }
+
+        DevolucionDTO result = devolucionService.setStatusDevueltoToTrue(devolucionDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-" + applicationName + "-alert", "Se devolvio el libro correctamente");
+
+        return ResponseEntity.ok().headers(headers).body(result);
+    }
+
     /**
      * {@code PUT  /devolucions/:id} : Updates an existing devolucion.
      *
-     * @param id the id of the devolucionDTO to save.
+     * @param id            the id of the devolucionDTO to save.
      * @param devolucionDTO the devolucionDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated devolucionDTO,
      * or with status {@code 400 (Bad Request)} if the devolucionDTO is not valid,
@@ -105,7 +120,7 @@ public class DevolucionResource {
     /**
      * {@code PATCH  /devolucions/:id} : Partial updates given fields of an existing devolucion, field will ignore if it is null
      *
-     * @param id the id of the devolucionDTO to save.
+     * @param id            the id of the devolucionDTO to save.
      * @param devolucionDTO the devolucionDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated devolucionDTO,
      * or with status {@code 400 (Bad Request)} if the devolucionDTO is not valid,

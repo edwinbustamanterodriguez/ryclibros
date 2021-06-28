@@ -1,4 +1,4 @@
-<form *ngIf="prestamo" name="deleteForm" (ngSubmit)="confirmDevolucion(prestamo)" [formGroup]="returnedForm">
+<form *ngIf="prestamo" name="deleteForm" (ngSubmit)="confirmDevolucion(prestamo)" [formGroup]="editForm">
   <div class="modal-header">
     <h4 class="modal-title" data-cy="prestamoDeleteDialogHeading">Confirmación de devolución del libro</h4>
 
@@ -7,8 +7,115 @@
 
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
-    <p id="jhi-delete-prestamo-heading">¿Esta seguro de devolver el libro "{{ prestamo.libro!.numero }}"?</p>
-
+    <p id="jhi-delete-prestamo-heading">¿Esta seguro de devolver el libro?</p>
+    <div class="form-group">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>ID</span>
+              </th>
+              <th scope="col">
+                <span>Numero</span>
+              </th>
+              <th scope="col">
+                <span>Fecha de registro</span>
+              </th>
+              <th scope="col">
+                <span>Categoria</span>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="libro">
+              <td>
+                {{ libro.id }}
+              </td>
+              <td>{{ libro.numero }}</td>
+              <td>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+              <td>
+                <div *ngIf="libro.categoria">
+                  {{ libro.categoria?.nombre }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="editForm.get(['prestamo'])!.invalid && (editForm.get(['prestamo'])!.dirty || editForm.get(['prestamo'])!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get(['prestamo'])?.errors?.required"> El prestamo es requerido. </small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-control-label">Nombre de la persona que devuelve</label>
+      <div class="table-responsive" id="entities">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>ID</span>
+              </th>
+              <th scope="col">
+                <span>Nombre</span>
+              </th>
+              <th scope="col">
+                <span>A. Paterno</span>
+              </th>
+              <th scope="col">
+                <span>A. Materno</span>
+              </th>
+              <th scope="col">
+                <span>CI</span>
+              </th>
+              <th scope="col">
+                <span>Teléfono</span>
+              </th>
+              <th scope="col">
+                <span>Institución</span>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="!persona">
+            <tr>
+              <td>
+                <div class="btn btn-primary btn-sm" (click)="selectedPrestatario()">
+                  <fa-icon icon="user"></fa-icon>
+                  <span class="d-none d-md-inline">Selecionar la persona que devuelve</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="persona">
+            <tr data-cy="entityTable">
+              <td>
+                {{ persona.id }}
+              </td>
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.apaterno }}</td>
+              <td>{{ persona.amaterno }}</td>
+              <td>{{ persona.ci + ' ' + departamentosAbr(persona.expedicion) }}</td>
+              <td>{{ persona.telefono }}</td>
+              <td>{{ persona.institucion }}</td>
+              <td class="text-right"></td>
+              <td class="text-right">
+                <div class="btn btn-primary btn-sm" (click)="selectedPrestatario()">
+                  <fa-icon icon="user"></fa-icon>
+                  <span class="d-none d-md-inline">Cambiar la persona que devuelve</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="editForm.get(['persona'])!.invalid && (editForm.get(['persona'])!.dirty || editForm.get(['persona'])!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get(['persona'])?.errors?.required"
+          >El nombre de la persona que devuelve el libro es requerido.
+        </small>
+      </div>
+    </div>
     <div class="form-group">
       <label class="form-control-label" for="field_observaciones">Observaciones</label>
       <textarea class="form-control" id="field_observaciones" id="field_observaciones" rows="3" formControlName="observaciones"></textarea>
@@ -25,9 +132,9 @@
       data-cy="entityConfirmDeleteButton"
       type="submit"
       class="btn btn-primary"
-      [disabled]="returnedForm.invalid || isSaving"
+      [disabled]="editForm.invalid || isSaving"
     >
-      <fa-icon icon="book"></fa-icon>&nbsp;<span>Devolver</span>
+      <fa-icon icon="book"></fa-icon>&nbsp;<span>Confirmar devolucion</span>
     </button>
   </div>
 </form>

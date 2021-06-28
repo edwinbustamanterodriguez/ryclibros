@@ -15,5 +15,9 @@ public interface PersonaMapper extends EntityMapper<PersonaDTO, Persona> {
     @Mapping(target = "nombre", source = "nombre")
     @Mapping(target = "apaterno", source = "apaterno")
     @Mapping(target = "amaterno", source = "amaterno")
+    @Mapping(target = "ci", source = "ci")
+    @Mapping(target = "expedicion", source = "expedicion")
+    @Mapping(target = "telefono", source = "telefono")
+    @Mapping(target = "institucion", source = "institucion")
     PersonaDTO toDtoId(Persona persona);
 }

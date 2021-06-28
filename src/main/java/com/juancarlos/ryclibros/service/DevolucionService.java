@@ -2,7 +2,10 @@ package com.juancarlos.ryclibros.service;
 
 import com.juancarlos.ryclibros.domain.Devolucion;
 import com.juancarlos.ryclibros.repository.DevolucionRepository;
+import com.juancarlos.ryclibros.repository.UserRepository;
+import com.juancarlos.ryclibros.security.SecurityUtils;
 import com.juancarlos.ryclibros.service.dto.DevolucionDTO;
+import com.juancarlos.ryclibros.service.dto.UserDTO;
 import com.juancarlos.ryclibros.service.mapper.DevolucionMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -25,9 +28,20 @@ public class DevolucionService {
 
     private final DevolucionMapper devolucionMapper;
 
-    public DevolucionService(DevolucionRepository devolucionRepository, DevolucionMapper devolucionMapper) {
+    private final UserRepository userRepository;
+
+    private final PrestamoService prestamoService;
+
+    public DevolucionService(
+        DevolucionRepository devolucionRepository,
+        DevolucionMapper devolucionMapper,
+        UserRepository userRepository,
+        PrestamoService prestamoService
+    ) {
         this.devolucionRepository = devolucionRepository;
         this.devolucionMapper = devolucionMapper;
+        this.userRepository = userRepository;
+        this.prestamoService = prestamoService;
     }
 
     /**
@@ -96,5 +110,24 @@ public class DevolucionService {
     public void delete(Long id) {
         log.debug("Request to delete Devolucion : {}", id);
         devolucionRepository.deleteById(id);
+    }
+
+    public DevolucionDTO setStatusDevueltoToTrue(DevolucionDTO devolucionDTO) {
+        SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(
+                user -> {
+                    Long id = user.getId();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(id);
+                    devolucionDTO.setUser(userDTO);
+                }
+            );
+
+        this.prestamoService.setStatusDevueltoToTrue(devolucionDTO.getPrestamo().getId());
+        Devolucion devolucion = devolucionMapper.toEntity(devolucionDTO);
+        devolucion = devolucionRepository.save(devolucion);
+        return devolucionMapper.toDto(devolucion);
     }
 }
