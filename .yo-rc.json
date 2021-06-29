@@ -42,7 +42,7 @@
     "jwtSecretKey": "NjkwOTQ1OGQ3ZDE0ZjkzNjlkNjRlYjViODA1YzQxMDBjOGRmNGM3MWI0MDhiZWViMTlhYTFhOGE5OGNlYTA2NjYxZTQzMWJiYjg4MmY3YTQ3NzY3MGYyODE2MDA3NzEwOTgzNzUwNDdjZDhkMjdjODg4ZWY3YWZhNzZkZGIxODk=",
     "clientPackageManager": "npm",
     "languages": ["en", "fr"],
-    "lastLiquibaseTimestamp": 1624648673000,
-    "entities": ["Categoria", "Libro", "Persona", "Prestamo", "Devolucion"]
+    "lastLiquibaseTimestamp": 1624984433000,
+    "entities": ["Categoria", "Libro", "Persona", "Prestamo", "Devolucion", "Provincia", "Localidad"]
   }
 }
