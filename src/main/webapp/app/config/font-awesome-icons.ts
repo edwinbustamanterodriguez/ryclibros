@@ -39,6 +39,8 @@ import {
   faWrench,
   faEyeSlash,
   faUndo,
+  faUserFriends,
+  faStream,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -83,5 +85,7 @@ export const fontAwesomeIcons = [
   faWrench,
   faEyeSlash,
   faUndo,
+  faUserFriends,
+  faStream,
   // jhipster-needle-add-icon-import
 ];
