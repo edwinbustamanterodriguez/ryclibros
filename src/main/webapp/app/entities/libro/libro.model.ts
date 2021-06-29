@@ -5,6 +5,7 @@ export interface ILibro {
   id?: number;
   numero?: string;
   observaciones?: string | null;
+  cantidad?: number;
   categoria?: ICategoria;
   user?: IUserRequired;
   createdBy?: string;
@@ -18,6 +19,7 @@ export class Libro implements ILibro {
     public id?: number,
     public numero?: string,
     public observaciones?: string | null,
+    public cantidad?: number,
     public categoria?: ICategoria,
     public user?: IUserRequired,
     public createdBy?: string,

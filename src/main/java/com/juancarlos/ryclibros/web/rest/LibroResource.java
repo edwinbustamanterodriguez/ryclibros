@@ -158,6 +158,21 @@ public class LibroResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/libros2")
+    public ResponseEntity<List<LibroDTO>> getAllLibros2(Pageable pageable) {
+        Page<LibroDTO> page = libroService.findAll2(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/libros/_search2")
+    public ResponseEntity<List<LibroDTO>> getAllLibrosSearch2(@RequestParam(required = true) String search, Pageable pageable) {
+        log.debug("REST request to get a page of Personas");
+        Page<LibroDTO> page = libroService.getAllLibrosSearch2(search, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /libros/:id} : get the "id" libro.
      *

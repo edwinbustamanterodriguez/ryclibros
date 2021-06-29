@@ -23,6 +23,7 @@ export class LibroUpdateComponent implements OnInit {
     id: [],
     numero: [null, [Validators.required]],
     observaciones: [],
+    cantidad: [null, [Validators.required, Validators.min(0)]],
     categoria: [null, Validators.required],
   });
 
@@ -82,6 +83,7 @@ export class LibroUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: libro.id,
       numero: libro.numero,
+      cantidad: libro.cantidad,
       observaciones: libro.observaciones,
       categoria: libro.categoria,
     });
@@ -110,6 +112,7 @@ export class LibroUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       numero: this.editForm.get(['numero'])!.value,
       observaciones: this.editForm.get(['observaciones'])!.value,
+      cantidad: this.editForm.get(['cantidad'])!.value,
       categoria: this.editForm.get(['categoria'])!.value,
     };
   }

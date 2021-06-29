@@ -1,6 +1,7 @@
 package com.juancarlos.ryclibros.service;
 
 import com.juancarlos.ryclibros.domain.Prestamo;
+import com.juancarlos.ryclibros.repository.LibroRepository;
 import com.juancarlos.ryclibros.repository.PrestamoRepository;
 import com.juancarlos.ryclibros.repository.UserRepository;
 import com.juancarlos.ryclibros.security.SecurityUtils;
@@ -30,10 +31,18 @@ public class PrestamoService {
 
     private final UserRepository userRepository;
 
-    public PrestamoService(PrestamoRepository prestamoRepository, PrestamoMapper prestamoMapper, UserRepository userRepository) {
+    private final LibroRepository libroRepository;
+
+    public PrestamoService(
+        PrestamoRepository prestamoRepository,
+        PrestamoMapper prestamoMapper,
+        UserRepository userRepository,
+        LibroRepository libroRepository
+    ) {
         this.prestamoRepository = prestamoRepository;
         this.prestamoMapper = prestamoMapper;
         this.userRepository = userRepository;
+        this.libroRepository = libroRepository;
     }
 
     /**
@@ -56,9 +65,9 @@ public class PrestamoService {
                     prestamoDTO.setUser(userDTO);
                 }
             );
-
         Prestamo prestamo = prestamoMapper.toEntity(prestamoDTO);
         prestamo = prestamoRepository.save(prestamo);
+        libroRepository.setCantidadMinus(prestamo.getLibro().getId());
         return prestamoMapper.toDto(prestamo);
     }
 

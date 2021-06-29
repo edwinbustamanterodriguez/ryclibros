@@ -1,11 +1,11 @@
-libro_id_pk;libro_numero;libro_observaciones;libro_categoria_id_fk;libro_user_id_fk;created_by;last_modified_by
-1;2545;Papelería monitorizar;1;1;system;system
-2;7841;matrix indexing;2;1;system;system
-3;784;En ubiquitous;3;1;system;system
-4;788845;contexto;4;1;system;system
-5;7845;payment Queso;5;1;system;system
-6;788;Mozambique;6;1;system;system
-7;7846;Credit Gris bluetooth;7;1;system;system
-8;7844;Práctico Buckinghamshire sistémica;8;1;system;system
-9;7811;TCP vía;9;1;system;system
-10;78411;strategic;10;1;system;system
+libro_id_pk;libro_numero;libro_observaciones;libro_cantidad;libro_categoria_id_fk;libro_user_id_fk;created_by;last_modified_by
+1;2545;Papelería monitorizar;1;1;1;system;system
+2;7841;matrix indexing;1;2;1;system;system
+3;784;En ubiquitous;1;3;1;system;system
+4;788845;contexto;1;4;1;system;system
+5;7845;payment Queso;1;5;1;system;system
+6;788;Mozambique;1;6;1;system;system
+7;7846;Credit Gris bluetooth;1;7;1;system;system
+8;7844;Práctico Buckinghamshire sistémica;1;8;1;system;system
+9;7811;TCP vía;1;9;1;system;system
+10;78411;strategic;2;10;1;system;system

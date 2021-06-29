@@ -14,6 +14,7 @@ public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "numero", source = "numero")
     @Mapping(target = "observaciones", source = "observaciones")
+    @Mapping(target = "cantidad", source = "cantidad")
     @Mapping(target = "createdDate", source = "createdDate")
     @Mapping(target = "lastModifiedDate", source = "lastModifiedDate")
     @Mapping(target = "createdBy", source = "createdBy")

@@ -2,6 +2,7 @@ package com.juancarlos.ryclibros.service;
 
 import com.juancarlos.ryclibros.domain.Devolucion;
 import com.juancarlos.ryclibros.repository.DevolucionRepository;
+import com.juancarlos.ryclibros.repository.LibroRepository;
 import com.juancarlos.ryclibros.repository.UserRepository;
 import com.juancarlos.ryclibros.security.SecurityUtils;
 import com.juancarlos.ryclibros.service.dto.DevolucionDTO;
@@ -32,16 +33,20 @@ public class DevolucionService {
 
     private final PrestamoService prestamoService;
 
+    private final LibroRepository libroRepository;
+
     public DevolucionService(
         DevolucionRepository devolucionRepository,
         DevolucionMapper devolucionMapper,
         UserRepository userRepository,
-        PrestamoService prestamoService
+        PrestamoService prestamoService,
+        LibroRepository libroRepository
     ) {
         this.devolucionRepository = devolucionRepository;
         this.devolucionMapper = devolucionMapper;
         this.userRepository = userRepository;
         this.prestamoService = prestamoService;
+        this.libroRepository = libroRepository;
     }
 
     /**
@@ -126,6 +131,7 @@ public class DevolucionService {
             );
 
         this.prestamoService.setStatusDevueltoToTrue(devolucionDTO.getPrestamo().getId());
+        this.libroRepository.setCantidadPlus(devolucionDTO.getPrestamo().getLibro().getId());
         Devolucion devolucion = devolucionMapper.toEntity(devolucionDTO);
         devolucion = devolucionRepository.save(devolucion);
         return devolucionMapper.toDto(devolucion);

@@ -17,6 +17,8 @@ public class LibroDTO implements Serializable {
 
     private String observaciones;
 
+    private Integer cantidad;
+
     private CategoriaDTO categoria;
 
     private UserDTO user;
@@ -51,6 +53,14 @@ public class LibroDTO implements Serializable {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     public CategoriaDTO getCategoria() {

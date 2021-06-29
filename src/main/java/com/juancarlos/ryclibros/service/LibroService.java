@@ -120,4 +120,14 @@ public class LibroService {
     public Page<LibroDTO> getAllLibrosSearch(String search, Pageable pageable) {
         return libroRepository.findAllByNumeroContaining(search, pageable).map(libroMapper::toDto);
     }
+
+    @Transactional(readOnly = true)
+    public Page<LibroDTO> findAll2(Pageable pageable) {
+        log.debug("Request to get all Libros");
+        return libroRepository.findAllByCantidadGreaterThan(0, pageable).map(libroMapper::toDto);
+    }
+
+    public Page<LibroDTO> getAllLibrosSearch2(String search, Pageable pageable) {
+        return libroRepository.findAllByNumeroContainingAndCantidadGreaterThan(search, 0, pageable).map(libroMapper::toDto);
+    }
 }

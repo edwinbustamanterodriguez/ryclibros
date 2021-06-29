@@ -42,7 +42,7 @@ export class SelectedLibroDialogComponent {
     if (this.currentSearch && this.currentSearch.length !== 0) {
       this.searching = true;
       this.libroService
-        .search(this.currentSearch, {
+        .search2(this.currentSearch, {
           page: pageToLoad - 1,
           size: this.itemsPerPage,
           sort: this.sort(),
@@ -57,7 +57,7 @@ export class SelectedLibroDialogComponent {
         );
     } else {
       this.libroService
-        .query({
+        .query2({
           page: pageToLoad - 1,
           size: this.itemsPerPage,
           sort: this.sort(),

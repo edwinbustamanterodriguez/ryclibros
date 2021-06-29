@@ -72,6 +72,10 @@
             <span>Fecha de registro</span>
             <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="cantidad">
+            <span>Cantidad</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="categoria.id">
             <span>Categoria</span>
             <fa-icon icon="sort"></fa-icon>
@@ -80,12 +84,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let libro of libros; trackBy: trackId" data-cy="entityTable">
+        <tr *ngFor="let libro of libros; trackBy: trackId" data-cy="entityTable" [ngClass]="libro.cantidad == 0 ? 'table-danger' : ''">
           <td>
             <a [routerLink]="['/libro', libro.id, 'view']">{{ libro.id }}</a>
           </td>
           <td>{{ libro.numero }}</td>
           <td>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+          <td>{{ libro.cantidad }}</td>
           <td>
             <div *ngIf="libro.categoria">
               <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.nombre }}</a>

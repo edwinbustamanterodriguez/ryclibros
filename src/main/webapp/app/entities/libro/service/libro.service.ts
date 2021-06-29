@@ -64,4 +64,15 @@ export class LibroService {
     options = options.append('search', currentSearch);
     return this.http.get<IPersona[]>(this.resourceUrl + '/_search', { params: options, observe: 'response' });
   }
+
+  search2(currentSearch: string, req?: any): Observable<EntityArrayResponseType> {
+    let options = createRequestOption(req);
+    options = options.append('search', currentSearch);
+    return this.http.get<IPersona[]>(this.resourceUrl + '/_search2', { params: options, observe: 'response' });
+  }
+
+  query2(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<ILibro[]>(this.resourceUrl + '2', { params: options, observe: 'response' });
+  }
 }

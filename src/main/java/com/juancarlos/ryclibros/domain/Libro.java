@@ -25,6 +25,10 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
     @Column(name = "libro_observaciones")
     private String observaciones;
 
+    @NotNull
+    @Column(name = "libro_cantidad", nullable = false)
+    private Integer cantidad;
+
     @ManyToOne(optional = false)
     @NotNull
     @JoinColumn(name = "libro_categoria_id_fk", nullable = false)
@@ -68,6 +72,19 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
 
     public Libro observaciones(String observaciones) {
         this.observaciones = observaciones;
+        return this;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Libro cantidad(Integer cantidad) {
+        this.cantidad = cantidad;
         return this;
     }
 
@@ -127,6 +144,7 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
             "id=" + getId() +
             ", numero='" + getNumero() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
+            ",cantidad=" + getCantidad() +
             "}";
     }
 }
