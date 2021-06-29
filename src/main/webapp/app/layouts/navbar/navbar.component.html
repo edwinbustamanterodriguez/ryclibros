@@ -49,6 +49,30 @@
           <li>
             <a
               class="dropdown-item"
+              routerLink="provincia"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="stream" [fixedWidth]="true"></fa-icon>
+              <span>Provincias</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="localidad"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="stream" [fixedWidth]="true"></fa-icon>
+              <span>Localidades</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
               routerLink="libro"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -61,7 +85,7 @@
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="prestamo" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="book"></fa-icon>
@@ -69,7 +93,7 @@
           </span>
         </a>
       </li>
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a class="nav-link" routerLink="devolucion" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="undo"></fa-icon>

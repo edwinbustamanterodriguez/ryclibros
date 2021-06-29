@@ -21,6 +21,10 @@ public class LibroDTO implements Serializable {
 
     private CategoriaDTO categoria;
 
+    private ProvinciaDTO provincia;
+
+    private LocalidadDTO localidad;
+
     private UserDTO user;
 
     private String createdBy;
@@ -65,6 +69,22 @@ public class LibroDTO implements Serializable {
 
     public CategoriaDTO getCategoria() {
         return categoria;
+    }
+
+    public ProvinciaDTO getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(ProvinciaDTO provincia) {
+        this.provincia = provincia;
+    }
+
+    public LocalidadDTO getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(LocalidadDTO localidad) {
+        this.localidad = localidad;
     }
 
     public void setCategoria(CategoriaDTO categoria) {
@@ -140,6 +160,8 @@ public class LibroDTO implements Serializable {
             ", numero='" + getNumero() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
             ", categoria=" + getCategoria() +
+            ", provincia=" + getProvincia() +
+            ", localidad=" + getLocalidad() +
             ", user=" + getUser() +
             ", createdBy=" + createdBy +
             ", createdDate=" + createdDate +

@@ -9,6 +9,10 @@ import { ILibro, Libro } from '../libro.model';
 import { LibroService } from '../service/libro.service';
 import { ICategoria } from 'app/entities/categoria/categoria.model';
 import { CategoriaService } from 'app/entities/categoria/service/categoria.service';
+import { IProvincia } from 'app/entities/provincia/provincia.model';
+import { ILocalidad } from 'app/entities/localidad/localidad.model';
+import { ProvinciaService } from 'app/entities/provincia/service/provincia.service';
+import { LocalidadService } from 'app/entities/localidad/service/localidad.service';
 
 @Component({
   selector: 'jhi-libro-update',
@@ -18,6 +22,8 @@ export class LibroUpdateComponent implements OnInit {
   isSaving = false;
 
   categoriasSharedCollection: ICategoria[] = [];
+  provinciasSharedCollection: IProvincia[] = [];
+  localidadesSharedCollection: ILocalidad[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -25,11 +31,15 @@ export class LibroUpdateComponent implements OnInit {
     observaciones: [],
     cantidad: [null, [Validators.required, Validators.min(0)]],
     categoria: [null, Validators.required],
+    provincia: [null, Validators.required],
+    localidad: [null, Validators.required],
   });
 
   constructor(
     protected libroService: LibroService,
     protected categoriaService: CategoriaService,
+    protected provinciaService: ProvinciaService,
+    protected localidadService: LocalidadService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -60,6 +70,14 @@ export class LibroUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  trackProvinciaById(index: number, item: IProvincia): number {
+    return item.id!;
+  }
+
+  trackLocalidadById(index: number, item: ILocalidad): number {
+    return item.id!;
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ILibro>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -86,11 +104,23 @@ export class LibroUpdateComponent implements OnInit {
       cantidad: libro.cantidad,
       observaciones: libro.observaciones,
       categoria: libro.categoria,
+      provincia: libro.provincia,
+      localidad: libro.localidad,
     });
 
     this.categoriasSharedCollection = this.categoriaService.addCategoriaToCollectionIfMissing(
       this.categoriasSharedCollection,
       libro.categoria
+    );
+
+    this.provinciasSharedCollection = this.provinciaService.addProvinciaToCollectionIfMissing(
+      this.provinciasSharedCollection,
+      libro.provincia
+    );
+
+    this.localidadesSharedCollection = this.localidadService.addLocalidadToCollectionIfMissing(
+      this.categoriasSharedCollection,
+      libro.localidad
     );
   }
 
@@ -104,6 +134,26 @@ export class LibroUpdateComponent implements OnInit {
         )
       )
       .subscribe((categorias: ICategoria[]) => (this.categoriasSharedCollection = categorias));
+
+    this.provinciaService
+      .query()
+      .pipe(map((res: HttpResponse<IProvincia[]>) => res.body ?? []))
+      .pipe(
+        map((provincias: IProvincia[]) =>
+          this.provinciaService.addProvinciaToCollectionIfMissing(provincias, this.editForm.get('provincia')!.value)
+        )
+      )
+      .subscribe((provincias: IProvincia[]) => (this.provinciasSharedCollection = provincias));
+
+    this.localidadService
+      .query()
+      .pipe(map((res: HttpResponse<ILocalidad[]>) => res.body ?? []))
+      .pipe(
+        map((localidades: ILocalidad[]) =>
+          this.localidadService.addLocalidadToCollectionIfMissing(localidades, this.editForm.get('localidad')!.value)
+        )
+      )
+      .subscribe((localidades: ILocalidad[]) => (this.localidadesSharedCollection = localidades));
   }
 
   protected createFromForm(): ILibro {
@@ -114,6 +164,8 @@ export class LibroUpdateComponent implements OnInit {
       observaciones: this.editForm.get(['observaciones'])!.value,
       cantidad: this.editForm.get(['cantidad'])!.value,
       categoria: this.editForm.get(['categoria'])!.value,
+      provincia: this.editForm.get(['provincia'])!.value,
+      localidad: this.editForm.get(['localidad'])!.value,
     };
   }
 }

@@ -7,7 +7,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Libro} and its DTO {@link LibroDTO}.
  */
-@Mapper(componentModel = "spring", uses = { CategoriaMapper.class, UserMapper.class })
+@Mapper(componentModel = "spring", uses = { CategoriaMapper.class, UserMapper.class, LocalidadMapper.class, ProvinciaMapper.class })
 public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Named("id")
     @BeanMapping(ignoreByDefault = true)
@@ -21,5 +21,7 @@ public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Mapping(target = "lastModifiedBy", source = "lastModifiedBy")
     @Mapping(target = "user", source = "user", qualifiedByName = "id")
     @Mapping(target = "categoria", source = "categoria", qualifiedByName = "id")
+    @Mapping(target = "localidad", source = "localidad", qualifiedByName = "id")
+    @Mapping(target = "provincia", source = "provincia", qualifiedByName = "id")
     LibroDTO toDto(Libro s);
 }

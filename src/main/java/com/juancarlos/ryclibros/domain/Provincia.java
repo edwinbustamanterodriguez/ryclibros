@@ -15,10 +15,11 @@ public class Provincia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "provincia_id_pk")
     private Long id;
 
     @NotNull
-    @Column(name = "nombre", nullable = false, unique = true)
+    @Column(name = "provincia_nombre", nullable = false, unique = true)
     private String nombre;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

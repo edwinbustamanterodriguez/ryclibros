@@ -26,8 +26,18 @@ import { RouterModule } from '@angular/router';
       },
       {
         path: 'devolucion',
-        data: { pageTitle: 'Devolucions' },
+        data: { pageTitle: 'Devoluciones' },
         loadChildren: () => import('./devolucion/devolucion.module').then(m => m.DevolucionModule),
+      },
+      {
+        path: 'provincia',
+        data: { pageTitle: 'Provincias' },
+        loadChildren: () => import('./provincia/provincia.module').then(m => m.ProvinciaModule),
+      },
+      {
+        path: 'localidad',
+        data: { pageTitle: 'Localidades' },
+        loadChildren: () => import('./localidad/localidad.module').then(m => m.LocalidadModule),
       },
 
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */

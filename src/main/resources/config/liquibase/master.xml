@@ -20,6 +20,8 @@
     <include file="config/liquibase/changelog/20210618213025_added_entity_Persona.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210623154535_added_entity_Prestamo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210625191753_added_entity_Devolucion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210629162935_added_entity_Provincia.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210629163353_added_entity_Localidad.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210617212957_added_entity_constraints_Libro.xml" relativeToChangelogFile="false"/>

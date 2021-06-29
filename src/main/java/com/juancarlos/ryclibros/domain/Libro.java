@@ -36,6 +36,16 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JoinColumn(name = "libro_provincia_id_fk", nullable = false)
+    private Provincia provincia;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "libro_localidad_id_fk", nullable = false)
+    private Localidad localidad;
+
+    @ManyToOne(optional = false)
+    @NotNull
     @JoinColumn(name = "libro_user_id_fk", nullable = false)
     private User user;
 
@@ -103,6 +113,32 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public Libro provincia(Provincia provincia) {
+        this.setProvincia(provincia);
+        return this;
+    }
+
+    public Localidad getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
+    }
+
+    public Libro localidad(Localidad localidad) {
+        this.setLocalidad(localidad);
+        return this;
     }
 
     public User getUser() {

@@ -13,6 +13,19 @@
                                  constraintName="fk_libro_categoria_id"
                                  referencedColumnNames="categoria_id_pk"
                                  referencedTableName="categoria"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_provincia_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_provincia_id"
+                                 referencedColumnNames="provincia_id_pk"
+                                 referencedTableName="provincia"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_localidad_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_localidad_id"
+                                 referencedColumnNames="localidad_id_pk"
+                                 referencedTableName="localidad"/>
+
         <addForeignKeyConstraint baseColumnNames="libro_user_id_fk"
                                  baseTableName="libro"
                                  constraintName="fk_libro_user_id"

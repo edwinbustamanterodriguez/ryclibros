@@ -1,5 +1,7 @@
 import { ICategoria } from 'app/entities/categoria/categoria.model';
 import { IUserRequired } from 'app/entities/user/user-required.model';
+import { IProvincia } from 'app/entities/provincia/provincia.model';
+import { ILocalidad } from 'app/entities/localidad/localidad.model';
 
 export interface ILibro {
   id?: number;
@@ -7,6 +9,8 @@ export interface ILibro {
   observaciones?: string | null;
   cantidad?: number;
   categoria?: ICategoria;
+  provincia?: IProvincia;
+  localidad?: ILocalidad;
   user?: IUserRequired;
   createdBy?: string;
   createdDate?: Date;
@@ -21,6 +25,8 @@ export class Libro implements ILibro {
     public observaciones?: string | null,
     public cantidad?: number,
     public categoria?: ICategoria,
+    public provincia?: IProvincia,
+    public localidad?: ILocalidad,
     public user?: IUserRequired,
     public createdBy?: string,
     public createdDate?: Date,

@@ -26,6 +26,12 @@
             <column name="libro_categoria_id_fk" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="libro_provincia_id_fk" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="libro_localidad_id_fk" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <column name="libro_user_id_fk" type="bigint">
                 <constraints nullable="false" />
             </column>
@@ -60,6 +66,8 @@
             <column name="libro_observaciones" type="string"/>
             <column name="libro_cantidad" type="numeric"/>
             <column name="libro_categoria_id_fk" type="numeric"/>
+            <column name="libro_provincia_id_fk" type="numeric"/>
+            <column name="libro_localidad_id_fk" type="numeric"/>
             <column name="libro_user_id_fk" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
