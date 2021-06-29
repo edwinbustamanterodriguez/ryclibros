@@ -30,6 +30,11 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(name = "libro_categoria_id_fk", nullable = false)
     private Categoria categoria;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "libro_user_id_fk", nullable = false)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -81,6 +86,19 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Libro user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

@@ -13,6 +13,11 @@
                                  constraintName="fk_libro_categoria_id"
                                  referencedColumnNames="categoria_id_pk"
                                  referencedTableName="categoria"/>
+        <addForeignKeyConstraint baseColumnNames="libro_user_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

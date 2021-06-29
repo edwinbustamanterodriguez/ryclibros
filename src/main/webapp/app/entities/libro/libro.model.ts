@@ -1,10 +1,12 @@
 import { ICategoria } from 'app/entities/categoria/categoria.model';
+import { IUserRequired } from 'app/entities/user/user-required.model';
 
 export interface ILibro {
   id?: number;
   numero?: string;
   observaciones?: string | null;
   categoria?: ICategoria;
+  user?: IUserRequired;
   createdBy?: string;
   createdDate?: Date;
   lastModifiedBy?: string;
@@ -17,6 +19,7 @@ export class Libro implements ILibro {
     public numero?: string,
     public observaciones?: string | null,
     public categoria?: ICategoria,
+    public user?: IUserRequired,
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,

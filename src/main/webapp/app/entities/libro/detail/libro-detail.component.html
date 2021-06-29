@@ -34,15 +34,7 @@
         </dd>
         <dt><span>Libro registrado por</span></dt>
         <dd>
-          <span>{{ libro.createdBy }}</span>
-        </dd>
-        <dt><span>Fecha de modificación</span></dt>
-        <dd>
-          <span>{{ libro.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</span>
-        </dd>
-        <dt><span>Libro modificado por</span></dt>
-        <dd>
-          <span>{{ libro.lastModifiedBy }}</span>
+          <span>{{ libro.user?.firstName + ' ' + libro.user?.lastName }}</span>
         </dd>
       </dl>
 

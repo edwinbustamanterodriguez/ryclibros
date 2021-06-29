@@ -19,6 +19,8 @@ public class LibroDTO implements Serializable {
 
     private CategoriaDTO categoria;
 
+    private UserDTO user;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -91,6 +93,14 @@ public class LibroDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -120,6 +130,7 @@ public class LibroDTO implements Serializable {
             ", numero='" + getNumero() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
             ", categoria=" + getCategoria() +
+            ", user=" + getUser() +
             ", createdBy=" + createdBy +
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +

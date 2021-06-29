@@ -2,7 +2,10 @@ package com.juancarlos.ryclibros.service;
 
 import com.juancarlos.ryclibros.domain.Libro;
 import com.juancarlos.ryclibros.repository.LibroRepository;
+import com.juancarlos.ryclibros.repository.UserRepository;
+import com.juancarlos.ryclibros.security.SecurityUtils;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
+import com.juancarlos.ryclibros.service.dto.UserDTO;
 import com.juancarlos.ryclibros.service.mapper.LibroMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -25,9 +28,12 @@ public class LibroService {
 
     private final LibroMapper libroMapper;
 
-    public LibroService(LibroRepository libroRepository, LibroMapper libroMapper) {
+    private final UserRepository userRepository;
+
+    public LibroService(LibroRepository libroRepository, LibroMapper libroMapper, UserRepository userRepository) {
         this.libroRepository = libroRepository;
         this.libroMapper = libroMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -38,6 +44,19 @@ public class LibroService {
      */
     public LibroDTO save(LibroDTO libroDTO) {
         log.debug("Request to save Libro : {}", libroDTO);
+
+        SecurityUtils
+            .getCurrentUserLogin()
+            .flatMap(userRepository::findOneByLogin)
+            .ifPresent(
+                user -> {
+                    Long id = user.getId();
+                    UserDTO userDTO = new UserDTO();
+                    userDTO.setId(id);
+                    libroDTO.setUser(userDTO);
+                }
+            );
+
         Libro libro = libroMapper.toEntity(libroDTO);
         libro = libroRepository.save(libro);
         return libroMapper.toDto(libro);
