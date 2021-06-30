@@ -13,6 +13,8 @@ import { IProvincia } from 'app/entities/provincia/provincia.model';
 import { ILocalidad } from 'app/entities/localidad/localidad.model';
 import { ProvinciaService } from 'app/entities/provincia/service/provincia.service';
 import { LocalidadService } from 'app/entities/localidad/service/localidad.service';
+import { EnumUbicaciones } from 'app/shared/enums/enum-ubicaciones';
+import { IUbicacion, Ubicacion } from 'app/entities/ubicacion/ubicacion.model';
 
 @Component({
   selector: 'jhi-libro-update',
@@ -25,6 +27,8 @@ export class LibroUpdateComponent implements OnInit {
   provinciasSharedCollection: IProvincia[] = [];
   localidadesSharedCollection: ILocalidad[] = [];
 
+  sectores: string[] = [];
+
   editForm = this.fb.group({
     id: [],
     numero: [null, [Validators.required]],
@@ -33,6 +37,10 @@ export class LibroUpdateComponent implements OnInit {
     categoria: [null, Validators.required],
     provincia: [null, Validators.required],
     localidad: [null, Validators.required],
+    ubicacionId: [],
+    ubicacionSector: [null, [Validators.required]],
+    ubicacionNumero: [null, [Validators.required, Validators.min(0)]],
+    ubicacionSerie: [null, [Validators.required]],
   });
 
   constructor(
@@ -42,12 +50,13 @@ export class LibroUpdateComponent implements OnInit {
     protected localidadService: LocalidadService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
-  ) {}
+  ) {
+    this.sectores = Object.values(EnumUbicaciones);
+  }
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ libro }) => {
       this.updateForm(libro);
-
       this.loadRelationshipsOptions();
     });
   }
@@ -106,6 +115,10 @@ export class LibroUpdateComponent implements OnInit {
       categoria: libro.categoria,
       provincia: libro.provincia,
       localidad: libro.localidad,
+      ubicacionId: libro.ubicacion?.id,
+      ubicacionSector: libro.ubicacion?.sector,
+      ubicacionNumero: libro.ubicacion?.numero,
+      ubicacionSerie: libro.ubicacion?.serie,
     });
 
     this.categoriasSharedCollection = this.categoriaService.addCategoriaToCollectionIfMissing(
@@ -166,6 +179,17 @@ export class LibroUpdateComponent implements OnInit {
       categoria: this.editForm.get(['categoria'])!.value,
       provincia: this.editForm.get(['provincia'])!.value,
       localidad: this.editForm.get(['localidad'])!.value,
+      ubicacion: this.createFromFormUbicacion(),
+    };
+  }
+
+  protected createFromFormUbicacion(): IUbicacion {
+    return {
+      ...new Ubicacion(),
+      id: this.editForm.get(['ubicacionId'])!.value,
+      sector: this.editForm.get(['ubicacionSector'])!.value,
+      numero: this.editForm.get(['ubicacionNumero'])!.value,
+      serie: this.editForm.get(['ubicacionSerie'])!.value,
     };
   }
 }

@@ -60,6 +60,11 @@ public class LibroResource {
         if (libroDTO.getId() != null) {
             throw new BadRequestAlertException("Un libro nuevo no puede tener un identificación", ENTITY_NAME, "idexists");
         }
+
+        if (libroDTO.getUbicacion().getId() != null) {
+            throw new BadRequestAlertException("Una nueva ubicacion no puede tener un identificación", ENTITY_NAME, "idexists");
+        }
+
         LibroDTO result = libroService.save(libroDTO);
         return ResponseEntity
             .created(new URI("/api/libros/" + result.getId()))
@@ -86,6 +91,11 @@ public class LibroResource {
         if (libroDTO.getId() == null) {
             throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
+
+        if (libroDTO.getUbicacion().getId() == null) {
+            throw new BadRequestAlertException("Id inválido de la ubicacion", ENTITY_NAME, "idnull");
+        }
+
         if (!Objects.equals(id, libroDTO.getId())) {
             throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }
@@ -121,6 +131,11 @@ public class LibroResource {
         if (libroDTO.getId() == null) {
             throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idnull");
         }
+
+        if (libroDTO.getUbicacion().getId() == null) {
+            throw new BadRequestAlertException("Id inválido de la ubicacion", ENTITY_NAME, "idnull");
+        }
+
         if (!Objects.equals(id, libroDTO.getId())) {
             throw new BadRequestAlertException("Id inválido", ENTITY_NAME, "idinvalid");
         }

@@ -1,5 +1,6 @@
 package com.juancarlos.ryclibros.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -48,6 +49,12 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @JoinColumn(name = "libro_user_id_fk", nullable = false)
     private User user;
+
+    @JsonIgnoreProperties(value = {}, allowSetters = true)
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "libro_ubicacion_id_fk", unique = true)
+    private Ubicacion ubicacion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -138,6 +145,19 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
 
     public Libro localidad(Localidad localidad) {
         this.setLocalidad(localidad);
+        return this;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public Libro ubicacion(Ubicacion ubicacion) {
+        this.setUbicacion(ubicacion);
         return this;
     }
 

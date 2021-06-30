@@ -36,6 +36,18 @@
         <dd>
           <span>{{ libro.user?.firstName + ' ' + libro.user?.lastName }}</span>
         </dd>
+        <dt><span>Archivado en</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.sector }}</span>
+        </dd>
+        <dt><span>Numero</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.numero }}</span>
+        </dd>
+        <dt><span>Fila</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.serie }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

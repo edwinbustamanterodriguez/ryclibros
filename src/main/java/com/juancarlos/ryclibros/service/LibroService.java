@@ -5,6 +5,7 @@ import com.juancarlos.ryclibros.repository.LibroRepository;
 import com.juancarlos.ryclibros.repository.UserRepository;
 import com.juancarlos.ryclibros.security.SecurityUtils;
 import com.juancarlos.ryclibros.service.dto.LibroDTO;
+import com.juancarlos.ryclibros.service.dto.UbicacionDTO;
 import com.juancarlos.ryclibros.service.dto.UserDTO;
 import com.juancarlos.ryclibros.service.mapper.LibroMapper;
 import java.util.Optional;
@@ -30,10 +31,18 @@ public class LibroService {
 
     private final UserRepository userRepository;
 
-    public LibroService(LibroRepository libroRepository, LibroMapper libroMapper, UserRepository userRepository) {
+    private final UbicacionService ubicacionService;
+
+    public LibroService(
+        LibroRepository libroRepository,
+        LibroMapper libroMapper,
+        UserRepository userRepository,
+        UbicacionService ubicacionService
+    ) {
         this.libroRepository = libroRepository;
         this.libroMapper = libroMapper;
         this.userRepository = userRepository;
+        this.ubicacionService = ubicacionService;
     }
 
     /**
@@ -57,6 +66,9 @@ public class LibroService {
                 }
             );
 
+        UbicacionDTO ubicacionDTO = this.ubicacionService.save(libroDTO.getUbicacion());
+        libroDTO.setUbicacion(ubicacionDTO);
+
         Libro libro = libroMapper.toEntity(libroDTO);
         libro = libroRepository.save(libro);
         return libroMapper.toDto(libro);
@@ -70,6 +82,9 @@ public class LibroService {
      */
     public Optional<LibroDTO> partialUpdate(LibroDTO libroDTO) {
         log.debug("Request to partially update Libro : {}", libroDTO);
+
+        UbicacionDTO ubicacionDTO = this.ubicacionService.save(libroDTO.getUbicacion());
+        libroDTO.setUbicacion(ubicacionDTO);
 
         return libroRepository
             .findById(libroDTO.getId())

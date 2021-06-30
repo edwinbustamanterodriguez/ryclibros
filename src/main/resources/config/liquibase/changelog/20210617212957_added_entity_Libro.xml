@@ -15,27 +15,29 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="libro_numero" type="varchar(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_libro__numero" />
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_libro__numero"/>
             </column>
             <column name="libro_observaciones" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
             <column name="libro_cantidad" type="int">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="libro_categoria_id_fk" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="libro_provincia_id_fk" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="libro_localidad_id_fk" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
             <column name="libro_user_id_fk" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
-
+            <column name="libro_ubicacion_id_fk" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="fk_libro_ubicacion_id"/>
+            </column>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -58,9 +60,9 @@
     -->
     <changeSet id="20210617212957-1-data" author="jhipster">
         <loadData
-                  file="config/liquibase/fake-data/libro.csv"
-                  separator=";"
-                  tableName="libro">
+            file="config/liquibase/fake-data/libro.csv"
+            separator=";"
+            tableName="libro">
             <column name="libro_id_pk" type="numeric"/>
             <column name="libro_numero" type="string"/>
             <column name="libro_observaciones" type="string"/>
@@ -69,6 +71,7 @@
             <column name="libro_provincia_id_fk" type="numeric"/>
             <column name="libro_localidad_id_fk" type="numeric"/>
             <column name="libro_user_id_fk" type="numeric"/>
+            <column name="libro_ubicacion_id_fk" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
