@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-ubicacion-heading" data-cy="UbicacionCreateUpdateHeading">Create or edit a Ubicacion</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_sector">Sector</label>
+          <input type="text" class="form-control" name="sector" id="field_sector" data-cy="sector" formControlName="sector" />
+          <div *ngIf="editForm.get('sector')!.invalid && (editForm.get('sector')!.dirty || editForm.get('sector')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('sector')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_numero">Numero</label>
+          <input type="number" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('numero')?.errors?.number"> This field should be a number. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_serie">Serie</label>
+          <input type="text" class="form-control" name="serie" id="field_serie" data-cy="serie" formControlName="serie" />
+          <div *ngIf="editForm.get('serie')!.invalid && (editForm.get('serie')!.dirty || editForm.get('serie')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('serie')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
