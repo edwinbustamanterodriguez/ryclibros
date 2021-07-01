@@ -3,6 +3,7 @@ package com.juancarlos.ryclibros.web.rest;
 import com.juancarlos.ryclibros.repository.ProvinciaRepository;
 import com.juancarlos.ryclibros.service.ProvinciaService;
 import com.juancarlos.ryclibros.service.dto.ProvinciaDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,19 +60,19 @@ public class ProvinciaResource {
     public ResponseEntity<ProvinciaDTO> createProvincia(@Valid @RequestBody ProvinciaDTO provinciaDTO) throws URISyntaxException {
         log.debug("REST request to save Provincia : {}", provinciaDTO);
         if (provinciaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new provincia cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Una nueva provincia no puede tener una identificación", ENTITY_NAME, "idexists");
         }
         ProvinciaDTO result = provinciaService.save(provinciaDTO);
         return ResponseEntity
             .created(new URI("/api/provincias/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "la", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /provincias/:id} : Updates an existing provincia.
      *
-     * @param id the id of the provinciaDTO to save.
+     * @param id           the id of the provinciaDTO to save.
      * @param provinciaDTO the provinciaDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated provinciaDTO,
      * or with status {@code 400 (Bad Request)} if the provinciaDTO is not valid,
@@ -85,27 +86,27 @@ public class ProvinciaResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Provincia : {}, {}", id, provinciaDTO);
         if (provinciaDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, provinciaDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!provinciaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         ProvinciaDTO result = provinciaService.save(provinciaDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, provinciaDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, provinciaDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /provincias/:id} : Partial updates given fields of an existing provincia, field will ignore if it is null
      *
-     * @param id the id of the provinciaDTO to save.
+     * @param id           the id of the provinciaDTO to save.
      * @param provinciaDTO the provinciaDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated provinciaDTO,
      * or with status {@code 400 (Bad Request)} if the provinciaDTO is not valid,
@@ -120,21 +121,21 @@ public class ProvinciaResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Provincia partially : {}, {}", id, provinciaDTO);
         if (provinciaDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Indentificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, provinciaDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Indentificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!provinciaRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         Optional<ProvinciaDTO> result = provinciaService.partialUpdate(provinciaDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, provinciaDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, provinciaDTO.getId().toString())
         );
     }
 
@@ -177,7 +178,7 @@ public class ProvinciaResource {
         provinciaService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "la", ENTITY_NAME, id.toString()))
             .build();
     }
 }

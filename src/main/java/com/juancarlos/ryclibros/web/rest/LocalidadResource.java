@@ -3,6 +3,7 @@ package com.juancarlos.ryclibros.web.rest;
 import com.juancarlos.ryclibros.repository.LocalidadRepository;
 import com.juancarlos.ryclibros.service.LocalidadService;
 import com.juancarlos.ryclibros.service.dto.LocalidadDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -59,19 +60,19 @@ public class LocalidadResource {
     public ResponseEntity<LocalidadDTO> createLocalidad(@Valid @RequestBody LocalidadDTO localidadDTO) throws URISyntaxException {
         log.debug("REST request to save Localidad : {}", localidadDTO);
         if (localidadDTO.getId() != null) {
-            throw new BadRequestAlertException("A new localidad cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("Una nueva localidad no puede tener una identificación", ENTITY_NAME, "idexists");
         }
         LocalidadDTO result = localidadService.save(localidadDTO);
         return ResponseEntity
             .created(new URI("/api/localidads/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "la", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PUT  /localidads/:id} : Updates an existing localidad.
      *
-     * @param id the id of the localidadDTO to save.
+     * @param id           the id of the localidadDTO to save.
      * @param localidadDTO the localidadDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated localidadDTO,
      * or with status {@code 400 (Bad Request)} if the localidadDTO is not valid,
@@ -85,27 +86,27 @@ public class LocalidadResource {
     ) throws URISyntaxException {
         log.debug("REST request to update Localidad : {}, {}", id, localidadDTO);
         if (localidadDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, localidadDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!localidadRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         LocalidadDTO result = localidadService.save(localidadDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, localidadDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, localidadDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /localidads/:id} : Partial updates given fields of an existing localidad, field will ignore if it is null
      *
-     * @param id the id of the localidadDTO to save.
+     * @param id           the id of the localidadDTO to save.
      * @param localidadDTO the localidadDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated localidadDTO,
      * or with status {@code 400 (Bad Request)} if the localidadDTO is not valid,
@@ -120,21 +121,21 @@ public class LocalidadResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Localidad partially : {}, {}", id, localidadDTO);
         if (localidadDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, localidadDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!localidadRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la entidad", ENTITY_NAME, "idnotfound");
         }
 
         Optional<LocalidadDTO> result = localidadService.partialUpdate(localidadDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, localidadDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, localidadDTO.getId().toString())
         );
     }
 
@@ -177,7 +178,7 @@ public class LocalidadResource {
         localidadService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "la", ENTITY_NAME, id.toString()))
             .build();
     }
 }

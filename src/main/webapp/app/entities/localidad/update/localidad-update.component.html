@@ -1,7 +1,9 @@
 <div class="row justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-localidad-heading" data-cy="LocalidadCreateUpdateHeading">Create or edit a Localidad</h2>
+      <h2 id="jhi-localidad-heading" data-cy="LocalidadCreateUpdateHeading">
+        {{ editForm.get('id')!.value == null ? 'Crear' : 'Editar' }} Localidad
+      </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
@@ -15,14 +17,14 @@
           <label class="form-control-label" for="field_nombre">Nombre</label>
           <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
           <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> Este campo es requerido. </small>
           </div>
         </div>
       </div>
 
       <div>
         <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
         </button>
 
         <button
@@ -32,7 +34,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
         </button>
       </div>
     </form>

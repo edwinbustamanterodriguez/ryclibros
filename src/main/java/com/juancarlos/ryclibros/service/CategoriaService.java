@@ -4,6 +4,7 @@ import com.juancarlos.ryclibros.domain.Categoria;
 import com.juancarlos.ryclibros.repository.CategoriaRepository;
 import com.juancarlos.ryclibros.service.dto.CategoriaDTO;
 import com.juancarlos.ryclibros.service.mapper.CategoriaMapper;
+import java.sql.SQLException;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

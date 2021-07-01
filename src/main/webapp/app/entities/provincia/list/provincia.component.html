@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Refresh List</span>
+        <span>Actualizar lista</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/provincia/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span> Create a new Provincia </span>
+        <span> Crear nueva provincia </span>
       </button>
     </div>
   </h2>
@@ -25,15 +25,21 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="provincias?.length === 0">
-    <span>No provincias found</span>
+    <span>No se encontró provincias</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="provincias && provincias.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nombre">
+            <span>Nombre</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -47,27 +53,17 @@
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/provincia', provincia.id, 'view']"
-                class="btn btn-info btn-sm"
-                data-cy="entityDetailsButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline">View</span>
-              </button>
-
-              <button
-                type="submit"
                 [routerLink]="['/provincia', provincia.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline">Edit</span>
+                <span class="d-none d-md-inline">Editar</span>
               </button>
 
               <button type="submit" (click)="delete(provincia)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Delete</span>
+                <span class="d-none d-md-inline">Eliminar</span>
               </button>
             </div>
           </td>
@@ -78,7 +74,7 @@
 
   <div *ngIf="provincias && provincias.length > 0">
     <div class="row justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Provincias' }"></jhi-item-count>
     </div>
 
     <div class="row justify-content-center">
