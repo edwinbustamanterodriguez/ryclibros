@@ -1,8 +1,7 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary fixed-top">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <span class="logo-img"></span>
     <span class="navbar-title">R y C Libros</span>
-    <span class="navbar-version">{{ version }}</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -153,7 +152,6 @@
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
           <span *ngIf="!isAuthenticated()">
             <fa-icon icon="user"></fa-icon>
-            <span>Cuenta</span>
           </span>
 
           <div *ngIf="isAuthenticated()" class="profile-navbar-content">

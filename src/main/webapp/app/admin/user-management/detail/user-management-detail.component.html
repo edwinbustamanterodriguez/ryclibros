@@ -1,50 +1,54 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="user">
-      <h2>
-        <span>Detalle del usuario </span>
-      </h2>
+<div class="container-fluid jh-card">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div *ngIf="user">
+        <h2>
+          <span>Detalle del usuario </span>
+        </h2>
 
-      <dl class="row-md jh-entity-details">
-        <dt><span>Usuario</span></dt>
-        <dd>
-          <span>{{ user.login }}</span>
-          <span *ngIf="user.activated" class="badge badge-success">Activado</span>
-          <span *ngIf="!user.activated" class="badge badge-danger">Desactivado</span>
-        </dd>
+        <dl class="row-md jh-entity-details">
+          <dt><span>Usuario</span></dt>
+          <dd>
+            <span>{{ user.login }}</span>
+            <span *ngIf="user.activated" class="badge badge-success">Activado</span>
+            <span *ngIf="!user.activated" class="badge badge-danger">Desactivado</span>
+          </dd>
 
-        <dt><span>Nombre</span></dt>
-        <dd>{{ user.firstName }}</dd>
+          <dt><span>Nombre</span></dt>
+          <dd>{{ user.firstName }}</dd>
 
-        <dt><span>Apellido</span></dt>
-        <dd>{{ user.lastName }}</dd>
+          <dt><span>Apellido</span></dt>
+          <dd>{{ user.lastName }}</dd>
 
-        <dt><span>Correo</span></dt>
-        <dd>{{ user.email }}</dd>
+          <dt><span>Correo</span></dt>
+          <dd>{{ user.email }}</dd>
 
-        <dt><span>Creado por</span></dt>
-        <dd>{{ user.createdBy }}</dd>
+          <dt><span>Creado por</span></dt>
+          <dd>{{ user.createdBy }}</dd>
 
-        <dt><span>Fecha de creación</span></dt>
-        <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <dt><span>Fecha de creación</span></dt>
+          <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-        <dt><span>Modificado por</span></dt>
-        <dd>{{ user.lastModifiedBy }}</dd>
+          <dt><span>Modificado por</span></dt>
+          <dd>{{ user.lastModifiedBy }}</dd>
 
-        <dt><span>Fecha de modificación</span></dt>
-        <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <dt><span>Fecha de modificación</span></dt>
+          <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
 
-        <dt><span>Roles</span></dt>
-        <dd>
-          <ul class="list-unstyled">
-            <li *ngFor="let authority of user.authorities">
-              <span class="badge badge-info">{{ authority }}</span>
-            </li>
-          </ul>
-        </dd>
-      </dl>
+          <dt><span>Roles</span></dt>
+          <dd>
+            <ul class="list-unstyled">
+              <li *ngFor="let authority of user.authorities">
+                <span class="badge badge-info">{{ authority }}</span>
+              </li>
+            </ul>
+          </dd>
+        </dl>
 
-      <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span></button>
+        <button type="submit" routerLink="../../" class="btn btn-info">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
