@@ -22,6 +22,11 @@ public class Localidad implements Serializable {
     @Column(name = "localidad_nombre", nullable = false, unique = true)
     private String nombre;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "localidad_provincia_id_fk", nullable = false)
+    private Provincia provincia;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -47,6 +52,19 @@ public class Localidad implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Provincia getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
+    }
+
+    public Localidad provincia(Provincia provincia) {
+        this.provincia = provincia;
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

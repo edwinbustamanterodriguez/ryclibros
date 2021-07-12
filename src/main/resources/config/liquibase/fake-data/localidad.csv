@@ -1,11 +1,11 @@
-localidad_id_pk;localidad_nombre
-1;Consultor
-2;fritas Centralizado
-3;Zapatos
-4;port
-5;Algodón
-6;Guinea-Bisau
-7;analista copy transmit
-8;Bedfordshire International Plástico
-9;Productor
-10;Explanada San
+localidad_id_pk;localidad_nombre;localidad_provincia_id_fk
+1;Consultor;1
+2;fritas Centralizado;1
+3;Zapatos;1
+4;port;1
+5;Algodón;1
+6;Guinea-Bisau;1
+7;analista copy transmit;1
+8;Bedfordshire International Plástico;1
+9;Productor;1
+10;Explanada San;1

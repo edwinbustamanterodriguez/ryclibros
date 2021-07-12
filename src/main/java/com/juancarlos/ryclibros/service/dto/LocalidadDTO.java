@@ -14,6 +14,9 @@ public class LocalidadDTO implements Serializable {
     @NotNull
     private String nombre;
 
+    @NotNull
+    private ProvinciaDTO provincia;
+
     public Long getId() {
         return id;
     }
@@ -28,6 +31,14 @@ public class LocalidadDTO implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public ProvinciaDTO getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(ProvinciaDTO provincia) {
+        this.provincia = provincia;
     }
 
     @Override
@@ -57,6 +68,7 @@ public class LocalidadDTO implements Serializable {
         return "LocalidadDTO{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
+            ", provincia='" + getProvincia() + "'" +
             "}";
     }
 }
