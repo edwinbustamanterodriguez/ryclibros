@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -58,6 +59,10 @@ export class LibroUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ libro }) => {
       this.updateForm(libro);
       this.loadRelationshipsOptions();
+
+      if (libro.id) {
+        this.loadLocalidades(libro.provincia.id);
+      }
     });
   }
 
@@ -157,9 +162,11 @@ export class LibroUpdateComponent implements OnInit {
         )
       )
       .subscribe((provincias: IProvincia[]) => (this.provinciasSharedCollection = provincias));
+  }
 
+  loadLocalidades(provinciaId: number): void {
     this.localidadService
-      .query()
+      .query2(provinciaId)
       .pipe(map((res: HttpResponse<ILocalidad[]>) => res.body ?? []))
       .pipe(
         map((localidades: ILocalidad[]) =>
@@ -191,5 +198,15 @@ export class LibroUpdateComponent implements OnInit {
       numero: this.editForm.get(['ubicacionNumero'])!.value,
       serie: this.editForm.get(['ubicacionSerie'])!.value,
     };
+  }
+
+  onChangeProvincia(iProvincia: IProvincia) {
+    this.editForm.patchValue({
+      localidad: null,
+    });
+
+    if (iProvincia && iProvincia.id !== undefined) {
+      this.loadLocalidades(iProvincia.id);
+    }
   }
 }

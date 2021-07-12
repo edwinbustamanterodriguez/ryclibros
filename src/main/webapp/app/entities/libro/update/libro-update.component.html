@@ -18,7 +18,14 @@
               <div class="d-flex mb-0 pb-0">
                 <div class="form-group flex-fill pr-1">
                   <label class="form-control-label" for="field_provincia">Provincia</label>
-                  <select class="form-control" id="field_provincia" data-cy="provincia" name="provincia" formControlName="provincia">
+                  <select
+                    class="form-control"
+                    id="field_provincia"
+                    data-cy="provincia"
+                    name="provincia"
+                    formControlName="provincia"
+                    (ngModelChange)="onChangeProvincia($event)"
+                  >
                     <option *ngIf="!editForm.get('provincia')!.value" [ngValue]="null" selected></option>
                     <option
                       [ngValue]="
