@@ -39,6 +39,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'Localidades' },
         loadChildren: () => import('./localidad/localidad.module').then(m => m.LocalidadModule),
       },
+      {
+        path: 'orc',
+        data: { pageTitle: 'Orcs' },
+        loadChildren: () => import('./orc/orc.module').then(m => m.OrcModule),
+      },
 
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),

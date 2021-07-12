@@ -1,0 +1,24 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { IOrc } from '../orc.model';
+
+@Component({
+  selector: 'jhi-orc-detail',
+  templateUrl: './orc-detail.component.html',
+})
+export class OrcDetailComponent implements OnInit {
+  orc: IOrc | null = null;
+
+  constructor(protected activatedRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ orc }) => {
+      this.orc = orc;
+    });
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+}
