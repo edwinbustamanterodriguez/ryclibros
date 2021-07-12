@@ -7,6 +7,7 @@ export interface IPersona {
   expedicion?: string;
   telefono?: string | null;
   institucion?: string | null;
+  esOficialDeRegistro?: boolean;
 }
 
 export class Persona implements IPersona {
@@ -18,8 +19,11 @@ export class Persona implements IPersona {
     public ci?: string,
     public expedicion?: string,
     public telefono?: string | null,
-    public institucion?: string | null
-  ) {}
+    public institucion?: string | null,
+    public esOficialDeRegistro?: boolean
+  ) {
+    this.esOficialDeRegistro = this.esOficialDeRegistro ?? false;
+  }
 }
 
 export function getPersonaIdentifier(persona: IPersona): number | undefined {

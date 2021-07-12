@@ -27,6 +27,7 @@ export class PersonaUpdateComponent implements OnInit {
     expedicion: [null, [Validators.required]],
     telefono: [],
     institucion: [],
+    esOficialDeRegistro: [null, [Validators.required]],
   });
 
   constructor(protected personaService: PersonaService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {
@@ -82,6 +83,7 @@ export class PersonaUpdateComponent implements OnInit {
       expedicion: persona.expedicion,
       telefono: persona.telefono,
       institucion: persona.institucion,
+      esOficialDeRegistro: persona.esOficialDeRegistro,
     });
   }
 
@@ -96,6 +98,7 @@ export class PersonaUpdateComponent implements OnInit {
       expedicion: this.editForm.get(['expedicion'])!.value,
       telefono: this.editForm.get(['telefono'])!.value,
       institucion: this.editForm.get(['institucion'])!.value,
+      esOficialDeRegistro: this.editForm.get(['esOficialDeRegistro'])!.value,
     };
   }
 }

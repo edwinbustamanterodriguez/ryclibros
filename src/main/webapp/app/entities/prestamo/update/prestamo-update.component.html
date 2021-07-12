@@ -115,6 +115,9 @@
                     <th scope="col">
                       <span>Institución</span>
                     </th>
+                    <th scope="col">
+                      <span>Oficial de registro</span>
+                    </th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -139,6 +142,7 @@
                     <td>{{ persona.ci + ' ' + departamentosAbr(persona.expedicion) }}</td>
                     <td>{{ persona.telefono }}</td>
                     <td>{{ persona.institucion }}</td>
+                    <td>{{ persona.esOficialDeRegistro ? 'SI' : 'NO' }}</td>
                     <td class="text-right"></td>
                     <td class="text-right">
                       <div class="btn btn-primary btn-sm" (click)="selectedPrestatario()">

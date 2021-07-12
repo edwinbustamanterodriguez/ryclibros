@@ -72,6 +72,28 @@
               formControlName="institucion"
             />
           </div>
+
+          <div class="form-group">
+            <label class="form-control-label" for="field_es_oficial_de_registro">Esta persona es Oficial de Registro</label>
+            <input
+              type="checkbox"
+              class="form-check"
+              name="activo"
+              id="field_es_oficial_de_registro"
+              data-cy="field_es_oficial_de_registro"
+              formControlName="esOficialDeRegistro"
+            />
+            <div
+              *ngIf="
+                editForm.get('esOficialDeRegistro')!.invalid &&
+                (editForm.get('esOficialDeRegistro')!.dirty || editForm.get('esOficialDeRegistro')!.touched)
+              "
+            >
+              <small class="form-text text-danger" *ngIf="editForm.get('esOficialDeRegistro')?.errors?.required">
+                Este campo es requerido.
+              </small>
+            </div>
+          </div>
         </div>
 
         <div>

@@ -94,6 +94,10 @@
             <span>Institución</span>
             <fa-icon icon="sort"></fa-icon>
           </th>
+          <th scope="col" jhiSortBy="esOficialDeRegistro">
+            <span>Oficial de registro</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -108,6 +112,7 @@
           <td>{{ persona.ci + ' ' + departamentosAbr(persona.expedicion) }}</td>
           <td>{{ persona.telefono }}</td>
           <td>{{ persona.institucion }}</td>
+          <td>{{ persona.esOficialDeRegistro ? 'SI' : 'NO' }}</td>
           <td class="text-right">
             <div class="btn-group">
               <button

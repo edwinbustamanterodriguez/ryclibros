@@ -29,6 +29,9 @@ public class PersonaDTO implements Serializable {
 
     private String institucion;
 
+    @NotNull
+    private Boolean esOficialDeRegistro;
+
     public Long getId() {
         return id;
     }
@@ -93,6 +96,14 @@ public class PersonaDTO implements Serializable {
         this.institucion = institucion;
     }
 
+    public Boolean getEsOficialDeRegistro() {
+        return esOficialDeRegistro;
+    }
+
+    public void setEsOficialDeRegistro(Boolean esOficialDeRegistro) {
+        this.esOficialDeRegistro = esOficialDeRegistro;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -126,6 +137,7 @@ public class PersonaDTO implements Serializable {
             ", expedicion='" + getExpedicion() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", institucion='" + getInstitucion() + "'" +
+            ", esOficialDeRegistro='" + getEsOficialDeRegistro() + "'" +
             "}";
     }
 }

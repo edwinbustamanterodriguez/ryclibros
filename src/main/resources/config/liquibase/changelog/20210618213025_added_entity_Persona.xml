@@ -35,6 +35,9 @@
             <column name="persona_institucion" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="persona_es_oficial_de_registro" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -62,6 +65,7 @@
             <column name="persona_expedicion" type="string"/>
             <column name="persona_telefono" type="string"/>
             <column name="persona_institucion" type="string"/>
+            <column name="persona_es_oficial_de_registro" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

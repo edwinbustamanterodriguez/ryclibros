@@ -43,6 +43,10 @@ public class Persona implements Serializable {
     @Column(name = "persona_institucion")
     private String institucion;
 
+    @NotNull
+    @Column(name = "persona_es_oficial_de_registro", nullable = false)
+    private Boolean esOficialDeRegistro;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -148,6 +152,19 @@ public class Persona implements Serializable {
         this.institucion = institucion;
     }
 
+    public Boolean getEsOficialDeRegistro() {
+        return esOficialDeRegistro;
+    }
+
+    public void setEsOficialDeRegistro(Boolean esOficialDeRegistro) {
+        this.esOficialDeRegistro = esOficialDeRegistro;
+    }
+
+    public Persona esOficialDeRegistro(Boolean esOficialDeRegistro) {
+        this.esOficialDeRegistro = esOficialDeRegistro;
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -179,6 +196,7 @@ public class Persona implements Serializable {
             ", expedicion='" + getExpedicion() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", institucion='" + getInstitucion() + "'" +
+            ", esOficalDeRegistro='" + getEsOficialDeRegistro() + "'" +
             "}";
     }
 }

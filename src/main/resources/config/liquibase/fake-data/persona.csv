@@ -1,5 +1,5 @@
-persona_id_pk;persona_nombre;persona_apaterno;persona_amaterno;persona_ci;persona_expedicion;persona_telefono;persona_institucion
-1;Edwin;Bustamante;Rodriguez;8785958;Oruro;75495889;Xiobit
-2;Luis;Balderrama;Rojas;65660;Oruro;7555223;Inteligente Account Salud
-3;Juan Carlos;Martinez;Chavez;64331;Oruro;7855855;Team
+persona_id_pk;persona_nombre;persona_apaterno;persona_amaterno;persona_ci;persona_expedicion;persona_telefono;persona_institucion;persona_es_oficial_de_registro
+1;Edwin;Bustamante;Rodriguez;8785958;Oruro;75495889;Xiobit;true
+2;Luis;Balderrama;Rojas;65660;Oruro;7555223;Inteligente Account Salud;false
+3;Juan Carlos;Martinez;Chavez;64331;Oruro;7855855;Team;false
 
