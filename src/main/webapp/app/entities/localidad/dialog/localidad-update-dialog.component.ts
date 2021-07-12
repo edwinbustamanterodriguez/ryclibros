@@ -1,35 +1,49 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ILocalidad, Localidad } from '../localidad.model';
 import { LocalidadService } from '../service/localidad.service';
+import { IProvincia } from 'app/entities/provincia/provincia.model';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 @Component({
-  selector: 'jhi-localidad-update',
-  templateUrl: './localidad-update.component.html',
+  templateUrl: './localidad-update-dialog.component.html',
 })
-export class LocalidadUpdateComponent implements OnInit {
+export class LocalidadUpdateDialogComponent implements OnInit {
+  localidad?: ILocalidad;
+  provincia?: IProvincia;
+
   isSaving = false;
 
   editForm = this.fb.group({
     id: [],
     nombre: [null, [Validators.required]],
+    provincia: [null, [Validators.required]],
   });
 
-  constructor(protected localidadService: LocalidadService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
+  constructor(protected localidadService: LocalidadService, public activeModal: NgbActiveModal, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ localidad }) => {
-      this.updateForm(localidad);
+    this.editForm.patchValue({
+      id: this.localidad?.id,
+      nombre: this.localidad?.nombre,
+      provincia: this.provincia,
     });
   }
 
-  previousState(): void {
-    window.history.back();
+  protected updateForm(localidad: ILocalidad): void {
+    this.editForm.patchValue({
+      id: localidad.id,
+      nombre: localidad.nombre,
+    });
+  }
+
+  cancel(): void {
+    this.activeModal.dismiss();
   }
 
   save(): void {
@@ -50,7 +64,7 @@ export class LocalidadUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    this.activeModal.close('close-dialog-localidad');
   }
 
   protected onSaveError(): void {
@@ -61,18 +75,12 @@ export class LocalidadUpdateComponent implements OnInit {
     this.isSaving = false;
   }
 
-  protected updateForm(localidad: ILocalidad): void {
-    this.editForm.patchValue({
-      id: localidad.id,
-      nombre: localidad.nombre,
-    });
-  }
-
   protected createFromForm(): ILocalidad {
     return {
       ...new Localidad(),
       id: this.editForm.get(['id'])!.value,
       nombre: this.editForm.get(['nombre'])!.value,
+      provincia: this.editForm.get(['provincia'])!.value,
     };
   }
 }

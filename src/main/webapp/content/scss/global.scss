@@ -197,9 +197,13 @@ CUSTOM  STYLES
   transform: scale(1.1);
 }
 
-.card-custom:hover {
+.card-custom2:hover {
   box-shadow: 0 1rem 3rem rgba($black, 0.175);
   transform: scale(1.1);
+}
+
+.card-custom {
+  box-shadow: 0 1rem 3rem rgba($black, 0.175);
 }
 
 /*.c1 {

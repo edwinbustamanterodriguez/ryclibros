@@ -53,6 +53,15 @@
             <div class="btn-group">
               <button
                 type="submit"
+                [routerLink]="['/localidad', provincia.id, 'manage']"
+                class="btn btn-success btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="cog"></fa-icon>
+                <span class="d-none d-md-inline">Administrar localidades</span>
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/provincia', provincia.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"

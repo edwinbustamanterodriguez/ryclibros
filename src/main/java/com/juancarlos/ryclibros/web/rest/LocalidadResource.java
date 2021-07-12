@@ -153,6 +153,14 @@ public class LocalidadResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/localidads/provincia/{id}")
+    public ResponseEntity<List<LocalidadDTO>> getAllLocalidadesByProvincia(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get a page of Localidads");
+        Page<LocalidadDTO> page = localidadService.findAllByProvincia(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /localidads/:id} : get the "id" localidad.
      *

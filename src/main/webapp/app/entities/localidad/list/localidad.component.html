@@ -1,22 +1,25 @@
 <div class="container-fluid jh-card">
   <h2 id="page-heading" data-cy="LocalidadHeading">
-    <span>Localidades</span>
+    <span>Localidades de la provincia {{ provincia?.nombre }}</span>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
-        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span>Actualizar Lista</span>
-      </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-localidad"
-        [routerLink]="['/localidad/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span> Crear localidad </span>
-      </button>
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <button class="btn btn-info" (click)="previousState()" [disabled]="isLoading">
+          <fa-icon icon="arrow-left"></fa-icon>
+          <span>Atrás</span>
+        </button>
+      </div>
+      <div class="p-2">
+        <button
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          class="btn btn-primary jh-create-entity create-localidad"
+          (click)="newLocalidad()"
+        >
+          <fa-icon icon="plus"></fa-icon>
+          <span> Agregar Localidad </span>
+        </button>
+      </div>
     </div>
   </h2>
 
@@ -25,15 +28,21 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="localidads?.length === 0">
-    <span>No se encontró localidades</span>
+    <span>No se encontró localidades para esta prrovincia</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="localidads && localidads.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="nombre"><span>Nombre</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nombre">
+            <span>Nombre</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -45,12 +54,7 @@
           <td>{{ localidad.nombre }}</td>
           <td class="text-right">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/localidad', localidad.id, 'edit']"
-                class="btn btn-primary btn-sm"
-                data-cy="entityEditButton"
-              >
+              <button type="submit" class="btn btn-primary btn-sm" data-cy="entityEditButton" (click)="editarLocalidad(localidad)">
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Editar</span>
               </button>

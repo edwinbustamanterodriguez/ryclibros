@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { LocalidadComponent } from '../list/localidad.component';
-import { LocalidadUpdateComponent } from '../update/localidad-update.component';
-import { LocalidadRoutingResolveService } from './localidad-routing-resolve.service';
+import { ProvinciaRoutingResolveService } from 'app/entities/provincia/route/provincia-routing-resolve.service';
 
 const localidadRoute: Routes = [
   {
@@ -15,19 +14,15 @@ const localidadRoute: Routes = [
     },
     canActivate: [UserRouteAccessService],
   },
+
   {
-    path: 'new',
-    component: LocalidadUpdateComponent,
-    resolve: {
-      localidad: LocalidadRoutingResolveService,
+    path: ':id/manage',
+    component: LocalidadComponent,
+    data: {
+      defaultSort: 'id,asc',
     },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: LocalidadUpdateComponent,
     resolve: {
-      localidad: LocalidadRoutingResolveService,
+      provincia: ProvinciaRoutingResolveService,
     },
     canActivate: [UserRouteAccessService],
   },

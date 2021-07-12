@@ -97,4 +97,10 @@ public class LocalidadService {
         log.debug("Request to delete Localidad : {}", id);
         localidadRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Page<LocalidadDTO> findAllByProvincia(Long id, Pageable pageable) {
+        log.debug("Request to get all Localidads");
+        return localidadRepository.findAllByProvincia_Id(id, pageable).map(localidadMapper::toDto);
+    }
 }
