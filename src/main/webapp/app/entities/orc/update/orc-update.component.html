@@ -1,40 +1,42 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-orc-heading" data-cy="OrcCreateUpdateHeading">Create or edit a Orc</h2>
+<div class="container-fluid jh-card">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <h2 id="jhi-orc-heading" data-cy="OrcCreateUpdateHeading">Create or edit a Orc</h2>
 
-      <div>
-        <jhi-alert-error></jhi-alert-error>
+        <div>
+          <jhi-alert-error></jhi-alert-error>
 
-        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-control-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+          <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+            <label class="form-control-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
 
-        <div class="form-group">
-          <label class="form-control-label" for="field_numero">Numero</label>
-          <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
-          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> This field is required. </small>
+          <div class="form-group">
+            <label class="form-control-label" for="field_numero">Numero de ORC</label>
+            <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+            <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> Este campo es requerido </small>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
-        </button>
+        <div>
+          <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+          </button>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
-        </button>
-      </div>
-    </form>
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

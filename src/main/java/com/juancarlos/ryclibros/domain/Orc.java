@@ -15,10 +15,11 @@ public class Orc implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orc_id_pk", nullable = false)
     private Long id;
 
     @NotNull
-    @Column(name = "numero", nullable = false, unique = true)
+    @Column(name = "orc_numero", nullable = false, unique = true)
     private String numero;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

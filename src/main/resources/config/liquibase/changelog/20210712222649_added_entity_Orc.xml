@@ -11,10 +11,10 @@
     -->
     <changeSet id="20210712222649-1" author="jhipster">
         <createTable tableName="orc">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="orc_id_pk" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="numero" type="varchar(255)">
+            <column name="orc_numero" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_orc__numero" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -36,8 +36,8 @@
                   file="config/liquibase/fake-data/orc.csv"
                   separator=";"
                   tableName="orc">
-            <column name="id" type="numeric"/>
-            <column name="numero" type="string"/>
+            <column name="orc_id_pk" type="numeric"/>
+            <column name="orc_numero" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

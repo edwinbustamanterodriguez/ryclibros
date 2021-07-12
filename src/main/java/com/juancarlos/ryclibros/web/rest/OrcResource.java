@@ -3,6 +3,7 @@ package com.juancarlos.ryclibros.web.rest;
 import com.juancarlos.ryclibros.repository.OrcRepository;
 import com.juancarlos.ryclibros.service.OrcService;
 import com.juancarlos.ryclibros.service.dto.OrcDTO;
+import com.juancarlos.ryclibros.service.utilies.HeaderUtilCustom;
 import com.juancarlos.ryclibros.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -34,7 +35,7 @@ public class OrcResource {
 
     private final Logger log = LoggerFactory.getLogger(OrcResource.class);
 
-    private static final String ENTITY_NAME = "orc";
+    private static final String ENTITY_NAME = "oficialia de registro civil";
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
@@ -59,12 +60,16 @@ public class OrcResource {
     public ResponseEntity<OrcDTO> createOrc(@Valid @RequestBody OrcDTO orcDTO) throws URISyntaxException {
         log.debug("REST request to save Orc : {}", orcDTO);
         if (orcDTO.getId() != null) {
-            throw new BadRequestAlertException("A new orc cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException(
+                "Una nueva oficialia de registro civil no puede tener una identificación",
+                ENTITY_NAME,
+                "idexists"
+            );
         }
         OrcDTO result = orcService.save(orcDTO);
         return ResponseEntity
             .created(new URI("/api/orcs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityCreationAlert(applicationName, false, "la", ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
@@ -83,20 +88,20 @@ public class OrcResource {
         throws URISyntaxException {
         log.debug("REST request to update Orc : {}, {}", id, orcDTO);
         if (orcDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, orcDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!orcRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la oficialia", ENTITY_NAME, "idnotfound");
         }
 
         OrcDTO result = orcService.save(orcDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, orcDTO.getId().toString()))
+            .headers(HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, orcDTO.getId().toString()))
             .body(result);
     }
 
@@ -118,21 +123,21 @@ public class OrcResource {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Orc partially : {}, {}", id, orcDTO);
         if (orcDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idnull");
         }
         if (!Objects.equals(id, orcDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException("Identificación inválida", ENTITY_NAME, "idinvalid");
         }
 
         if (!orcRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException("No se encontró la oficialia", ENTITY_NAME, "idnotfound");
         }
 
         Optional<OrcDTO> result = orcService.partialUpdate(orcDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, orcDTO.getId().toString())
+            HeaderUtilCustom.createEntityUpdateAlert(applicationName, false, "la", ENTITY_NAME, orcDTO.getId().toString())
         );
     }
 
@@ -175,7 +180,7 @@ public class OrcResource {
         orcService.delete(id);
         return ResponseEntity
             .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+            .headers(HeaderUtilCustom.createEntityDeletionAlert(applicationName, false, "la", ENTITY_NAME, id.toString()))
             .build();
     }
 }
