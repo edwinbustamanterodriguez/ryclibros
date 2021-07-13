@@ -9,7 +9,15 @@ import org.mapstruct.*;
  */
 @Mapper(
     componentModel = "spring",
-    uses = { CategoriaMapper.class, UserMapper.class, LocalidadMapper.class, ProvinciaMapper.class, UbicacionMapper.class }
+    uses = {
+        CategoriaMapper.class,
+        UserMapper.class,
+        LocalidadMapper.class,
+        ProvinciaMapper.class,
+        UbicacionMapper.class,
+        OrcMapper.class,
+        PersonaMapper.class,
+    }
 )
 public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Named("id")
@@ -27,5 +35,7 @@ public interface LibroMapper extends EntityMapper<LibroDTO, Libro> {
     @Mapping(target = "localidad", source = "localidad", qualifiedByName = "id")
     @Mapping(target = "provincia", source = "provincia", qualifiedByName = "id")
     @Mapping(target = "ubicacion", source = "ubicacion", qualifiedByName = "id")
+    @Mapping(target = "orc", source = "orc", qualifiedByName = "id")
+    @Mapping(target = "persona", source = "persona", qualifiedByName = "id")
     LibroDTO toDto(Libro s);
 }

@@ -255,7 +255,7 @@ export class LibroUpdateComponent implements OnInit {
 
   onChangeOrc(iOrc: IOrc) {
     this.editForm.patchValue({
-      orc: null,
+      persona: null,
     });
 
     if (iOrc && iOrc.id !== undefined) {

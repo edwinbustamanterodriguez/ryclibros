@@ -195,7 +195,7 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
     }
 
     public Libro persona(Persona persona) {
-        this.persona(persona);
+        this.setPersona(persona);
         return this;
     }
 

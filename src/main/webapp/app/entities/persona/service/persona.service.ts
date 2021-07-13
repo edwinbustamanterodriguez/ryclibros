@@ -72,6 +72,6 @@ export class PersonaService {
   }
 
   oficialesDeRegistroPorOrc(id: number): Observable<EntityArrayResponseType> {
-    return this.http.get<IPersona[]>(`${this.resourceUrl}/orc/${id}`, { observe: 'response' });
+    return this.http.get<IPersona[]>(`${this.resourceUrl}/or/${id}`, { observe: 'response' });
   }
 }
