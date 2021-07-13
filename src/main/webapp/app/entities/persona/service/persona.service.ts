@@ -70,4 +70,8 @@ export class PersonaService {
 
     return this.http.get<IPersona[]>(this.resourceUrl + '/_search', { params: options, observe: 'response' });
   }
+
+  oficialesDeRegistroPorOrc(id: number): Observable<EntityArrayResponseType> {
+    return this.http.get<IPersona[]>(`${this.resourceUrl}/orc/${id}`, { observe: 'response' });
+  }
 }

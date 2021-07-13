@@ -16,6 +16,10 @@ import { ProvinciaService } from 'app/entities/provincia/service/provincia.servi
 import { LocalidadService } from 'app/entities/localidad/service/localidad.service';
 import { EnumUbicaciones } from 'app/shared/enums/enum-ubicaciones';
 import { IUbicacion, Ubicacion } from 'app/entities/ubicacion/ubicacion.model';
+import { IOrc } from 'app/entities/orc/orc.model';
+import { OrcService } from 'app/entities/orc/service/orc.service';
+import { PersonaService } from 'app/entities/persona/service/persona.service';
+import { IPersona } from 'app/entities/persona/persona.model';
 
 @Component({
   selector: 'jhi-libro-update',
@@ -27,6 +31,8 @@ export class LibroUpdateComponent implements OnInit {
   categoriasSharedCollection: ICategoria[] = [];
   provinciasSharedCollection: IProvincia[] = [];
   localidadesSharedCollection: ILocalidad[] = [];
+  orcsSharedCollection: IOrc[] = [];
+  personasSharedCollection: IPersona[] = [];
 
   sectores: string[] = [];
 
@@ -38,6 +44,8 @@ export class LibroUpdateComponent implements OnInit {
     categoria: [null, Validators.required],
     provincia: [null, Validators.required],
     localidad: [null, Validators.required],
+    orc: [null, Validators.required],
+    persona: [null, Validators.required],
     ubicacionId: [],
     ubicacionSector: [null, [Validators.required]],
     ubicacionNumero: [null, [Validators.required, Validators.min(0)]],
@@ -50,7 +58,9 @@ export class LibroUpdateComponent implements OnInit {
     protected provinciaService: ProvinciaService,
     protected localidadService: LocalidadService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected orcService: OrcService,
+    protected personaService: PersonaService
   ) {
     this.sectores = Object.values(EnumUbicaciones);
   }
@@ -62,6 +72,7 @@ export class LibroUpdateComponent implements OnInit {
 
       if (libro.id) {
         this.loadLocalidades(libro.provincia.id);
+        this.loadPersonas(libro.orc.id);
       }
     });
   }
@@ -89,6 +100,14 @@ export class LibroUpdateComponent implements OnInit {
   }
 
   trackLocalidadById(index: number, item: ILocalidad): number {
+    return item.id!;
+  }
+
+  trackOrcById(index: number, item: IOrc): number {
+    return item.id!;
+  }
+
+  trackPersonaById(index: number, item: IPersona): number {
     return item.id!;
   }
 
@@ -120,6 +139,8 @@ export class LibroUpdateComponent implements OnInit {
       categoria: libro.categoria,
       provincia: libro.provincia,
       localidad: libro.localidad,
+      orc: libro.orc,
+      persona: libro.persona,
       ubicacionId: libro.ubicacion?.id,
       ubicacionSector: libro.ubicacion?.sector,
       ubicacionNumero: libro.ubicacion?.numero,
@@ -137,9 +158,13 @@ export class LibroUpdateComponent implements OnInit {
     );
 
     this.localidadesSharedCollection = this.localidadService.addLocalidadToCollectionIfMissing(
-      this.categoriasSharedCollection,
+      this.localidadesSharedCollection,
       libro.localidad
     );
+
+    this.orcsSharedCollection = this.orcService.addOrcToCollectionIfMissing(this.orcsSharedCollection, libro.orc);
+
+    this.personasSharedCollection = this.personaService.addPersonaToCollectionIfMissing(this.personasSharedCollection, libro.persona);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -162,6 +187,12 @@ export class LibroUpdateComponent implements OnInit {
         )
       )
       .subscribe((provincias: IProvincia[]) => (this.provinciasSharedCollection = provincias));
+
+    this.orcService
+      .query()
+      .pipe(map((res: HttpResponse<IOrc[]>) => res.body ?? []))
+      .pipe(map((orcs: IOrc[]) => this.orcService.addOrcToCollectionIfMissing(orcs, this.editForm.get('orc')!.value)))
+      .subscribe((orcs: IOrc[]) => (this.orcsSharedCollection = orcs));
   }
 
   loadLocalidades(provinciaId: number): void {
@@ -176,6 +207,16 @@ export class LibroUpdateComponent implements OnInit {
       .subscribe((localidades: ILocalidad[]) => (this.localidadesSharedCollection = localidades));
   }
 
+  loadPersonas(orcId: number): void {
+    this.personaService
+      .oficialesDeRegistroPorOrc(orcId)
+      .pipe(map((res: HttpResponse<IPersona[]>) => res.body ?? []))
+      .pipe(
+        map((personas: IPersona[]) => this.personaService.addPersonaToCollectionIfMissing(personas, this.editForm.get('persona')!.value))
+      )
+      .subscribe((personas: IPersona[]) => (this.personasSharedCollection = personas));
+  }
+
   protected createFromForm(): ILibro {
     return {
       ...new Libro(),
@@ -186,6 +227,8 @@ export class LibroUpdateComponent implements OnInit {
       categoria: this.editForm.get(['categoria'])!.value,
       provincia: this.editForm.get(['provincia'])!.value,
       localidad: this.editForm.get(['localidad'])!.value,
+      orc: this.editForm.get(['orc'])!.value,
+      persona: this.editForm.get(['persona'])!.value,
       ubicacion: this.createFromFormUbicacion(),
     };
   }
@@ -207,6 +250,16 @@ export class LibroUpdateComponent implements OnInit {
 
     if (iProvincia && iProvincia.id !== undefined) {
       this.loadLocalidades(iProvincia.id);
+    }
+  }
+
+  onChangeOrc(iOrc: IOrc) {
+    this.editForm.patchValue({
+      orc: null,
+    });
+
+    if (iOrc && iOrc.id !== undefined) {
+      this.loadPersonas(iOrc.id);
     }
   }
 }

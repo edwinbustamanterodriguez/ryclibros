@@ -82,6 +82,12 @@ public class PersonaService {
         return personaRepository.findAllByEsOficialDeRegistroIsTrue(pageable).map(personaMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PersonaDTO> findAllORByOrc(Long id, Pageable pageable) {
+        log.debug("Request to get all Personas");
+        return personaRepository.findAllByOrcs_id(id, pageable).map(personaMapper::toDto);
+    }
+
     /**
      * Get one persona by id.
      *

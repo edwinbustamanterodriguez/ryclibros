@@ -1,5 +1,5 @@
-libro_id_pk;libro_numero;libro_observaciones;libro_cantidad;libro_categoria_id_fk;libro_provincia_id_fk;libro_localidad_id_fk;libro_user_id_fk;libro_ubicacion_id_fk;created_by;last_modified_by
-1;2545;Papelería monitorizar;1;1;1;1;1;1;system;system
-2;7841;Certificados;1;1;1;2;1;2;system;system
+libro_id_pk;libro_numero;libro_observaciones;libro_cantidad;libro_categoria_id_fk;libro_provincia_id_fk;libro_localidad_id_fk;libro_user_id_fk;libro_ubicacion_id_fk;libro_orc_id_fk;libro_persona_id_fk;created_by;last_modified_by
+1;2545;Papelería monitorizar;1;1;1;1;1;1;1;1;system;system
+2;7841;Certificados;1;1;1;1;1;2;1;1;system;system
 
 

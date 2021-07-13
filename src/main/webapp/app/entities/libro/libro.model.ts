@@ -3,6 +3,8 @@ import { IUserRequired } from 'app/entities/user/user-required.model';
 import { IProvincia } from 'app/entities/provincia/provincia.model';
 import { ILocalidad } from 'app/entities/localidad/localidad.model';
 import { IUbicacion } from 'app/entities/ubicacion/ubicacion.model';
+import { IOrc } from 'app/entities/orc/orc.model';
+import { IPersona } from 'app/entities/persona/persona.model';
 
 export interface ILibro {
   id?: number;
@@ -14,6 +16,8 @@ export interface ILibro {
   localidad?: ILocalidad;
   user?: IUserRequired;
   ubicacion?: IUbicacion;
+  orc?: IOrc;
+  persona?: IPersona;
   createdBy?: string;
   createdDate?: Date;
   lastModifiedBy?: string;
@@ -31,6 +35,8 @@ export class Libro implements ILibro {
     public localidad?: ILocalidad,
     public user?: IUserRequired,
     public ubicacion?: IUbicacion,
+    public orc?: IOrc,
+    public persona?: IPersona,
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,

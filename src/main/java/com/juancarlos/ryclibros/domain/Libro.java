@@ -56,6 +56,18 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(name = "libro_ubicacion_id_fk", unique = true)
     private Ubicacion ubicacion;
 
+    @JsonIgnoreProperties(value = {}, allowSetters = true)
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "libro_orc_id_fk", unique = true)
+    private Orc orc;
+
+    @JsonIgnoreProperties(value = {}, allowSetters = true)
+    @OneToOne(optional = false)
+    @NotNull
+    @JoinColumn(name = "libro_persona_id_fk", unique = true)
+    private Persona persona;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -161,6 +173,32 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
         return this;
     }
 
+    public Orc getOrc() {
+        return orc;
+    }
+
+    public void setOrc(Orc orc) {
+        this.orc = orc;
+    }
+
+    public Libro orc(Orc orc) {
+        this.setOrc(orc);
+        return this;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public Libro persona(Persona persona) {
+        this.persona(persona);
+        return this;
+    }
+
     public User getUser() {
         return user;
     }
@@ -200,7 +238,7 @@ public class Libro extends AbstractAuditingEntity implements Serializable {
             "id=" + getId() +
             ", numero='" + getNumero() + "'" +
             ", observaciones='" + getObservaciones() + "'" +
-            ",cantidad=" + getCantidad() +
+            ", cantidad=" + getCantidad() +
             "}";
     }
 }

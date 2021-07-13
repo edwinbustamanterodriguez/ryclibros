@@ -38,6 +38,12 @@
             <column name="libro_ubicacion_id_fk" type="bigint">
                 <constraints nullable="false" unique="true" uniqueConstraintName="fk_libro_ubicacion_id"/>
             </column>
+            <column name="libro_orc_id_fk" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="libro_persona_id_fk" type="bigint">
+                <constraints nullable="false"/>
+            </column>
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
@@ -72,6 +78,8 @@
             <column name="libro_localidad_id_fk" type="numeric"/>
             <column name="libro_user_id_fk" type="numeric"/>
             <column name="libro_ubicacion_id_fk" type="numeric"/>
+            <column name="libro_orc_id_fk" type="numeric"/>
+            <column name="libro_persona_id_fk" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

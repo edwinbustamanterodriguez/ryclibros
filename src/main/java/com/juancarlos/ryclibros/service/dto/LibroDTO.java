@@ -27,6 +27,10 @@ public class LibroDTO implements Serializable {
 
     private UbicacionDTO ubicacion;
 
+    private OrcDTO orc;
+
+    private PersonaDTO persona;
+
     private UserDTO user;
 
     private String createdBy;
@@ -141,6 +145,22 @@ public class LibroDTO implements Serializable {
         this.ubicacion = ubicacion;
     }
 
+    public OrcDTO getOrc() {
+        return orc;
+    }
+
+    public void setOrc(OrcDTO orc) {
+        this.orc = orc;
+    }
+
+    public PersonaDTO getPersona() {
+        return persona;
+    }
+
+    public void setPersona(PersonaDTO persona) {
+        this.persona = persona;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -172,6 +192,8 @@ public class LibroDTO implements Serializable {
             ", categoria=" + getCategoria() +
             ", provincia=" + getProvincia() +
             ", localidad=" + getLocalidad() +
+            ", orc=" + getOrc() +
+            ", persona=" + getPersona() +
             ", user=" + getUser() +
             ", ubicacion=" + getUbicacion() +
             ", createdBy=" + createdBy +

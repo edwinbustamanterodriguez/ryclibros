@@ -22,4 +22,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     Page<Persona> findAllByCiContaining(String Ci, Pageable pageable);
 
     Page<Persona> findAllByEsOficialDeRegistroIsTrue(Pageable pageable);
+
+    Page<Persona> findAllByOrcs_id(Long id, Pageable pageable);
 }

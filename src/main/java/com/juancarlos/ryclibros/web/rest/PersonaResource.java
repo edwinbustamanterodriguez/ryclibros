@@ -173,6 +173,14 @@ public class PersonaResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/personas/or/{id}")
+    public ResponseEntity<List<PersonaDTO>> getAllPersonasORByOrc(@PathVariable Long id, Pageable pageable) {
+        log.debug("REST request to get a page of Personas");
+        Page<PersonaDTO> page = personaService.findAllORByOrc(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /personas/:id} : get the "id" persona.
      *

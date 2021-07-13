@@ -32,6 +32,18 @@
                                  referencedColumnNames="ubicacion_id_pk"
                                  referencedTableName="ubicacion"/>
 
+        <addForeignKeyConstraint baseColumnNames="libro_orc_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_orc_id"
+                                 referencedColumnNames="orc_id_pk"
+                                 referencedTableName="orc"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_persona_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_persona_id"
+                                 referencedColumnNames="persona_id_pk"
+                                 referencedTableName="persona"/>
+
         <addForeignKeyConstraint baseColumnNames="libro_user_id_fk"
                                  baseTableName="libro"
                                  constraintName="fk_libro_user_id"
