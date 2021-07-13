@@ -14,5 +14,6 @@ public interface OrcMapper extends EntityMapper<OrcDTO, Orc> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     @Mapping(target = "numero", source = "numero")
+    @Mapping(target = "personas", source = "personas")
     OrcDTO toDto(Orc o);
 }

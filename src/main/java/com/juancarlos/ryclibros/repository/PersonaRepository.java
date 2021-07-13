@@ -20,4 +20,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Long> {
     Page<Persona> findAllByAmaternoContaining(String Amaterno, Pageable pageable);
 
     Page<Persona> findAllByCiContaining(String Ci, Pageable pageable);
+
+    Page<Persona> findAllByEsOficialDeRegistroIsTrue(Pageable pageable);
 }

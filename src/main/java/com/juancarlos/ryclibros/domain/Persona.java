@@ -1,6 +1,9 @@
 package com.juancarlos.ryclibros.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -46,6 +49,10 @@ public class Persona implements Serializable {
     @NotNull
     @Column(name = "persona_es_oficial_de_registro", nullable = false)
     private Boolean esOficialDeRegistro;
+
+    @ManyToMany(mappedBy = "personas")
+    @JsonIgnoreProperties(value = { "personas" }, allowSetters = true)
+    private Set<Orc> orcs = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -163,6 +170,37 @@ public class Persona implements Serializable {
     public Persona esOficialDeRegistro(Boolean esOficialDeRegistro) {
         this.esOficialDeRegistro = esOficialDeRegistro;
         return this;
+    }
+
+    public Set<Orc> getOrcs() {
+        return this.orcs;
+    }
+
+    public Persona orcs(Set<Orc> orcs) {
+        this.setOrcs(orcs);
+        return this;
+    }
+
+    public Persona addOrc(Orc orc) {
+        this.orcs.add(orc);
+        orc.getPersonas().add(this);
+        return this;
+    }
+
+    public Persona removeOrc(Orc orc) {
+        this.orcs.remove(orc);
+        orc.getPersonas().remove(this);
+        return this;
+    }
+
+    public void setOrcs(Set<Orc> orcs) {
+        if (this.orcs != null) {
+            this.orcs.forEach(i -> i.removePersona(this));
+        }
+        if (orcs != null) {
+            orcs.forEach(i -> i.addPersona(this));
+        }
+        this.orcs = orcs;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

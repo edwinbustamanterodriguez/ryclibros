@@ -76,6 +76,12 @@ public class PersonaService {
         return personaRepository.findAll(pageable).map(personaMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PersonaDTO> findAllOR(Pageable pageable) {
+        log.debug("Request to get all Personas");
+        return personaRepository.findAllByEsOficialDeRegistroIsTrue(pageable).map(personaMapper::toDto);
+    }
+
     /**
      * Get one persona by id.
      *

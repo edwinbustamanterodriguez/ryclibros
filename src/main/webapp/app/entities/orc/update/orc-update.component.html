@@ -21,6 +21,18 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label for="field_personas">Oficiales de registro de esta ORC</label>
+          <select class="form-control" id="field_personas" data-cy="persona" multiple name="personas" formControlName="personas">
+            <option
+              [ngValue]="getSelectedPersona(personaOption, editForm.get('personas')!.value)"
+              *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
+            >
+              {{ personaOption.nombre + ' ' + personaOption.apaterno + ' ' + personaOption.amaterno }}
+            </option>
+          </select>
+        </div>
+
         <div>
           <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
             <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>

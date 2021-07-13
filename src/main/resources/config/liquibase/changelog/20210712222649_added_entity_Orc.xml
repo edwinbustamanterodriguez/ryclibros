@@ -23,6 +23,19 @@
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
+    <changeSet id="20210712222649-1-relations" author="jhipster">
+
+        <createTable tableName="rel_orc__persona">
+            <column name="persona_id_pk" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orc_id_pk" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="orc_id_pk, persona_id_pk" tableName="rel_orc__persona"/>
+    </changeSet>
     <!--
         Load sample data generated with Faker.js
         - This data can be easily edited using a CSV editor (or even MS Excel) and

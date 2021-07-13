@@ -1,7 +1,9 @@
 package com.juancarlos.ryclibros.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -13,6 +15,8 @@ public class OrcDTO implements Serializable {
 
     @NotNull
     private String numero;
+
+    private Set<PersonaDTO> personas = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -28,6 +32,14 @@ public class OrcDTO implements Serializable {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public Set<PersonaDTO> getPersonas() {
+        return personas;
+    }
+
+    public void setPersonas(Set<PersonaDTO> personas) {
+        this.personas = personas;
     }
 
     @Override
@@ -57,6 +69,7 @@ public class OrcDTO implements Serializable {
         return "OrcDTO{" +
             "id=" + getId() +
             ", numero='" + getNumero() + "'" +
+            ", personas=" + getPersonas() +
             "}";
     }
 }
