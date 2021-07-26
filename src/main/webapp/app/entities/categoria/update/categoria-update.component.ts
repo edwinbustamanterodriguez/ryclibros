@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -80,5 +81,13 @@ export class CategoriaUpdateComponent implements OnInit {
       descripcion: this.editForm.get(['descripcion'])!.value,
       activo: this.editForm.get(['activo'])!.value,
     };
+  }
+
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
   }
 }

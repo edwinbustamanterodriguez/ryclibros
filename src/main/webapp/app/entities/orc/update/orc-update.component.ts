@@ -10,6 +10,7 @@ import { IOrc, Orc } from '../orc.model';
 import { OrcService } from '../service/orc.service';
 import { IPersona } from 'app/entities/persona/persona.model';
 import { PersonaService } from 'app/entities/persona/service/persona.service';
+import { EnumDepartamentos } from 'app/shared/enums/enum-expedicion';
 
 @Component({
   selector: 'jhi-orc-update',
@@ -58,7 +59,7 @@ export class OrcUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  getSelectedPersona(option: IPersona, selectedVals?: IPersona[]): IPersona {
+  getSelectedPersona2(option: IPersona, selectedVals?: IPersona[]): IPersona {
     if (selectedVals) {
       for (const selectedVal of selectedVals) {
         if (option.id === selectedVal.id) {
@@ -67,6 +68,17 @@ export class OrcUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+
+  getSelectedPersona(option: IPersona, selectedVals?: IPersona[]): boolean {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IOrc>>): void {
@@ -120,5 +132,16 @@ export class OrcUpdateComponent implements OnInit {
       numero: this.editForm.get(['numero'])!.value,
       personas: this.editForm.get(['personas'])!.value,
     };
+  }
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
+  }
+  departamentosAbr(expedicion: string | undefined): string {
+    // @ts-ignore
+    return Object.keys(EnumDepartamentos)[Object.values(EnumDepartamentos).indexOf(expedicion)];
   }
 }

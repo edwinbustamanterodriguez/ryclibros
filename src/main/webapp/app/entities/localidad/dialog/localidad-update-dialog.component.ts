@@ -83,4 +83,11 @@ export class LocalidadUpdateDialogComponent implements OnInit {
       provincia: this.editForm.get(['provincia'])!.value,
     };
   }
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
+  }
 }

@@ -1,54 +1,105 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <h2 id="jhi-orc-heading" data-cy="OrcCreateUpdateHeading">Create or edit a Orc</h2>
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-3">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-orc-heading" data-cy="OrcCreateUpdateHeading">
+        {{ editForm.get('id')!.value ? 'Editar' : 'Crear' }} oficialia de registro
+      </h2>
 
-        <div>
-          <jhi-alert-error></jhi-alert-error>
-
-          <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-            <label class="form-control-label" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-
-          <div class="form-group">
-            <label class="form-control-label" for="field_numero">Numero de ORC</label>
-            <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
-            <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
-              <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> Este campo es requerido </small>
-            </div>
-          </div>
-        </div>
-
+      <div>
+        <jhi-alert-error></jhi-alert-error>
         <div class="form-group">
-          <label for="field_personas">Oficiales de registro de esta ORC</label>
-          <select class="form-control" id="field_personas" data-cy="persona" multiple name="personas" formControlName="personas">
-            <option
-              [ngValue]="getSelectedPersona(personaOption, editForm.get('personas')!.value)"
-              *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
-            >
-              {{ personaOption.nombre + ' ' + personaOption.apaterno + ' ' + personaOption.amaterno }}
-            </option>
-          </select>
+          <label class="form-control-label" for="field_numero">Numero de ORC</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numero"
+            id="field_numero"
+            data-cy="numero"
+            formControlName="numero"
+            [ngClass]="validInputBootstrap('numero')"
+          />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> Este campo es requerido </small>
+          </div>
         </div>
+      </div>
 
-        <div>
-          <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
-          </button>
-
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="editForm.invalid || isSaving"
-            class="btn btn-primary"
+      <div class="form-group">
+        <label for="field_personas">Oficiales de registro de esta ORC</label>
+        <select class="form-control" id="field_personas" data-cy="persona" multiple name="personas" formControlName="personas">
+          <option
+            [ngValue]="getSelectedPersona2(personaOption, editForm.get('personas')!.value)"
+            *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
           >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
-          </button>
+            {{ personaOption.nombre + ' ' + personaOption.apaterno + ' ' + personaOption.amaterno }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="field_personas">Oficiales de registro de esta ORC</label>
+        <div class="table-responsive" id="entities">
+          <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+              <tr>
+                <th scope="col">
+                  <span>Nombre</span>
+                </th>
+                <th scope="col">
+                  <span>Apellido Paterno</span>
+                </th>
+                <th scope="col">
+                  <span>Apellido Materno</span>
+                </th>
+                <th scope="col">
+                  <span>CI</span>
+                </th>
+                <th scope="col">
+                  <span>Teléfono</span>
+                </th>
+                <th scope="col">
+                  <span>Institución</span>
+                </th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let personaOption of personasSharedCollection">
+                <td>{{ personaOption.nombre }}</td>
+                <td>{{ personaOption.apaterno }}</td>
+                <td>{{ personaOption.amaterno }}</td>
+                <td>{{ personaOption.ci + ' ' + departamentosAbr(personaOption.expedicion) }}</td>
+                <td>{{ personaOption.telefono }}</td>
+                <td>{{ personaOption.institucion }}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="form-check"
+                    id="field_check"
+                    [checked]="getSelectedPersona(personaOption, editForm.get('personas')!.value)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

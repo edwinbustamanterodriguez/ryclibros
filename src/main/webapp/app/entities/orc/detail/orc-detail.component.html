@@ -1,30 +1,60 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <div *ngIf="orc">
-        <h2 data-cy="orcDetailsHeading"><span>Orc</span></h2>
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-3">
+    <div *ngIf="orc">
+      <h2 data-cy="orcDetailsHeading">
+        Detalle de la oficialia de registro civil <span class="text-info">{{ orc.numero }}</span>
+      </h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error></jhi-alert-error>
 
-        <jhi-alert></jhi-alert>
+      <jhi-alert></jhi-alert>
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ orc.id }}</span>
-          </dd>
-          <dt><span>Numerom de ORC</span></dt>
-          <dd>
-            <span>{{ orc.numero }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
-        </button>
+      <div class="alert alert-warning" id="no-result" *ngIf="orc.personas?.length === 0">
+        <span>No se encontró oficiales de registro civil</span>
       </div>
+      <h4>Lista de oficiales de registro</h4>
+      <div class="table-responsive" id="entities" *ngIf="orc.personas && orc.personas.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Nombre</span>
+              </th>
+              <th scope="col">
+                <span>Apellido Paterno</span>
+              </th>
+              <th scope="col">
+                <span>Apellido Materno</span>
+              </th>
+              <th scope="col">
+                <span>CI</span>
+              </th>
+              <th scope="col">
+                <span>Teléfono</span>
+              </th>
+              <th scope="col">
+                <span>Institución</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let persona of orc.personas" data-cy="entityTable">
+              <td>{{ persona.nombre }}</td>
+              <td>{{ persona.apaterno }}</td>
+              <td>{{ persona.amaterno }}</td>
+              <td>{{ persona.ci + ' ' + departamentosAbr(persona.expedicion) }}</td>
+              <td>{{ persona.telefono }}</td>
+              <td>{{ persona.institucion }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
+      </button>
     </div>
   </div>
 </div>

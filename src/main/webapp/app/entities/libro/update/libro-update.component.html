@@ -1,277 +1,306 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-10">
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <h2 id="jhi-libro-heading" data-cy="LibroCreateUpdateHeading">
-          {{ editForm.get('id')!.value == null ? 'Registrar' : 'Editar' }} Libro
-        </h2>
-        <div>
-          <jhi-alert-error></jhi-alert-error>
-          <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-            <label class="form-control-label" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-          <div class="card">
-            <div class="card-body pb-0 pt-1">
-              <h5 class="card-title">Datos registro Civil</h5>
-              <div class="d-flex mb-0 pb-0">
-                <div class="form-group flex-fill pr-1">
-                  <label class="form-control-label" for="field_orc">Numero de ORC</label>
-                  <select
-                    class="form-control"
-                    id="field_orc"
-                    data-cy="orc"
-                    name="orc"
-                    formControlName="orc"
-                    (ngModelChange)="onChangeOrc($event)"
-                  >
-                    <option *ngIf="!editForm.get('orc')!.value" [ngValue]="null" selected></option>
-                    <option
-                      [ngValue]="orcOption.id === editForm.get('orc')!.value?.id ? editForm.get('orc')!.value : orcOption"
-                      *ngFor="let orcOption of orcsSharedCollection; trackBy: trackOrcById"
-                    >
-                      {{ orcOption.numero }}
-                    </option>
-                  </select>
-                  <div *ngIf="editForm.get(['orc'])!.invalid && (editForm.get(['orc'])!.dirty || editForm.get(['orc'])!.touched)">
-                    <small class="form-text text-danger" *ngIf="editForm.get(['orc'])?.errors?.required"> Este campo es requerido. </small>
-                  </div>
-                </div>
-                <div class="form-group flex-fill pl-1">
-                  <label class="form-control-label" for="field_persona">Oficial de registro</label>
-                  <select class="form-control" id="field_persona" data-cy="persona" name="persona" formControlName="persona">
-                    <option *ngIf="!editForm.get('persona')!.value" [ngValue]="null" selected></option>
-                    <option
-                      [ngValue]="personaOption.id === editForm.get('persona')!.value?.id ? editForm.get('persona')!.value : personaOption"
-                      *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
-                    >
-                      {{ personaOption?.nombre + ' ' + personaOption?.apaterno + ' ' + personaOption?.amaterno }}
-                    </option>
-                  </select>
-                  <div
-                    *ngIf="editForm.get(['persona'])!.invalid && (editForm.get(['persona'])!.dirty || editForm.get(['persona'])!.touched)"
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get(['persona'])?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                  </div>
-                </div>
-              </div>
-
-              <div class="d-flex mb-0 pb-0">
-                <div class="form-group flex-fill pr-1">
-                  <label class="form-control-label" for="field_provincia">Provincia</label>
-                  <select
-                    class="form-control"
-                    id="field_provincia"
-                    data-cy="provincia"
-                    name="provincia"
-                    formControlName="provincia"
-                    (ngModelChange)="onChangeProvincia($event)"
-                  >
-                    <option *ngIf="!editForm.get('provincia')!.value" [ngValue]="null" selected></option>
-                    <option
-                      [ngValue]="
-                        provinciaOption.id === editForm.get('provincia')!.value?.id ? editForm.get('provincia')!.value : provinciaOption
-                      "
-                      *ngFor="let provinciaOption of provinciasSharedCollection; trackBy: trackProvinciaById"
-                    >
-                      {{ provinciaOption.nombre }}
-                    </option>
-                  </select>
-                  <div
-                    *ngIf="
-                      editForm.get(['provincia'])!.invalid && (editForm.get(['provincia'])!.dirty || editForm.get(['provincia'])!.touched)
-                    "
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get(['provincia'])?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                  </div>
-                </div>
-                <div class="form-group flex-fill pl-1">
-                  <label class="form-control-label" for="field_localidad">Localidad</label>
-                  <select class="form-control" id="field_localidad" data-cy="localidad" name="localidad" formControlName="localidad">
-                    <option *ngIf="!editForm.get('localidad')!.value" [ngValue]="null" selected></option>
-                    <option
-                      [ngValue]="
-                        localidadOption.id === editForm.get('localidad')!.value?.id ? editForm.get('localidad')!.value : localidadOption
-                      "
-                      *ngFor="let localidadOption of localidadesSharedCollection; trackBy: trackLocalidadById"
-                    >
-                      {{ localidadOption.nombre }}
-                    </option>
-                  </select>
-                  <div
-                    *ngIf="
-                      editForm.get(['localidad'])!.invalid && (editForm.get(['localidad'])!.dirty || editForm.get(['localidad'])!.touched)
-                    "
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get(['localidad'])?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mt-3">
-            <div class="card-body pb-0 pt-1">
-              <h5 class="card-title">Datos del libro</h5>
-              <div class="d-flex">
-                <div class="form-group flex-fill pr-1">
-                  <label class="form-control-label" for="field_numero">Numero de Libro</label>
-                  <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
-                  <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
-                    <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> Este campo es requerido. </small>
-                  </div>
-                </div>
-                <div class="form-group flex-fill pl-1">
-                  <label class="form-control-label" for="field_numero">Cantidad de ejemplares</label>
-                  <input
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    name="cantidad"
-                    id="field_cantidad"
-                    data-cy="cantidad"
-                    formControlName="cantidad"
-                  />
-                  <div *ngIf="editForm.get('cantidad')!.invalid && (editForm.get('cantidad')!.dirty || editForm.get('cantidad')!.touched)">
-                    <small class="form-text text-danger" *ngIf="editForm.get('cantidad')?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="editForm.get('cantidad')?.errors?.min"> Mimino debe ser 0 </small>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-control-label" for="field_categoria">Categoria</label>
-                <select class="form-control" id="field_categoria" data-cy="categoria" name="categoria" formControlName="categoria">
-                  <option *ngIf="!editForm.get('categoria')!.value" [ngValue]="null" selected></option>
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-3">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-libro-heading" data-cy="LibroCreateUpdateHeading">
+        {{ editForm.get('id')!.value == null ? 'Registrar' : 'Editar' }} Libro
+      </h2>
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+        <div class="card">
+          <div class="card-body pb-0 pt-1">
+            <h5 class="card-title">Datos registro Civil</h5>
+            <div class="d-flex mb-0 pb-0">
+              <div class="form-group flex-fill pr-1">
+                <label class="form-control-label" for="field_orc">Numero de ORC</label>
+                <select
+                  class="form-control"
+                  id="field_orc"
+                  data-cy="orc"
+                  name="orc"
+                  formControlName="orc"
+                  (ngModelChange)="onChangeOrc($event)"
+                  [ngClass]="validInputBootstrap('orc')"
+                >
+                  <option *ngIf="!editForm.get('orc')!.value" [ngValue]="null" selected></option>
                   <option
-                    [ngValue]="
-                      categoriaOption.id === editForm.get('categoria')!.value?.id ? editForm.get('categoria')!.value : categoriaOption
-                    "
-                    *ngFor="let categoriaOption of categoriasSharedCollection; trackBy: trackCategoriaById"
+                    [ngValue]="orcOption.id === editForm.get('orc')!.value?.id ? editForm.get('orc')!.value : orcOption"
+                    *ngFor="let orcOption of orcsSharedCollection; trackBy: trackOrcById"
                   >
-                    {{ categoriaOption.nombre }}
+                    {{ orcOption.numero }}
                   </option>
                 </select>
-                <div
-                  *ngIf="
-                    editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)
-                  "
+                <div *ngIf="editForm.get(['orc'])!.invalid && (editForm.get(['orc'])!.dirty || editForm.get(['orc'])!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get(['orc'])?.errors?.required"> Este campo es requerido. </small>
+                </div>
+              </div>
+              <div class="form-group flex-fill pl-1">
+                <label class="form-control-label" for="field_persona">Oficial de registro</label>
+                <select
+                  class="form-control"
+                  id="field_persona"
+                  data-cy="persona"
+                  name="persona"
+                  formControlName="persona"
+                  [ngClass]="validInputBootstrap('persona')"
                 >
-                  <small class="form-text text-danger" *ngIf="editForm.get(['categoria'])?.errors?.required">
+                  <option *ngIf="!editForm.get('persona')!.value" [ngValue]="null" selected></option>
+                  <option
+                    [ngValue]="personaOption.id === editForm.get('persona')!.value?.id ? editForm.get('persona')!.value : personaOption"
+                    *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
+                  >
+                    {{ personaOption?.nombre + ' ' + personaOption?.apaterno + ' ' + personaOption?.amaterno }}
+                  </option>
+                </select>
+                <div *ngIf="editForm.get(['persona'])!.invalid && (editForm.get(['persona'])!.dirty || editForm.get(['persona'])!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get(['persona'])?.errors?.required">
                     Este campo es requerido.
                   </small>
                 </div>
               </div>
-              <div></div>
             </div>
-          </div>
-          <div class="card mt-3">
-            <div class="card-body pb-0 pt-1">
-              <h5 class="card-title">Datos de Ubicacion</h5>
-              <div class="d-flex">
-                <div class="form-group flex-fill pr-1">
-                  <label class="d-block" for="field_ubicacionSector">Archivado en</label>
-                  <select class="form-control" id="field_ubicacionSector" name="ubicacionSector" formControlName="ubicacionSector">
-                    <option [ngValue]="sectorOption" *ngFor="let sectorOption of sectores">{{ sectorOption }}</option>
-                  </select>
-                  <div
-                    *ngIf="
-                      editForm.get('ubicacionSector')!.invalid &&
-                      (editForm.get('ubicacionSector')!.dirty || editForm.get('ubicacionSector')!.touched)
-                    "
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get('ubicacionSector')?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                  </div>
-                </div>
-                <div class="form-group flex-fill pl-1 pr-1">
-                  <label class="form-control-label" for="field_ubicacionNumero">Numero</label>
-                  <input
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    name="ubicacionNumero"
-                    id="field_ubicacionNumero"
-                    data-cy="ubicacionNumero"
-                    formControlName="ubicacionNumero"
-                  />
-                  <div
-                    *ngIf="
-                      editForm.get('ubicacionNumero')!.invalid &&
-                      (editForm.get('ubicacionNumero')!.dirty || editForm.get('ubicacionNumero')!.touched)
-                    "
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get('ubicacionNumero')?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                    <small class="form-text text-danger" *ngIf="editForm.get('ubicacionNumero')?.errors?.min"> Mimino debe ser 0 </small>
-                  </div>
-                </div>
-                <div class="form-group flex-fill pl-1">
-                  <label class="form-control-label" for="field_ubicacionSerie">Fila</label>
-                  <input
-                    type="number"
-                    min="0"
-                    class="form-control"
-                    name="ubicacionSerie"
-                    id="field_ubicacionSerie"
-                    data-cy="ubicacionSerie"
-                    formControlName="ubicacionSerie"
-                  />
-                  <div
-                    *ngIf="
-                      editForm.get('ubicacionSerie')!.invalid &&
-                      (editForm.get('ubicacionSerie')!.dirty || editForm.get('ubicacionSerie')!.touched)
-                    "
-                  >
-                    <small class="form-text text-danger" *ngIf="editForm.get('ubicacionSerie')?.errors?.required">
-                      Este campo es requerido.
-                    </small>
-                  </div>
-                </div>
-              </div>
-              <div></div>
-            </div>
-          </div>
-          <div class="card mt-3 mb-2">
-            <div class="card-body pb-0 pt-1">
-              <div class="form-group">
-                <label class="form-control-label" for="field_observaciones">Observaciones</label>
-                <textarea
+
+            <div class="d-flex mb-0 pb-0">
+              <div class="form-group flex-fill pr-1">
+                <label class="form-control-label" for="field_provincia">Provincia</label>
+                <select
                   class="form-control"
-                  id="field_observaciones"
-                  id="field_observaciones"
-                  rows="3"
-                  formControlName="observaciones"
-                ></textarea>
+                  id="field_provincia"
+                  data-cy="provincia"
+                  name="provincia"
+                  formControlName="provincia"
+                  (ngModelChange)="onChangeProvincia($event)"
+                  [ngClass]="validInputBootstrap('provincia')"
+                >
+                  <option *ngIf="!editForm.get('provincia')!.value" [ngValue]="null" selected></option>
+                  <option
+                    [ngValue]="
+                      provinciaOption.id === editForm.get('provincia')!.value?.id ? editForm.get('provincia')!.value : provinciaOption
+                    "
+                    *ngFor="let provinciaOption of provinciasSharedCollection; trackBy: trackProvinciaById"
+                  >
+                    {{ provinciaOption.nombre }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    editForm.get(['provincia'])!.invalid && (editForm.get(['provincia'])!.dirty || editForm.get(['provincia'])!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get(['provincia'])?.errors?.required">
+                    Este campo es requerido.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group flex-fill pl-1">
+                <label class="form-control-label" for="field_localidad">Localidad</label>
+                <select
+                  class="form-control"
+                  id="field_localidad"
+                  data-cy="localidad"
+                  name="localidad"
+                  formControlName="localidad"
+                  [ngClass]="validInputBootstrap('localidad')"
+                >
+                  <option *ngIf="!editForm.get('localidad')!.value" [ngValue]="null" selected></option>
+                  <option
+                    [ngValue]="
+                      localidadOption.id === editForm.get('localidad')!.value?.id ? editForm.get('localidad')!.value : localidadOption
+                    "
+                    *ngFor="let localidadOption of localidadesSharedCollection; trackBy: trackLocalidadById"
+                  >
+                    {{ localidadOption.nombre }}
+                  </option>
+                </select>
+                <div
+                  *ngIf="
+                    editForm.get(['localidad'])!.invalid && (editForm.get(['localidad'])!.dirty || editForm.get(['localidad'])!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get(['localidad'])?.errors?.required">
+                    Este campo es requerido.
+                  </small>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div>
-          <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
-          </button>
-
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="editForm.invalid || isSaving"
-            class="btn btn-primary"
-          >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
-          </button>
+        <div class="card mt-3">
+          <div class="card-body pb-0 pt-1">
+            <h5 class="card-title">Datos del libro</h5>
+            <div class="d-flex">
+              <div class="form-group flex-fill pr-1">
+                <label class="form-control-label" for="field_numero">Numero de Libro</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="numero"
+                  id="field_numero"
+                  data-cy="numero"
+                  formControlName="numero"
+                  [ngClass]="validInputBootstrap('numero')"
+                />
+                <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required"> Este campo es requerido. </small>
+                </div>
+              </div>
+              <div class="form-group flex-fill pl-1">
+                <label class="form-control-label" for="field_numero">Cantidad de ejemplares</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  name="cantidad"
+                  id="field_cantidad"
+                  data-cy="cantidad"
+                  formControlName="cantidad"
+                  [ngClass]="validInputBootstrap('cantidad')"
+                />
+                <div *ngIf="editForm.get('cantidad')!.invalid && (editForm.get('cantidad')!.dirty || editForm.get('cantidad')!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get('cantidad')?.errors?.required"> Este campo es requerido. </small>
+                  <small class="form-text text-danger" *ngIf="editForm.get('cantidad')?.errors?.min"> Mimino debe ser 0 </small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-control-label" for="field_categoria">Categoria</label>
+              <select
+                class="form-control"
+                id="field_categoria"
+                data-cy="categoria"
+                name="categoria"
+                formControlName="categoria"
+                [ngClass]="validInputBootstrap('categoria')"
+              >
+                <option *ngIf="!editForm.get('categoria')!.value" [ngValue]="null" selected></option>
+                <option
+                  [ngValue]="
+                    categoriaOption.id === editForm.get('categoria')!.value?.id ? editForm.get('categoria')!.value : categoriaOption
+                  "
+                  *ngFor="let categoriaOption of categoriasSharedCollection; trackBy: trackCategoriaById"
+                >
+                  {{ categoriaOption.nombre }}
+                </option>
+              </select>
+              <div
+                *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)"
+              >
+                <small class="form-text text-danger" *ngIf="editForm.get(['categoria'])?.errors?.required">
+                  Este campo es requerido.
+                </small>
+              </div>
+            </div>
+            <div></div>
+          </div>
         </div>
-      </form>
-    </div>
+        <div class="card mt-3">
+          <div class="card-body pb-0 pt-1">
+            <h5 class="card-title">Datos de Ubicacion</h5>
+            <div class="d-flex">
+              <div class="form-group flex-fill pr-1">
+                <label class="d-block" for="field_ubicacionSector">Archivado en</label>
+                <select
+                  class="form-control"
+                  id="field_ubicacionSector"
+                  name="ubicacionSector"
+                  formControlName="ubicacionSector"
+                  [ngClass]="validInputBootstrap('ubicacionSector')"
+                >
+                  <option [ngValue]="sectorOption" *ngFor="let sectorOption of sectores">{{ sectorOption }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    editForm.get('ubicacionSector')!.invalid &&
+                    (editForm.get('ubicacionSector')!.dirty || editForm.get('ubicacionSector')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('ubicacionSector')?.errors?.required">
+                    Este campo es requerido.
+                  </small>
+                </div>
+              </div>
+              <div class="form-group flex-fill pl-1 pr-1">
+                <label class="form-control-label" for="field_ubicacionNumero">Numero</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  name="ubicacionNumero"
+                  id="field_ubicacionNumero"
+                  data-cy="ubicacionNumero"
+                  formControlName="ubicacionNumero"
+                  [ngClass]="validInputBootstrap('ubicacionNumero')"
+                />
+                <div
+                  *ngIf="
+                    editForm.get('ubicacionNumero')!.invalid &&
+                    (editForm.get('ubicacionNumero')!.dirty || editForm.get('ubicacionNumero')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('ubicacionNumero')?.errors?.required">
+                    Este campo es requerido.
+                  </small>
+                  <small class="form-text text-danger" *ngIf="editForm.get('ubicacionNumero')?.errors?.min"> Mimino debe ser 0 </small>
+                </div>
+              </div>
+              <div class="form-group flex-fill pl-1">
+                <label class="form-control-label" for="field_ubicacionSerie">Fila</label>
+                <input
+                  type="number"
+                  min="0"
+                  class="form-control"
+                  name="ubicacionSerie"
+                  id="field_ubicacionSerie"
+                  data-cy="ubicacionSerie"
+                  formControlName="ubicacionSerie"
+                  [ngClass]="validInputBootstrap('ubicacionSerie')"
+                />
+                <div
+                  *ngIf="
+                    editForm.get('ubicacionSerie')!.invalid &&
+                    (editForm.get('ubicacionSerie')!.dirty || editForm.get('ubicacionSerie')!.touched)
+                  "
+                >
+                  <small class="form-text text-danger" *ngIf="editForm.get('ubicacionSerie')?.errors?.required">
+                    Este campo es requerido.
+                  </small>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+        <div class="card mt-3 mb-2">
+          <div class="card-body pb-0 pt-1">
+            <div class="form-group">
+              <label class="form-control-label" for="field_observaciones">Observaciones</label>
+              <textarea
+                class="form-control"
+                id="field_observaciones"
+                id="field_observaciones"
+                rows="3"
+                formControlName="observaciones"
+                [ngClass]="validInputBootstrap('observaciones')"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

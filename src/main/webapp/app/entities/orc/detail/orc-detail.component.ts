@@ -1,7 +1,9 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IOrc } from '../orc.model';
+import { EnumDepartamentos } from 'app/shared/enums/enum-expedicion';
 
 @Component({
   selector: 'jhi-orc-detail',
@@ -20,5 +22,9 @@ export class OrcDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+  departamentosAbr(expedicion: string | undefined): string {
+    // @ts-ignore
+    return Object.keys(EnumDepartamentos)[Object.values(EnumDepartamentos).indexOf(expedicion)];
   }
 }
