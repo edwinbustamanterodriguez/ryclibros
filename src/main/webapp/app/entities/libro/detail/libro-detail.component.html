@@ -1,60 +1,82 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <div *ngIf="libro">
-        <h2 data-cy="libroDetailsHeading"><span>Libro</span></h2>
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-3">
+    <div *ngIf="libro">
+      <h2 data-cy="libroDetailsHeading"><span>Libro</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error></jhi-alert-error>
+      <jhi-alert-error></jhi-alert-error>
 
-        <jhi-alert></jhi-alert>
+      <jhi-alert></jhi-alert>
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ libro.id }}</span>
-          </dd>
-          <dt><span>Numero</span></dt>
-          <dd>
-            <span>{{ libro.numero }}</span>
-          </dd>
-          <dt><span>Observaciones</span></dt>
-          <dd>
-            <span>{{ libro.observaciones }}</span>
-          </dd>
-          <dt><span>Categoria</span></dt>
-          <dd>
-            <div *ngIf="libro.categoria">
-              <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.nombre }}</a>
+      <div class="card" *ngIf="libro">
+        <div class="card-body pb-0 pt-1">
+          <h5 class="card-title">Datos registro Civil</h5>
+          <div class="row">
+            <div class="col-sm-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_orc">Numero de Orc</label>
+              <p id="field_orc">{{ libro?.orc?.numero }}</p>
             </div>
-          </dd>
-          <dt><span>Fecha de registro</span></dt>
-          <dd>
-            <span>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</span>
-          </dd>
-          <dt><span>Libro registrado por</span></dt>
-          <dd>
-            <span>{{ libro.user?.firstName + ' ' + libro.user?.lastName }}</span>
-          </dd>
-          <dt><span>Archivado en</span></dt>
-          <dd>
-            <span>{{ libro.ubicacion?.sector }}</span>
-          </dd>
-          <dt><span>Numero</span></dt>
-          <dd>
-            <span>{{ libro.ubicacion?.numero }}</span>
-          </dd>
-          <dt><span>Fila</span></dt>
-          <dd>
-            <span>{{ libro.ubicacion?.serie }}</span>
-          </dd>
-        </dl>
-
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
-        </button>
+            <div class="col-sm-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_or">Ofical de registro</label>
+              <p id="field_or" *ngIf="libro.persona">{{ (libro?.persona)!.nombre }}</p>
+            </div>
+            <div class="col-sm-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_provincia">Provincia</label>
+              <p id="field_provincia">{{ libro?.provincia?.nombre }}</p>
+            </div>
+            <div class="col-sm-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_localidad">Localidad</label>
+              <p id="field_localidad">{{ libro?.localidad?.nombre }}</p>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ libro.id }}</span>
+        </dd>
+        <dt><span>Numero</span></dt>
+        <dd>
+          <span>{{ libro.numero }}</span>
+        </dd>
+        <dt><span>Observaciones</span></dt>
+        <dd>
+          <span>{{ libro.observaciones }}</span>
+        </dd>
+        <dt><span>Categoria</span></dt>
+        <dd>
+          <div *ngIf="libro.categoria">
+            <a [routerLink]="['/categoria', libro.categoria?.id, 'view']">{{ libro.categoria?.nombre }}</a>
+          </div>
+        </dd>
+        <dt><span>Fecha de registro</span></dt>
+        <dd>
+          <span>{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</span>
+        </dd>
+        <dt><span>Libro registrado por</span></dt>
+        <dd>
+          <span>{{ libro.user?.firstName + ' ' + libro.user?.lastName }}</span>
+        </dd>
+        <dt><span>Archivado en</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.sector }}</span>
+        </dd>
+        <dt><span>Numero</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.numero }}</span>
+        </dd>
+        <dt><span>Fila</span></dt>
+        <dd>
+          <span>{{ libro.ubicacion?.serie }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
+      </button>
     </div>
   </div>
 </div>
