@@ -42,6 +42,8 @@ import {
   faUserFriends,
   faStream,
   faCog,
+  faHouseUser,
+  faMapMarked,
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -89,5 +91,7 @@ export const fontAwesomeIcons = [
   faUserFriends,
   faStream,
   faCog,
+  faHouseUser,
+  faMapMarked,
   // jhipster-needle-add-icon-import
 ];

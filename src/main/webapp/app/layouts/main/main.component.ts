@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
@@ -39,5 +40,8 @@ export class MainComponent implements OnInit {
       pageTitle = 'Ryclibros';
     }
     this.titleService.setTitle(pageTitle);
+  }
+  isAuthenticated(): boolean {
+    return this.accountService.isAuthenticated();
   }
 }
