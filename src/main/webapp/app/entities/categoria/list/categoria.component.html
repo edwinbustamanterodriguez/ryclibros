@@ -54,7 +54,7 @@
       <tbody>
         <tr *ngFor="let categoria of categorias; trackBy: trackId" data-cy="entityTable">
           <td>
-            <a [routerLink]="['/categoria', categoria.id, 'view']">{{ categoria.id }}</a>
+            {{ categoria.id }}
           </td>
           <td>{{ categoria.nombre }}</td>
           <td>{{ categoria.descripcion }}</td>

@@ -99,4 +99,12 @@ export class PrestamoDevolverDialogComponent implements OnInit {
       }
     );
   }
+
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
+  }
 }

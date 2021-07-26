@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +23,7 @@ export class PersonaUpdateComponent implements OnInit {
     id: [],
     nombre: [null, [Validators.required]],
     apaterno: [null, [Validators.required]],
-    amaterno: [],
+    amaterno: [null, [Validators.required]],
     ci: [null, [Validators.required]],
     expedicion: [null, [Validators.required]],
     telefono: [],
@@ -100,5 +101,12 @@ export class PersonaUpdateComponent implements OnInit {
       institucion: this.editForm.get(['institucion'])!.value,
       esOficialDeRegistro: this.editForm.get(['esOficialDeRegistro'])!.value,
     };
+  }
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
   }
 }

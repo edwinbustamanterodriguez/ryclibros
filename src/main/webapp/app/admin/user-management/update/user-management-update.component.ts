@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -99,5 +100,12 @@ export class UserManagementUpdateComponent implements OnInit {
 
   private onSaveError(): void {
     this.isSaving = false;
+  }
+  validInputBootstrap(formName: string): string {
+    return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
+      ? this.editForm.get(formName)!.invalid
+        ? 'is-invalid'
+        : 'is-valid'
+      : '';
   }
 }

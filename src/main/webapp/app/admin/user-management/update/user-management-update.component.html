@@ -1,20 +1,21 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <h2 id="myUserLabel">{{ !user.id ? 'Crear' : 'Editar' }} Usuario</h2>
+<div class="row justify-content-center">
+  <div class="col-sm-12 colmd-11 card-custom pb-2">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="myUserLabel">{{ !user.id ? 'Crear' : 'Editar' }} Usuario</h2>
 
-        <div *ngIf="user">
-          <jhi-alert-error></jhi-alert-error>
-
-          <div class="form-group" [hidden]="!user.id">
-            <label>ID</label>
-            <input type="text" class="form-control" name="id" formControlName="id" readonly />
-          </div>
-
-          <div class="form-group">
+      <div *ngIf="user">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="row">
+          <div class="form-group col-6">
             <label class="form-control-label">Usuario</label>
-            <input type="text" class="form-control" name="login" formControlName="login" [readOnly]="user.id" />
+            <input
+              type="text"
+              class="form-control"
+              name="login"
+              formControlName="login"
+              [readOnly]="user.id"
+              [ngClass]="validInputBootstrap('login')"
+            />
 
             <div *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.required"> Este campo es requerido. </small>
@@ -28,10 +29,40 @@
               </small>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-12">
+            <label class="form-control-label">Usuario</label>
+            <input
+              type="text"
+              class="form-control"
+              name="login"
+              formControlName="login"
+              [readOnly]="user.id"
+              [ngClass]="validInputBootstrap('login')"
+            />
 
-          <div class="form-group">
+            <div *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.required"> Este campo es requerido. </small>
+
+              <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.maxlength">
+                Este campo no puede tener más de 50 caracteres.
+              </small>
+
+              <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.pattern">
+                Este campo solo puede contener letras, dígitos y direcciones de correo electrónico.
+              </small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
             <label class="form-control-label">Nombre</label>
-            <input type="text" class="form-control" name="firstName" formControlName="firstName" />
+            <input
+              type="text"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              [ngClass]="validInputBootstrap('firstName')"
+            />
 
             <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.required"> Este campo es requerido. </small>
@@ -40,10 +71,15 @@
               </small>
             </div>
           </div>
-
-          <div class="form-group">
+          <div class="form-group col-md-6">
             <label>Apellido (s)</label>
-            <input type="text" class="form-control" name="lastName" formControlName="lastName" />
+            <input
+              type="text"
+              class="form-control"
+              name="lastName"
+              formControlName="lastName"
+              [ngClass]="validInputBootstrap('lastName')"
+            />
 
             <div *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.required"> Este campo es requerido. </small>
@@ -52,11 +88,9 @@
               </small>
             </div>
           </div>
-
-          <div class="form-group">
-            <label class="form-control-label">Correo elctrónico</label>
-            <input type="email" class="form-control" name="email" formControlName="email" />
-
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Correo electrónico</label>
+            <input type="email" class="form-control" name="email" formControlName="email" [ngClass]="validInputBootstrap('email')" />
             <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required"> Este campo es requerido. </small>
 
@@ -71,22 +105,7 @@
               <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.email"> Tu correo electrónico es inválido. </small>
             </div>
           </div>
-
-          <div class="form-check">
-            <label class="form-check-label" for="activated">
-              <input
-                class="form-check-input"
-                [attr.disabled]="user.id === undefined ? 'disabled' : null"
-                type="checkbox"
-                id="activated"
-                name="activated"
-                formControlName="activated"
-              />
-              <span>Activado</span>
-            </label>
-          </div>
-
-          <div class="form-group">
+          <div class="form-group col-md-6">
             <label>Roles</label>
             <select class="form-control" multiple name="authority" formControlName="authorities">
               <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
@@ -97,18 +116,33 @@
               <small class="form-text text-danger" *ngIf="editForm.get('authorities')?.errors?.required"> Este campo es requerido. </small>
             </div>
           </div>
+          <div class="col-md-6 pb-5">
+            <div class="form-check">
+              <label class="form-check-label" for="activated">
+                <input
+                  class="form-check-input"
+                  [attr.disabled]="user.id === undefined ? 'disabled' : null"
+                  type="checkbox"
+                  id="activated"
+                  name="activated"
+                  formControlName="activated"
+                />
+                <span>Activado</span>
+              </label>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div *ngIf="user">
-          <button type="button" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
-          </button>
+      <div *ngIf="user">
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
 
-          <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-            <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
-          </button>
-        </div>
-      </form>
-    </div>
+        <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

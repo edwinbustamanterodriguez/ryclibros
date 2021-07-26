@@ -1,44 +1,74 @@
-<div class="container-fluid jh-card">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-        <h2 id="jhi-persona-heading" data-cy="PersonaCreateUpdateHeading">
-          {{ editForm.get('id')!.value == null ? 'Agregar' : 'Editar' }} Persona
-        </h2>
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-2">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-persona-heading" data-cy="PersonaCreateUpdateHeading">
+        {{ editForm.get('id')!.value == null ? 'Agregar' : 'Editar' }} Persona
+      </h2>
 
-        <div>
-          <jhi-alert-error></jhi-alert-error>
+      <div>
+        <jhi-alert-error></jhi-alert-error>
 
-          <div class="form-group" [hidden]="editForm.get('id')!.value == null">
-            <label class="form-control-label" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-
-          <div class="form-group">
+        <div class="row">
+          <div class="form-group col-md-4 col-sm-12">
             <label class="form-control-label" for="field_nombre">Nombre</label>
-            <input type="text" class="form-control" name="nombre" id="field_nombre" data-cy="nombre" formControlName="nombre" />
+            <input
+              type="text"
+              class="form-control"
+              name="nombre"
+              id="field_nombre"
+              data-cy="nombre"
+              formControlName="nombre"
+              [ngClass]="validInputBootstrap('nombre')"
+            />
             <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> Este campo es requerido. </small>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-4 col-sm-12">
             <label class="form-control-label" for="field_apaterno">Apellido Paterno</label>
-            <input type="text" class="form-control" name="apaterno" id="field_apaterno" data-cy="apaterno" formControlName="apaterno" />
+            <input
+              type="text"
+              class="form-control"
+              name="apaterno"
+              id="field_apaterno"
+              data-cy="apaterno"
+              formControlName="apaterno"
+              [ngClass]="validInputBootstrap('apaterno')"
+            />
             <div *ngIf="editForm.get('apaterno')!.invalid && (editForm.get('apaterno')!.dirty || editForm.get('apaterno')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('apaterno')?.errors?.required"> Este campo es requerido. </small>
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-4 col-sm-12">
             <label class="form-control-label" for="field_amaterno">Apellido Materno</label>
-            <input type="text" class="form-control" name="amaterno" id="field_amaterno" data-cy="amaterno" formControlName="amaterno" />
+            <input
+              type="text"
+              class="form-control"
+              name="amaterno"
+              id="field_amaterno"
+              data-cy="amaterno"
+              formControlName="amaterno"
+              [ngClass]="validInputBootstrap('amaterno')"
+            />
+            <div *ngIf="editForm.get('amaterno')!.invalid && (editForm.get('amaterno')!.dirty || editForm.get('amaterno')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('amaterno')?.errors?.required"> Este campo es requerido. </small>
+            </div>
           </div>
 
-          <div class="d-flex mb-0 pb-0">
+          <div class="col-md-6 col-sm-12 d-flex mb-0 pb-0">
             <div class="flex-grow-1 form-group">
               <label class="form-control-label" for="field_ci">CI</label>
-              <input type="number" class="form-control" name="ci" id="field_ci" data-cy="ci" formControlName="ci" />
+              <input
+                type="number"
+                class="form-control"
+                name="ci"
+                id="field_ci"
+                data-cy="ci"
+                formControlName="ci"
+                [ngClass]="validInputBootstrap('ci')"
+              />
               <div *ngIf="editForm.get('ci')!.invalid && (editForm.get('ci')!.dirty || editForm.get('ci')!.touched)">
                 <small class="form-text text-danger" *ngIf="editForm.get('ci')?.errors?.required"> Este campo es requerido. </small>
                 <small class="form-text text-danger" [hidden]="!editForm.get('ci')?.errors?.number"> Este campo debe ser números. </small>
@@ -46,7 +76,13 @@
             </div>
             <div class="form-group">
               <label class="d-block" for="field_expedicion">Expedición</label>
-              <select class="form-control" id="field_expedicion" name="expedicion" formControlName="expedicion">
+              <select
+                class="form-control"
+                id="field_expedicion"
+                name="expedicion"
+                formControlName="expedicion"
+                [ngClass]="validInputBootstrap('expedicion')"
+              >
                 <option [ngValue]="departamentoOption" *ngFor="let departamentoOption of departamentos">{{ departamentoOption }}</option>
               </select>
               <div
@@ -56,12 +92,20 @@
               </div>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group col-md-6 col-sm-12">
             <label class="form-control-label" for="field_telefono">Teléfono</label>
-            <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+            <input
+              type="text"
+              class="form-control"
+              name="telefono"
+              id="field_telefono"
+              data-cy="telefono"
+              formControlName="telefono"
+              [ngClass]="validInputBootstrap('telefono')"
+            />
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-6 col-sm-12">
             <label class="form-control-label" for="field_institucion">Institución</label>
             <input
               type="text"
@@ -70,10 +114,11 @@
               id="field_institucion"
               data-cy="institucion"
               formControlName="institucion"
+              [ngClass]="validInputBootstrap('institucion')"
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-6 col-sm-12">
             <label class="form-control-label" for="field_es_oficial_de_registro">Esta persona es Oficial de Registro</label>
             <input
               type="checkbox"
@@ -95,23 +140,23 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <div>
-          <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
-          </button>
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+        </button>
 
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="editForm.invalid || isSaving"
-            class="btn btn-primary"
-          >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
-          </button>
-        </div>
-      </form>
-    </div>
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>

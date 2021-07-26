@@ -18,14 +18,7 @@
   <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
     <ul class="navbar-nav ml-auto">
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-      <li
-        *ngSwitchCase="true"
-        ngbDropdown
-        class="nav-item dropdown pointer"
-        display="dynamic"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
+      <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active">
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
           <span>
             <fa-icon icon="th-list"></fa-icon>
@@ -34,50 +27,26 @@
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
           <li>
-            <a
-              class="dropdown-item"
-              routerLink="categoria"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
+            <a class="dropdown-item" routerLink="categoria" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="stream" [fixedWidth]="true"></fa-icon>
               <span>Categorias</span>
             </a>
           </li>
           <li>
-            <a
-              class="dropdown-item"
-              routerLink="provincia"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
+            <a class="dropdown-item" routerLink="provincia" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="stream" [fixedWidth]="true"></fa-icon>
               <span>Provincias</span>
             </a>
           </li>
           <li>
-            <a
-              class="dropdown-item"
-              routerLink="orc"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
+            <a class="dropdown-item" routerLink="orc" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span>Oficialias de Registro Civil</span>
             </a>
           </li>
 
           <li>
-            <a
-              class="dropdown-item"
-              routerLink="libro"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
+            <a class="dropdown-item" routerLink="libro" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
               <span>Libros</span>
             </a>
@@ -85,7 +54,7 @@
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>
-      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="prestamo" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="book"></fa-icon>
@@ -93,7 +62,7 @@
           </span>
         </a>
       </li>
-      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="devolucion" (click)="collapseNavbar()">
           <span>
             <fa-icon icon="undo"></fa-icon>
@@ -107,7 +76,6 @@
         class="nav-item dropdown pointer"
         display="dynamic"
         routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
       >
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
           <span>
@@ -123,13 +91,7 @@
             </a>
           </li>
           <li>
-            <a
-              class="dropdown-item"
-              routerLink="persona"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-              (click)="collapseNavbar()"
-            >
+            <a class="dropdown-item" routerLink="persona" routerLinkActive="active" (click)="collapseNavbar()">
               <fa-icon icon="user-friends" [fixedWidth]="true"></fa-icon>
               <span>Gestión de personas</span>
             </a>
