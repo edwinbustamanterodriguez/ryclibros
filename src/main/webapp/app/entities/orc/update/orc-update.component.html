@@ -31,58 +31,14 @@
             [ngValue]="getSelectedPersona2(personaOption, editForm.get('personas')!.value)"
             *ngFor="let personaOption of personasSharedCollection; trackBy: trackPersonaById"
           >
-            {{ personaOption.nombre + ' ' + personaOption.apaterno + ' ' + personaOption.amaterno }}
+            <td>{{ personaOption.nombre }}</td>
+            <td>{{ personaOption.apaterno }}</td>
+            <td>{{ personaOption.amaterno }}</td>
+            <td>{{ personaOption.ci + ' ' + departamentosAbr(personaOption.expedicion) }}</td>
+            <td>{{ personaOption.telefono }}</td>
+            <td>{{ personaOption.institucion }}</td>
           </option>
         </select>
-      </div>
-
-      <div class="form-group">
-        <label for="field_personas">Oficiales de registro de esta ORC</label>
-        <div class="table-responsive" id="entities">
-          <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-              <tr>
-                <th scope="col">
-                  <span>Nombre</span>
-                </th>
-                <th scope="col">
-                  <span>Apellido Paterno</span>
-                </th>
-                <th scope="col">
-                  <span>Apellido Materno</span>
-                </th>
-                <th scope="col">
-                  <span>CI</span>
-                </th>
-                <th scope="col">
-                  <span>Teléfono</span>
-                </th>
-                <th scope="col">
-                  <span>Institución</span>
-                </th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let personaOption of personasSharedCollection">
-                <td>{{ personaOption.nombre }}</td>
-                <td>{{ personaOption.apaterno }}</td>
-                <td>{{ personaOption.amaterno }}</td>
-                <td>{{ personaOption.ci + ' ' + departamentosAbr(personaOption.expedicion) }}</td>
-                <td>{{ personaOption.telefono }}</td>
-                <td>{{ personaOption.institucion }}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    class="form-check"
-                    id="field_check"
-                    [checked]="getSelectedPersona(personaOption, editForm.get('personas')!.value)"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
 
       <div>

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -133,6 +133,7 @@ export class OrcUpdateComponent implements OnInit {
       personas: this.editForm.get(['personas'])!.value,
     };
   }
+
   validInputBootstrap(formName: string): string {
     return this.editForm.get(formName)!.dirty || this.editForm.get(formName)!.touched
       ? this.editForm.get(formName)!.invalid
