@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-3">
+    <div *ngIf="libro">
+      <h2 data-cy="libroDetailsHeading"><span>Libro</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <div class="card mb-2" *ngIf="libro">
+        <div class="card-body pb-0 pt-1">
+          <h5 class="card-title">Datos registro Civil</h5>
+          <div class="row">
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_orc">Numero de Orc</label>
+              <p id="field_orc">{{ libro?.orc?.numero }}</p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_or">Ofical de registro</label>
+              <p id="field_or" *ngIf="libro.persona">
+                {{ (libro?.persona)!.nombre + ' ' + (libro?.persona)!.apaterno + ' ' + (libro?.persona)!.amaterno }}
+              </p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_provincia">Provincia</label>
+              <p id="field_provincia">{{ libro?.provincia?.nombre }}</p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_localidad">Localidad</label>
+              <p id="field_localidad">{{ libro?.localidad?.nombre }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="libro">
+        <div class="card-body pb-0 pt-1">
+          <h5 class="card-title">Datos del libro</h5>
+          <div class="row">
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_cantidad">Numero de Libro</label>
+              <p id="field_cantidad">{{ libro?.numero }}</p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_ejemplares">Cantidad de ejemplares</label>
+              <p id="field_ejemplares" *ngIf="libro.persona">{{ libro.cantidad }}</p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_fecha_registro">Fecha de registro</label>
+              <p id="field_fecha_registro" *ngIf="libro.persona">{{ libro.createdDate | date: 'dd/MM/yy HH:mm' }}</p>
+            </div>
+            <div class="col-6 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_categoria">Categoria</label>
+              <p id="field_categoria">{{ libro?.categoria?.nombre }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="libro">
+        <div class="card-body pb-0 pt-1">
+          <h5 class="card-title">Datos de ubicacion</h5>
+          <div class="row">
+            <div class="col-4 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_sector">Archivado en</label>
+              <p id="field_sector">{{ libro?.ubicacion?.sector }}</p>
+            </div>
+            <div class="col-4 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_numero">Numero</label>
+              <p id="field_numero" *ngIf="libro.persona">{{ libro?.ubicacion?.numero }}</p>
+            </div>
+            <div class="col-4 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_fila">Fila</label>
+              <p id="field_fila">{{ libro?.ubicacion?.serie }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-2" *ngIf="libro">
+        <div class="card-body pb-0 pt-1">
+          <div class="row">
+            <div class="col-sm-4 form-group mb-4">
+              <label class="form-control-label text-muted" for="field_observaciones">Observaciones</label>
+              <p id="field_observaciones">{{ libro?.observaciones }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span>
+      </button>
+    </div>
+  </div>
+</div>

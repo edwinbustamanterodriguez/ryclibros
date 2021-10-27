@@ -1,0 +1,115 @@
+<form action="">
+  <div class="modal-header">
+    <h4 class="modal-title">Detalle de la devolucion</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="form-group">
+      <label class="form-control-label">Datos del prestamo</label>
+      <div class="table-responsive" id="prestamo" *ngIf="prestamo">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Numero de libro</span>
+              </th>
+              <th scope="col">
+                <span>Prestatario</span>
+              </th>
+              <th scope="col">
+                <span>Fecha de prestamo</span>
+              </th>
+              <th scope="col">
+                <span>Prestado por</span>
+              </th>
+              <th scope="col">
+                <span>Prestado hasta</span>
+              </th>
+
+              <th scope="col">
+                <span>Observaciones</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="prestamo">
+              <td>
+                <div *ngIf="prestamo?.libro">
+                  {{ prestamo?.libro?.numero }}
+                </div>
+              </td>
+              <td>
+                <div *ngIf="prestamo?.persona">
+                  {{ prestamo?.persona?.nombre + ' ' + prestamo?.persona?.apaterno + ' ' + prestamo?.persona?.amaterno }}
+                </div>
+              </td>
+              <td>{{ prestamo?.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                {{ prestamo?.user?.firstName + ' ' + prestamo?.user?.lastName }}
+              </td>
+              <td>
+                {{ prestamo?.fechaFin?.toString() | date: 'dd/MM/yyyy HH:mm' }}
+              </td>
+              <td>
+                {{ prestamo?.observaciones }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="form-group">
+      <label class="form-control-label">Datos de la devolucion</label>
+      <div class="table-responsive" id="entities" *ngIf="devolucion">
+        <table class="table table-striped" aria-describedby="page-heading">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span>Numero de libro</span>
+              </th>
+              <th scope="col">
+                <span>Devuelto por</span>
+              </th>
+              <th scope="col">
+                <span>Fecha de devolucion</span>
+              </th>
+              <th scope="col">
+                <span>Recibido por</span>
+              </th>
+              <th scope="col">
+                <span>Observaciones</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="devolucion" data-cy="entityTable">
+              <td>
+                <div *ngIf="devolucion.prestamo">
+                  {{ devolucion.prestamo?.libro?.numero }}
+                </div>
+              </td>
+              <td>
+                <div *ngIf="devolucion.persona">
+                  {{ devolucion.persona?.nombre + ' ' + devolucion.persona?.apaterno + ' ' + devolucion.persona?.amaterno }}
+                </div>
+              </td>
+              <td>{{ devolucion.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                {{ devolucion.user?.firstName + ' ' + devolucion.user?.lastName }}
+              </td>
+              <td>
+                {{ devolucion.observaciones }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>

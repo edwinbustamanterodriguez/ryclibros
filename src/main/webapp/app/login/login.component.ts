@@ -11,6 +11,7 @@ import { AccountService } from 'app/core/auth/account.service';
 export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChild('username', { static: false })
   username?: ElementRef;
+  starting = false;
 
   authenticationError = false;
 
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login(): void {
+    this.starting = true;
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,
@@ -51,13 +53,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
       })
       .subscribe(
         () => {
+          this.starting = false;
           this.authenticationError = false;
           if (!this.router.getCurrentNavigation()) {
             // There were no routing during login (eg from navigationToStoredUrl)
             this.router.navigate(['']);
           }
         },
-        () => (this.authenticationError = true)
+        () => {
+          this.starting = false;
+          this.authenticationError = true;
+        }
       );
   }
 }

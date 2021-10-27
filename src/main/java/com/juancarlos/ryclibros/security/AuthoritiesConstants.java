@@ -5,11 +5,13 @@ package com.juancarlos.ryclibros.security;
  */
 public final class AuthoritiesConstants {
 
-    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String ADMINISTRADOR = "ROL_ADMINISTRADOR";
 
-    public static final String USER = "ROLE_USER";
+    public static final String ARCHIVO = "ROL_ARCHIVO";
 
-    public static final String ANONYMOUS = "ROLE_ANONYMOUS";
+    public static final String VENTANILLA = "ROL_VENTANILLA";
+
+    public static final String ANONIMO = "ROL_ANONIMO";
 
     private AuthoritiesConstants() {}
 }

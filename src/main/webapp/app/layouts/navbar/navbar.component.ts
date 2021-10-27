@@ -5,6 +5,8 @@ import { VERSION } from 'app/app.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { LoginDialogComponent } from 'app/login/login-dialog.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'jhi-navbar',
@@ -21,7 +23,8 @@ export class NavbarComponent implements OnInit {
     private loginService: LoginService,
     private accountService: AccountService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private modalService: NgbModal
   ) {
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION;
@@ -44,7 +47,7 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
-    this.router.navigate(['/login']);
+    this.modalService.open(LoginDialogComponent, { size: 'lg', backdrop: 'static' });
   }
 
   logout(): void {
@@ -59,5 +62,13 @@ export class NavbarComponent implements OnInit {
 
   getImageUrl(): string {
     return this.isAuthenticated() ? this.accountService.getImageUrl() : '';
+  }
+
+  getIntialFullName(): string {
+    return this.accountService.getInitialFullName();
+  }
+
+  getFullName(): string {
+    return this.accountService.getFullName();
   }
 }

@@ -1,0 +1,2 @@
+prestamo_id_pk;prestamo_observaciones;prestamo_fecha_fin;prestamo_libro_id_fk;prestamo_persona_id_fk;prestamo_user_id_fk
+

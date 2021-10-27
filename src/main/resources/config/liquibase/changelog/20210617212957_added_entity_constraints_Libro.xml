@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Libro.
+    -->
+    <changeSet id="20210617212957-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="libro_categoria_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_categoria_id"
+                                 referencedColumnNames="categoria_id_pk"
+                                 referencedTableName="categoria"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_provincia_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_provincia_id"
+                                 referencedColumnNames="provincia_id_pk"
+                                 referencedTableName="provincia"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_localidad_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_localidad_id"
+                                 referencedColumnNames="localidad_id_pk"
+                                 referencedTableName="localidad"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_ubicacion_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_ubicacion_id"
+                                 referencedColumnNames="ubicacion_id_pk"
+                                 referencedTableName="ubicacion"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_orc_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_orc_id"
+                                 referencedColumnNames="orc_id_pk"
+                                 referencedTableName="orc"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_persona_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_persona_id"
+                                 referencedColumnNames="persona_id_pk"
+                                 referencedTableName="persona"/>
+
+        <addForeignKeyConstraint baseColumnNames="libro_user_id_fk"
+                                 baseTableName="libro"
+                                 constraintName="fk_libro_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
+    </changeSet>
+</databaseChangeLog>

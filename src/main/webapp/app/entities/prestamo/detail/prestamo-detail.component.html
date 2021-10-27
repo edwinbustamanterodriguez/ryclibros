@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-2">
+    <div *ngIf="prestamo">
+      <h2 data-cy="prestamoDetailsHeading"><span>Prestamo</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_numero">Numero de libro</label>
+          <p id="field_numero">
+            <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.numero }}</a>
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_prestatario">Prestatario</label>
+          <p id="field_prestatario" *ngIf="prestamo.persona">
+            <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{
+              prestamo.persona?.nombre + ' ' + prestamo.persona?.apaterno + ' ' + prestamo.persona?.amaterno
+            }}</a>
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_fecha_prestamo">Fecha de prestamo</label>
+          <p id="field_fecha_prestamo" *ngIf="prestamo.createdDate">{{ prestamo.createdDate | date: 'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_prestado_por">Prestado por</label>
+          <p id="field_prestado_por" *ngIf="prestamo.createdDate">{{ prestamo.user?.firstName + ' ' + prestamo.user?.lastName }}</p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_prestado_hasta">Prestado hasta</label>
+          <p id="field_prestado_hasta" *ngIf="prestamo.createdDate">{{ prestamo.fechaFin | formatMediumDatetime }}</p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_observaciones">Observaciones</label>
+          <p id="field_observaciones" *ngIf="prestamo.createdDate">{{ prestamo.observaciones }}</p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-4" *ngIf="prestamo.libro">
+          <label class="form-control-label text-muted" for="field_estado">Estado del libro</label>
+          <p id="field_estado" *ngIf="prestamo.createdDate">{{ prestamo.devuelto ? 'Devuelto' : 'Prestado' }}</p>
+        </div>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+    </div>
+  </div>
+</div>

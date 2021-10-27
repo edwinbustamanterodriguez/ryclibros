@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Orc.
+    -->
+    <changeSet id="20210712222649-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="orc_id_pk"
+                                 baseTableName="rel_orc__persona"
+                                 constraintName="fk_rel_orc__persona__orc_id_pk"
+                                 referencedColumnNames="orc_id_pk"
+                                 referencedTableName="orc"/>
+
+        <addForeignKeyConstraint baseColumnNames="persona_id_pk"
+                                 baseTableName="rel_orc__persona"
+                                 constraintName="fk_rel_orc__persona__persona_id_pk"
+                                 referencedColumnNames="persona_id_pk"
+                                 referencedTableName="persona"/>
+    </changeSet>
+</databaseChangeLog>

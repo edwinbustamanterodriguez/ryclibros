@@ -1,0 +1,13 @@
+categoria_id_pk;categoria_nombre;categoria_descripcion;categoria_activo
+1;Nacimientos;;true
+2;Legajos Nacimientos;;true
+3;Matrimonios;;true
+4;Legajos Matrimonios;;true
+5;Defunciones;;true
+6;Legajos Defunciones;;true
+7;Reconocimientos;;false
+8;Legajos Reconocimientos;;true
+9;Ejecutoriales de Inscripciones Nacimientos;;true
+10;Tramites Departamentales;;true
+11;Tramites Interdepartamentales;;true
+12;Cancelación de Matrimonios;;true

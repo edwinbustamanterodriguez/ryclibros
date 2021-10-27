@@ -1,0 +1,163 @@
+<div>
+  <h2 id="page-heading" data-cy="PrestamoHeading">
+    <span>Prestamo de libros</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Actualizar Lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-prestamo"
+        [routerLink]="['/prestamo/new']"
+      >
+        <fa-icon icon="book"></fa-icon>
+        <span> Prestar libro </span>
+      </button>
+    </div>
+  </h2>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form name="searchForm" class="form-inline">
+        <div class="input-group w-100 mt-3 mb-3">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="currentSearch"
+            (ngModelChange)="onSearchChange()"
+            id="currentSearch"
+            name="currentSearch"
+            placeholder="Buscar por el numero de libro..."
+          />
+          <button class="input-group-append btn btn-info" [disabled]="!currentSearch || searching" (click)="loadPage(1, true)">
+            <fa-icon *ngIf="!searching" icon="search"></fa-icon>
+            <span *ngIf="searching" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          </button>
+          <button class="input-group-append btn btn-danger" (click)="deleteSearch()" *ngIf="currentSearch">
+            <fa-icon icon="trash-alt"></fa-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="prestamos?.length === 0 && !currentSearch">
+    <span>No se encontró registro de préstamo de libros</span>
+  </div>
+  <div class="alert alert-warning" id="no-found" *ngIf="prestamos?.length === 0 && currentSearch">
+    <span>No se encontró resultados para la búsqueda</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="prestamos && prestamos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id">
+            <span>ID</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="libro.numero">
+            <span>Numero de libro</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="persona.id">
+            <span>Prestatario</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="createdDate">
+            <span>Fecha de prestamo</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="user.id">
+            <span>Prestado por</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="fechaFin">
+            <span>Prestado hasta</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+
+          <th scope="col" jhiSortBy="observaciones">
+            <span>Observaciones</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prestamo of prestamos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/prestamo', prestamo.id, 'view']">{{ prestamo.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="prestamo.libro">
+              <a [routerLink]="['/libro', prestamo.libro?.id, 'view']">{{ prestamo.libro?.numero }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="prestamo.persona">
+              <a [routerLink]="['/persona', prestamo.persona?.id, 'view']">{{
+                prestamo.persona?.nombre + ' ' + prestamo.persona?.apaterno + ' ' + prestamo.persona?.amaterno
+              }}</a>
+            </div>
+          </td>
+          <td>{{ prestamo.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>
+            {{ prestamo.user?.firstName + ' ' + prestamo.user?.lastName }}
+          </td>
+          <td>{{ prestamo.fechaFin | formatMediumDatetime }}</td>
+          <td>
+            {{
+              prestamo.observaciones! && prestamo.observaciones!.length > 10
+                ? (prestamo.observaciones! | slice: 0:10) + '..'
+                : prestamo.observaciones
+            }}
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prestamo', prestamo.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Detalle</span>
+              </button>
+              <button type="submit" (click)="returned(prestamo)" class="btn btn-primary btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="book"></fa-icon>
+                <span class="d-none d-md-inline">Devolver Libro</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="prestamos && prestamos.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage, items: 'Registros' }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

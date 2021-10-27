@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-sm-12 col-md-11 card-custom pb-2">
+    <div *ngIf="persona">
+      <h2 data-cy="personaDetailsHeading"><span>Persona</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <div class="row">
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_nombre">Nombre</label>
+          <p id="field_nombre">{{ persona.nombre + ' ' + persona.apaterno + ' ' + persona.amaterno }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_ci">Ci</label>
+          <p id="field_ci">{{ persona.ci + ' ' + persona.expedicion }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_telefono">Telefono</label>
+          <p id="field_telefono">{{ persona.telefono }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_institucion">Institucion</label>
+          <p id="field_institucion">{{ persona.institucion }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_or">Es oficial dde registro</label>
+          <p id="field_or">{{ persona.esOficialDeRegistro ? 'Si' : 'No' }}</p>
+        </div>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atrás</span>
+      </button>
+    </div>
+  </div>
+</div>

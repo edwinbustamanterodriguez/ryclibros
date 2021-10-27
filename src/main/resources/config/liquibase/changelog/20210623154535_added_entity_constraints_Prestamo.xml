@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!--
+        Added the constraints for entity Prestamo.
+    -->
+    <changeSet id="20210623154535-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="prestamo_libro_id_fk"
+                                 baseTableName="prestamo"
+                                 constraintName="fk_prestamo_libro_id"
+                                 referencedColumnNames="libro_id_pk"
+                                 referencedTableName="libro"/>
+
+        <addForeignKeyConstraint baseColumnNames="prestamo_persona_id_fk"
+                                 baseTableName="prestamo"
+                                 constraintName="fk_prestamo_persona_id"
+                                 referencedColumnNames="persona_id_pk"
+                                 referencedTableName="persona"/>
+
+        <addForeignKeyConstraint baseColumnNames="prestamo_user_id_fk"
+                                 baseTableName="prestamo"
+                                 constraintName="fk_prestamo_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

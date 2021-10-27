@@ -1,51 +1,40 @@
 <div class="row justify-content-center">
-  <div class="col-8">
+  <div class="col-sm-12 col-md-11 card-custom pb-2">
     <div *ngIf="user">
       <h2>
-        <span>User</span> [<strong>{{ user.login }}</strong
-        >]
+        <span>Detalle del usuario </span>
       </h2>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span>Login</span></dt>
-        <dd>
-          <span>{{ user.login }}</span>
-          <span *ngIf="user.activated" class="badge badge-success">Activated</span>
-          <span *ngIf="!user.activated" class="badge badge-danger">Deactivated</span>
-        </dd>
-
-        <dt><span>First Name</span></dt>
-        <dd>{{ user.firstName }}</dd>
-
-        <dt><span>Last Name</span></dt>
-        <dd>{{ user.lastName }}</dd>
-
-        <dt><span>Email</span></dt>
-        <dd>{{ user.email }}</dd>
-
-        <dt><span>Created By</span></dt>
-        <dd>{{ user.createdBy }}</dd>
-
-        <dt><span>Created Date</span></dt>
-        <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span>Last Modified By</span></dt>
-        <dd>{{ user.lastModifiedBy }}</dd>
-
-        <dt><span>Last Modified Date</span></dt>
-        <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
-
-        <dt><span>Profiles</span></dt>
-        <dd>
-          <ul class="list-unstyled">
-            <li *ngFor="let authority of user.authorities">
-              <span class="badge badge-info">{{ authority }}</span>
-            </li>
-          </ul>
-        </dd>
-      </dl>
-
-      <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span></button>
+      <div class="row">
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_user">Usuario</label>
+          <p id="field_user">
+            <span>{{ user.login }}</span>
+            <span *ngIf="user.activated" class="badge badge-success">Activado</span>
+            <span *ngIf="!user.activated" class="badge badge-danger">Desactivado</span>
+          </p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_nombre">Nombre</label>
+          <p id="field_nombre">{{ user.firstName + ' ' + user.lastName }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_or">Creado por</label>
+          <p id="field_or">{{ user.createdBy }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_m">Modificado por</label>
+          <p id="field_m">{{ user.lastModifiedBy }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_f_c">Fecha de creacion</label>
+          <p id="field_f_c">{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</p>
+        </div>
+        <div class="col-6 form-group mb-4">
+          <label class="form-control-label text-muted" for="field_f_m">Fecha de modificacion</label>
+          <p id="field_f_m">{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</p>
+        </div>
+      </div>
+      <button type="submit" routerLink="../../" class="btn btn-info"><fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Atras</span></button>
     </div>
   </div>
 </div>

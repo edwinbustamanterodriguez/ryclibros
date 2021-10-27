@@ -1,0 +1,44 @@
+<form *ngIf="provincia" name="deleteForm" (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="localidadDeleteDialogHeading">{{ localidad === undefined ? 'Agregar nueva' : 'Editar' }} Localidad</h4>
+
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <div>
+      <div class="form-group">
+        <label class="form-control-label" for="field_nombre">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nombre"
+          id="field_nombre"
+          data-cy="nombre"
+          formControlName="nombre"
+          [ngClass]="validInputBootstrap('nombre')"
+        />
+        <div *ngIf="editForm.get('nombre')!.invalid && (editForm.get('nombre')!.dirty || editForm.get('nombre')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('nombre')?.errors?.required"> Este campo es requerido. </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancelar</span>
+    </button>
+
+    <button
+      id="jhi-confirm-save-localidad"
+      data-cy="entityConfirmSaveButton"
+      type="submit"
+      class="btn btn-danger"
+      [disabled]="editForm.invalid || isSaving"
+    >
+      <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar</span>
+    </button>
+  </div>
+</form>
